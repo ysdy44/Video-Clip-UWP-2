@@ -181,6 +181,14 @@
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Tools\Elements\ToolTypeComboBox.xaml.cs">
+      <DependentUpon>ToolTypeComboBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Tools\ITool.cs" />
+    <Compile Include="Video Clip2.Tools\Models\CursorTool.cs" />
+    <Compile Include="Video Clip2.Tools\Models\NoneTool.cs" />
+    <Compile Include="Video Clip2.Tools\ToolType.cs" />
+    <Compile Include="Video Clip2.Tools\XMLs\XML.ToolFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -316,6 +324,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Tools\Elements\ToolTypeComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="Video_Clip2.Tools.Elements.ToolTypeComboBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:Video_Clip2.Tools.Elements"
+    mc:Ignorable="d"
+    d:DesignWidth="100"
+    d:DesignHeight="50"
+    >
+
+    <ComboBox x:Name="ComboBox" 
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+              BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+
+        <local:ToolTypeComboBoxItem x:Name="Cursor" Type="Cursor" Index="0" >
+            <Polygon StrokeThickness="1" Stroke="White" Fill="Black" HorizontalAlignment="Center">
+                <Polygon.Points>
+                    0,0 0,23 6,16 16,15
+                </Polygon.Points>
+            </Polygon>
+        </local:ToolTypeComboBoxItem>
+
+    </ComboBox>
+
+</UserControl>
