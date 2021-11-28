@@ -126,6 +126,11 @@
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video Clip2.Easings\EasingControl.xaml.cs">
+      <DependentUpon>EasingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Easings\EasingManager.cs" />
+    <Compile Include="Video Clip2.Easings\EasingType.cs" />
     <Compile Include="Video Clip2.Effects\Effect.cs" />
     <Compile Include="Video Clip2.Elements\ApplicationTitleBarExtension.cs" />
     <Compile Include="Video Clip2.Elements\ColorPicker2.cs" />
@@ -246,6 +251,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Transition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Easings\EasingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
