@@ -116,14 +116,20 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="%24DrawPages\DrawPage.Add.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Canvas.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Edit.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Menu.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Position.cs" />
+    <Compile Include="%24DrawPages\DrawPage.Preview.cs" />
+    <Compile Include="%24DrawPages\DrawPage.xaml.cs">
+      <DependentUpon>DrawPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="%24MainPages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="%24DrawPages\DrawPage.xaml.cs">
-      <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ItemCanvas.cs" />
     <Compile Include="Controls\PinCanvas.cs" />
@@ -268,13 +274,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="%24MainPages\MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="%24DrawPages\DrawPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="%24MainPages\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Style\Brush.xaml">
       <Generator>MSBuild:Compile</Generator>
