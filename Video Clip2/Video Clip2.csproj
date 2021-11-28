@@ -126,6 +126,35 @@
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video Clip2.Clips\ClipManagers\ClipManager.cs" />
+    <Compile Include="Video Clip2.Clips\Clips\ClipBase.cs" />
+    <Compile Include="Video Clip2.Clips\Clips\FrameClip.cs" />
+    <Compile Include="Video Clip2.Clips\Clips\IClip.cs" />
+    <Compile Include="Video Clip2.Clips\Clips\MediaClip.cs" />
+    <Compile Include="Video Clip2.Clips\ClipTracks\ClipTrack.cs" />
+    <Compile Include="Video Clip2.Clips\ClipTracks\ClipTrackBase.xaml.cs">
+      <DependentUpon>ClipTrackBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Clips\ClipTracks\IClipTrack.cs" />
+    <Compile Include="Video Clip2.Clips\ClipTracks\LazyClipTrack.cs" />
+    <Compile Include="Video Clip2.Clips\ClipType.cs" />
+    <Compile Include="Video Clip2.Clips\Draggers\DraggerBase.cs" />
+    <Compile Include="Video Clip2.Clips\Draggers\LeftDragger.cs" />
+    <Compile Include="Video Clip2.Clips\Draggers\RightDragger.cs" />
+    <Compile Include="Video Clip2.Clips\Draggers\ThumbDragger.xaml.cs">
+      <DependentUpon>ThumbDragger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Clips\Draggers\TrimDragger.xaml.cs">
+      <DependentUpon>TrimDragger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Clips\Extensions.cs" />
+    <Compile Include="Video Clip2.Clips\Models\AudioClip.cs" />
+    <Compile Include="Video Clip2.Clips\Models\ColorClip.cs" />
+    <Compile Include="Video Clip2.Clips\Models\ImageClip.cs" />
+    <Compile Include="Video Clip2.Clips\Models\SubtitleClip.cs" />
+    <Compile Include="Video Clip2.Clips\Models\TextClip.cs" />
+    <Compile Include="Video Clip2.Clips\Models\VideoClip.cs" />
+    <Compile Include="Video Clip2.Clips\Trimmer.cs" />
     <Compile Include="Video Clip2.Easings\EasingControl.xaml.cs">
       <DependentUpon>EasingControl.xaml</DependentUpon>
     </Compile>
@@ -251,6 +280,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Transition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Clips\ClipTracks\ClipTrackBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Clips\Draggers\ThumbDragger.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Clips\Draggers\TrimDragger.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
