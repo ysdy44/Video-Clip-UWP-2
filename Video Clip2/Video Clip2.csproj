@@ -189,6 +189,13 @@
     <Compile Include="Video Clip2.Tools\Models\NoneTool.cs" />
     <Compile Include="Video Clip2.Tools\ToolType.cs" />
     <Compile Include="Video Clip2.Tools\XMLs\XML.ToolFactory.cs" />
+    <Compile Include="Video Clip2.ViewModels\InvalidateMode.cs" />
+    <Compile Include="Video Clip2.ViewModels\MethodViewModels\MethodViewModel.cs" />
+    <Compile Include="Video Clip2.ViewModels\MethodViewModels\MethodViewModel.Edit.cs" />
+    <Compile Include="Video Clip2.ViewModels\SelectionViewModels\SelectionViewModel.cs" />
+    <Compile Include="Video Clip2.ViewModels\SelectionViewModels\SelectionViewModel.SetMode.cs" />
+    <Compile Include="Video Clip2.ViewModels\ViewModels\ViewModel.cs" />
+    <Compile Include="Video Clip2.ViewModels\ViewModels\ViewModel.Transformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
