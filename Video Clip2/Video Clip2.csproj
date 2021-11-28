@@ -126,6 +126,7 @@
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video Clip2.Effects\Effect.cs" />
     <Compile Include="Video Clip2.Elements\ApplicationTitleBarExtension.cs" />
     <Compile Include="Video Clip2.Elements\ColorPicker2.cs" />
     <Compile Include="Video Clip2.Elements\PlayRing.xaml.cs">
