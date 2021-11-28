@@ -126,6 +126,26 @@
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Video Clip2.Elements\ApplicationTitleBarExtension.cs" />
+    <Compile Include="Video Clip2.Elements\ColorPicker2.cs" />
+    <Compile Include="Video Clip2.Elements\PlayRing.xaml.cs">
+      <DependentUpon>PlayRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Elements\ThemeControl.xaml.cs">
+      <DependentUpon>ThemeControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Elements\TimeSlider.cs" />
+    <Compile Include="Video Clip2.Elements\Times\Roulette.xaml.cs">
+      <DependentUpon>Roulette.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Elements\Times\TimeButton.xaml.cs">
+      <DependentUpon>TimeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Elements\Transitions\IndexTransitionPanel.cs" />
+    <Compile Include="Video Clip2.Elements\Transitions\TransitionPanel.cs" />
+    <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
+      <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -225,6 +245,26 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Style\Transition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\PlayRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\ThemeControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\Times\Roulette.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\Times\TimeButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
