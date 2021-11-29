@@ -13,10 +13,10 @@ namespace Video_Clip2.Clips.Models
     public class ColorClip : FrameClip, IClip
     {
 
-        private readonly ColorSourceEffect Source;
+        public Color Color { get; private set; }
+        private ColorSourceEffect Source;
 
         public override ClipType Type => ClipType.Color;
-        public Color Color { get; }
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Black, Symbol.Flag);
 
         public ColorClip(Color color, bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -38,6 +38,17 @@ namespace Video_Clip2.Clips.Models
         {
             if (base.InRange(position) == false) return null;
             else return this.Source;
+        }
+
+        public void SetColor(Color color)
+        {
+            this.Color = color;
+            this.Source = new ColorSourceEffect
+            {
+                Color = color
+            };
+
+            this.Track.Invalidate(); // Invalidate
         }
 
         protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)

@@ -117,9 +117,13 @@ namespace Video_Clip2
                 {
                     if (item.IsSelected)
                     {
-                        // TODO: set color for color-clip
+                        if (item is Clips.Models.ColorClip colorClip)
+                        {
+                            colorClip.SetColor(e.NewColor);
+                        }
                     }
                 }
+                this.ViewModel.Invalidate(); // Invalidate
             };
         }
     }

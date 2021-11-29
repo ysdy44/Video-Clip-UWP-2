@@ -17,8 +17,9 @@ namespace Video_Clip2
             this.PreviewCanvas.Draw += (s, args) =>
             {
                 float scale = (float)this.ViewModel.Scale;
+                int rows = this.RectangleCanvas.MaximumRows;
 
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < rows; i++)
                 {
                     foreach (IClip item in this.ViewModel.ObservableCollection)
                     {

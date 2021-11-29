@@ -14,6 +14,8 @@ namespace Video_Clip2.Clips.ClipTracks
         event RoutedEventHandler TrackUnloaded;
         event RoutedEventHandler TrackLoaded;
 
+        void Invalidate();
+
         void SetLeft(double trackScale, TimeSpan delay);
         void SetTop(int index, double trackHeight);
         void SetWidth(double trackScale, TimeSpan duration);

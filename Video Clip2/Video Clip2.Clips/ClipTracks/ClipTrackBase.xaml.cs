@@ -53,6 +53,8 @@ namespace Video_Clip2.Clips.ClipTracks
             };
         }
 
+
+        public void Invalidate() => this.CanvasControl.Invalidate();
         protected void SetSize(double width, double height)
         {
             this.CanvasControl.Width = width;
