@@ -135,6 +135,7 @@
     <Compile Include="Controls\PinCanvas.cs" />
     <Compile Include="Controls\PinHeader.cs" />
     <Compile Include="Controls\PositionCanvas.cs" />
+    <Compile Include="Controls\PreviewCanvas.cs" />
     <Compile Include="Controls\RectangleCanvas.cs" />
     <Compile Include="FileUtils\FileUtil.PickAndCopy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
