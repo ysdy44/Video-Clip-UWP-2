@@ -556,7 +556,7 @@
             <elements:PlayRing x:Name="PlayRing" HorizontalAlignment="Center"/>
 
             <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+                        Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
                 <ToolTipService.ToolTip>
                     <ToolTip>
                         Play
@@ -565,7 +565,7 @@
                 <SymbolIcon Symbol="Play"/>
             </Button>
             <Button x:Name="PauseButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+                        Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
                 <ToolTipService.ToolTip>
                     <ToolTip>
                         Pause
