@@ -216,8 +216,8 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="PreviewRowDefinition" MinHeight="100" MaxHeight="700" Height="276"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="48" MinHeight="48" MaxHeight="48"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -229,19 +229,18 @@
 
 
         <!--Preview-->
-        <Border x:Name="PreviewGrid" Grid.RowSpan="1" HorizontalAlignment="Stretch">
-            <Border.RenderTransformOrigin>
-                0.5,0
-            </Border.RenderTransformOrigin>
-            <Border.RenderTransform>
-                <ScaleTransform x:Name="PreviewScaleTransform" ScaleX="1" ScaleY="1"/>
-            </Border.RenderTransform>
-            <!--Preview-->
-            <xaml:CanvasControl x:Name="PreviewCanvas" ClearColor="Black" 
-                                Width="{x:Bind ViewModel.PreviewSize.Width, Mode=OneWay}" 
-                                Height="{x:Bind ViewModel.PreviewSize.Height, Mode=OneWay}" 
-                                />
-        </Border>
+        <controls1:PreviewCanvas x:Name="PreviewGrid"
+                   Height="276" MinHeight="100" MaxHeight="700"
+                   Scale2="{x:Bind ViewModel.Scale, Mode=TwoWay}" Size2="{x:Bind ViewModel.Size, Mode=OneWay}">
+            <xaml:CanvasControl x:Name="PreviewCanvas" Width="1920" Height="1080" ClearColor="Black">
+                <UIElement.RenderTransformOrigin>
+                    0, 0
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
+                </UIElement.RenderTransform>
+            </xaml:CanvasControl>
+        </controls1:PreviewCanvas>
 
         <Grid Padding="12" RequestedTheme="Dark" VerticalAlignment="Top">
             <Button IsEnabled="False" HorizontalAlignment="Left" Background="{ThemeResource AppBackgroundLight}">
@@ -538,8 +537,16 @@
 
         </Grid>
         <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" >
-            <elements1:ToolTypeComboBox x:Name="ToolTypeComboBox" HorizontalAlignment="Left" ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"/>
-            <Button x:Name="GridSpliterButton" HorizontalAlignment="Right" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+            <elements1:ToolTypeComboBox x:Name="ToolTypeComboBox" HorizontalAlignment="Left" 
+                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                    ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
+            <Button HorizontalAlignment="Right" 
+                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" 
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
+                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
+                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
+                    Style="{StaticResource TextBlockButtonStyle}">
                 <UIElement.ManipulationMode>
                     TranslateY
                 </UIElement.ManipulationMode>
