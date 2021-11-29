@@ -22,7 +22,7 @@ namespace Video_Clip2.ViewModels
                 IClip lastClip = this.ObservableCollection.First(c => c.Id == item);
                 if (lastClip.InRange(this.Position) == false) continue;
 
-                IClip nextClip = lastClip.TrimClone(this.IsMuted, this.Position, this.TrackHeight, this.TrackScale, this.PreviewSize);
+                IClip nextClip = lastClip.TrimClone(this.IsMuted, this.Position, this.TrackHeight, this.TrackScale);
                 if (nextClip == null) continue;
 
                 this.ObservableCollection.Add(nextClip);

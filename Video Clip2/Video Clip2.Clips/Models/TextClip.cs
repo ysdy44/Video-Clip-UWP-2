@@ -14,6 +14,7 @@ namespace Video_Clip2.Clips.Models
     {
 
         protected readonly ICanvasResourceCreatorWithDpi ResourceCreator;
+
         public CanvasCommandList CommandList { get; protected set; }
         public string Text { get; protected set; }
 
@@ -24,7 +25,7 @@ namespace Video_Clip2.Clips.Models
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
         }
-        public TextClip(string text, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public TextClip(string text, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
             this.ResourceCreator = resourceCreator;
@@ -46,13 +47,9 @@ namespace Video_Clip2.Clips.Models
             else return this.CommandList;
         }
 
-        public override void SetPreviewSize(Size previewSize)
+        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-        }
-
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale, Size previewSize)
-        {
-            return new TextClip(this.Text, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale, this.ResourceCreator, previewSize);
+            return new TextClip(this.Text, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale, this.ResourceCreator);
         }
 
         public void Dispose()

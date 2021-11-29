@@ -25,7 +25,7 @@ namespace Video_Clip2.Clips.Models
         public override ClipType Type => ClipType.Subtitle;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.OrangeRed, Symbol.FontColor);
 
-        public SubtitleClip(IList<Subtitle> subtitles, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public SubtitleClip(IList<Subtitle> subtitles, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
            : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
             this.CommandList = new CanvasCommandList(resourceCreator);
@@ -38,9 +38,9 @@ namespace Video_Clip2.Clips.Models
         {
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale, Size previewSize)
+        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-            return new SubtitleClip(this.Subtitles, isMuted, position, this.Delay, nextDuration, base.Index, trackHeight, trackScale, this.ResourceCreator, previewSize);
+            return new SubtitleClip(this.Subtitles, isMuted, position, this.Delay, nextDuration, base.Index, trackHeight, trackScale, this.ResourceCreator);
         }
 
         //@Static

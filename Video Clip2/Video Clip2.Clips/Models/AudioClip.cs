@@ -57,11 +57,7 @@ namespace Video_Clip2.Clips.Models
             return null;
         }
 
-        public override void SetPreviewSize(Size previewSize)
-        {
-        }
-
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale, Size previewSize)
+        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
             return new AudioClip(base.Player.Source, isMuted, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }

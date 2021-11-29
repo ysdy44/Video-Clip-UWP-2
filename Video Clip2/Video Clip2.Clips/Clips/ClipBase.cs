@@ -52,7 +52,6 @@ namespace Video_Clip2.Clips
         #region Render
 
         public abstract void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        public abstract void SetPreviewSize(Size previewSize);
         public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize);
 
         int StartingIndex;

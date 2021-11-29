@@ -39,7 +39,6 @@ namespace Video_Clip2.Clips.Clips
 
         bool InRange(TimeSpan position);
         void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        void SetPreviewSize(Size previewSize);
         ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize);
 
         int Index { get; }
@@ -56,7 +55,7 @@ namespace Video_Clip2.Clips.Clips
 
         #endregion
 
-        IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale, Size previewSize);
+        IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale);
 
     }
 }

@@ -40,11 +40,7 @@ namespace Video_Clip2.Clips.Models
             else return this.Source;
         }
 
-        public override void SetPreviewSize(Size previewSize)
-        {
-        }
-
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale, Size previewSize)
+        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
             return new ColorClip(this.Color, isMuted, position, nextDuration, base.Index, trackHeight, trackScale);
         }

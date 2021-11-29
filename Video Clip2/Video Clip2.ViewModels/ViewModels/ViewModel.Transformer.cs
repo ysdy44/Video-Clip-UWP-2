@@ -17,10 +17,6 @@ namespace Video_Clip2.ViewModels
                 this.previewSize = value;
                 this.OnPropertyChanged(nameof(PreviewSize)); // Notify 
 
-                foreach (IClip item in this.ObservableCollection)
-                {
-                    item.SetPreviewSize(value);
-                }
                 this.Invalidate(); // Invalidate
             }
         }

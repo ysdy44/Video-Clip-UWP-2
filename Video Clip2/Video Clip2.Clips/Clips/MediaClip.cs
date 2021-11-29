@@ -9,7 +9,7 @@ namespace Video_Clip2.Clips
     {
 
         //@Abstract
-        protected abstract IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale, Size previewSize);
+        protected abstract IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale);
 
         public override TimeSpan Duration => this.TrimmedDuration;
         protected TimeSpan TrimmedDuration => this.OriginalDuration - this.TrimTimeFromStart - this.TrimTimeFromEnd;
@@ -98,7 +98,7 @@ namespace Video_Clip2.Clips
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
-        public IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale, Size previewSize)
+        public IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale)
         {
             TimeSpan trimTimeFromStart = this.TrimTimeFromStart;
             TimeSpan trimTimeFromEnd = this.TrimTimeFromEnd;
@@ -109,7 +109,7 @@ namespace Video_Clip2.Clips
             this.TrimTimeFromEnd = lastTrimTimeFromEnd;
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
 
-            return this.TrimClone(isMuted, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale, previewSize);
+            return this.TrimClone(isMuted, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale);
         }
 
     }

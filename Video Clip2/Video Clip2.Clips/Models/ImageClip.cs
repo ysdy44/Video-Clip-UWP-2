@@ -17,22 +17,21 @@ namespace Video_Clip2.Clips.Models
 
         readonly CanvasBitmap Thumbnail;
         readonly CanvasBitmap Bitmap;
-        ICanvasImage Image;
+
         public Stretch Stretch { get; private set; } = Stretch.Uniform;
 
         public override ClipType Type => ClipType.Image;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
 
-        public ImageClip(CanvasBitmap bitmap, CanvasBitmap thumbnail, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, Size previewSize)
+        public ImageClip(CanvasBitmap bitmap, CanvasBitmap thumbnail, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
             this.Thumbnail = thumbnail;
             this.Bitmap = bitmap;
-            this.Image = ImageClip.Rednder(this.Stretch, this.Bitmap, previewSize);
             base.ChangeView(position, delay, duration);
         }
-        public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
-            : this(bitmap, ImageClip.LoadThumbnail(resourceCreator, bitmap), isMuted, position, delay, duration, index, trackHeight, trackScale, previewSize)
+        public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
+            : this(bitmap, ImageClip.LoadThumbnail(resourceCreator, bitmap), isMuted, position, delay, duration, index, trackHeight, trackScale)
         {
         }
 
@@ -49,22 +48,17 @@ namespace Video_Clip2.Clips.Models
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
-            else return this.Image;
+            else return ImageClip.Render(this.Stretch, this.Bitmap, previewSize);
         }
 
-        public override void SetPreviewSize(Size previewSize)
-        {
-            this.Image = ImageClip.Rednder(this.Stretch, this.Bitmap, previewSize);
-        }
-        public void SetStretch(Stretch stretch, Size previewSize)
+        public void SetStretch(Stretch stretch)
         {
             this.Stretch = stretch;
-            this.Image = ImageClip.Rednder(stretch, this.Bitmap, previewSize);
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale, Size previewSize)
+        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-            return new ImageClip(this.Bitmap, this.Thumbnail, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale, previewSize);
+            return new ImageClip(this.Bitmap, this.Thumbnail, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
@@ -93,7 +87,7 @@ namespace Video_Clip2.Clips.Models
             return renderTarget;
         }
 
-        private static ICanvasImage Rednder(Stretch stretch, CanvasBitmap bitmap, Size previewSize)
+        private static ICanvasImage Render(Stretch stretch, CanvasBitmap bitmap, Size previewSize)
         {
             if (stretch == Stretch.None) return bitmap;
 
