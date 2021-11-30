@@ -20,6 +20,7 @@ namespace Video_Clip2
         private bool IntToBooleanConverter(int value) => value == 0;
         private string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
+        private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
@@ -62,6 +63,31 @@ namespace Video_Clip2
         }));
 
 
+        /// <summary> Gets or set the freedom state for <see cref="DrawPage"/>. </summary>
+        public bool IsDirectFreedom
+        {
+            get => (bool)base.GetValue(IsDirectFreedomProperty);
+            set => SetValue(IsDirectFreedomProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "DrawPage.IsDirectFreedom" /> dependency property. </summary>
+        public static readonly DependencyProperty IsDirectFreedomProperty = DependencyProperty.Register(nameof(IsDirectFreedom), typeof(bool), typeof(DrawPage), new PropertyMetadata(false, (sender, e) =>
+        {
+            DrawPage control = (DrawPage)sender;
+
+            if (e.NewValue is bool value)
+            {
+                if (value)
+                {
+                    control.TrackCanvas.Margin = new Thickness(0);
+                }
+                else
+                {
+                    control.UpdateTrackWidth(control.TrackScrollViewer.ActualWidth);
+                }
+            }
+        }));
+
+
         #endregion
 
 
@@ -71,7 +97,9 @@ namespace Video_Clip2
 
             this.ConstructPreview();
             this.ConstructPosition();
+
             this.ConstructCanvas();
+            this.ConstructScrollViewer();
 
             this.ConstructAdd();
             this.ConstructMenu();
@@ -93,6 +121,9 @@ namespace Video_Clip2
 
             this.PlayButton.Click += (s, e) =>
             {
+                if (this.ViewModel.Position >= this.ViewModel.Duration)
+                    this.ViewModel.Position = TimeSpan.Zero;
+
                 this.ViewModel.IsPlaying = true;
                 this.PlayRing.Ding();
                 this.PauseButton.Focus(FocusState.Programmatic);

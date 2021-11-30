@@ -122,6 +122,7 @@
     <Compile Include="%24DrawPages\DrawPage.Menu.cs" />
     <Compile Include="%24DrawPages\DrawPage.Position.cs" />
     <Compile Include="%24DrawPages\DrawPage.Preview.cs" />
+    <Compile Include="%24DrawPages\DrawPage.ScrollViewer.cs" />
     <Compile Include="%24DrawPages\DrawPage.xaml.cs">
       <DependentUpon>DrawPage.xaml</DependentUpon>
     </Compile>

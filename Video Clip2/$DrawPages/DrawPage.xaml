@@ -310,46 +310,63 @@
                          />
 
 
-                <!--Track-->
-                <ComboBox x:Name="TrackComboBox"
+                <StackPanel Width="{StaticResource TrackLeftWidth}">
+                    <!--Track-->
+                    <ComboBox x:Name="TrackComboBox"
                           SelectedIndex="2" 
                           Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"
                           BorderThickness="0" BorderBrush="{ThemeResource AppBorderBrush}" Background="Transparent">
-                    <UIElement.ManipulationMode>
-                        None
-                    </UIElement.ManipulationMode>
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Track Height
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <x:Int32>30</x:Int32>
-                    <x:Int32>40</x:Int32>
-                    <x:Int32>50</x:Int32>
-                    <x:Int32>60</x:Int32>
-                    <x:Int32>70</x:Int32>
-                </ComboBox>
-                <!--Mute-->
-                <ToggleButton 
+                        <UIElement.ManipulationMode>
+                            None
+                        </UIElement.ManipulationMode>
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Track Height
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <x:Int32>30</x:Int32>
+                        <x:Int32>40</x:Int32>
+                        <x:Int32>50</x:Int32>
+                        <x:Int32>60</x:Int32>
+                        <x:Int32>70</x:Int32>
+                    </ComboBox>
+                    <!--Mute-->
+                    <ToggleButton 
                           IsChecked="{x:Bind ViewModel.IsMuted, Mode=TwoWay}"
-                          Canvas.Left="0" Canvas.Top="{StaticResource TimelineHeight}"
                           Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
                           Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
-                    <UIElement.ManipulationMode>
-                        None
-                    </UIElement.ManipulationMode>
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Mute
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="{x:Bind BooleanToMuteConverter(ViewModel.IsMuted), Mode=OneWay}"/>
-                </ToggleButton>
+                        <UIElement.ManipulationMode>
+                            None
+                        </UIElement.ManipulationMode>
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Mute
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="{x:Bind BooleanToMuteConverter(ViewModel.IsMuted), Mode=OneWay}"/>
+                    </ToggleButton>
+                    <!--Freedom-->
+                    <ToggleButton 
+                          IsChecked="{x:Bind IsDirectFreedom, Mode=TwoWay}"
+                          Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
+                          Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
+                        <UIElement.ManipulationMode>
+                            None
+                        </UIElement.ManipulationMode>
+                        <ToolTipService.ToolTip>
+                            <ToolTip>
+                                Freedom
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="{x:Bind BooleanToFreedomConverter(IsDirectFreedom), Mode=OneWay}"/>
+                    </ToggleButton>
+                </StackPanel>
 
 
                 <!--Position-->
                 <controls1:PositionCanvas x:Name="PositionCanvas"
                         Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
+                        IsHitTestVisible="{x:Bind IsDirectFreedom, Mode=OneWay}"
                         Duration="{x:Bind ViewModel.Duration, Mode=OneWay}"
                         TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
                         Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" Height="{StaticResource TimelineHeight}"
