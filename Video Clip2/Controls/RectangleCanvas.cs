@@ -112,6 +112,7 @@ namespace Video_Clip2.Controls
             {
                 this.Children.Add(this.CreateRectangle(i));
             }
+            base.Height = count * this.ItemHeight;
         }
 
         private Rectangle CreateRectangle(int index)
@@ -120,7 +121,7 @@ namespace Video_Clip2.Controls
             {
                 Width = this.ItemWidth,
                 Height = this.ItemHeight,
-                Style= index % 2 == 0 ? this.DarkStyle : this.LightStyle
+                Style = index % 2 == 0 ? this.DarkStyle : this.LightStyle
             };
             Canvas.SetTop(rectangle, index * this.ItemHeight);
 

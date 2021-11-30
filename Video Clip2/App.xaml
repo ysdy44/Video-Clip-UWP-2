@@ -39,6 +39,10 @@
                         <GradientStop Offset="0" Color="#00D1FE"/>
                         <GradientStop Offset="1" Color="#0048FE"/>
                     </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppBlueAbsoluteLinearGradientBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,100">
+                        <GradientStop Offset="0" Color="#00D1FE"/>
+                        <GradientStop Offset="1" Color="#0048FE"/>
+                    </LinearGradientBrush>
                     <LinearGradientBrush x:Key="AppRedLinearGradientBrush" StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Offset="0" Color="#FE8100"/>
                         <GradientStop Offset="1" Color="#D40000"/>
@@ -84,6 +88,10 @@
                         <GradientStop Color="#00000000" Offset="1"/>
                     </LinearGradientBrush>
                     <LinearGradientBrush x:Key="AppBlueLinearGradientBrush" StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0" Color="#76EAF8"/>
+                        <GradientStop Offset="1" Color="#0B9DFF"/>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppBlueAbsoluteLinearGradientBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,100">
                         <GradientStop Offset="0" Color="#76EAF8"/>
                         <GradientStop Offset="1" Color="#0B9DFF"/>
                     </LinearGradientBrush>

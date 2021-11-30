@@ -384,11 +384,13 @@
                 </controls1:PinCanvas>
                 <controls1:PinHeader x:Name="PinHeader"
                        IsHitTestVisible="False" 
-                       HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                        Width="12" Height="{StaticResource TimelineHeight}"
                        Position="{x:Bind ViewModel.Position, Mode=OneWay}"
                        TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}">
-                    <Border CornerRadius="0,0,4,4" BorderThickness="2" BorderBrush="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
+                    <Border IsHitTestVisible="False" 
+                          Width="12" Height="{StaticResource TimelineHeight}"
+                          Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
+                          CornerRadius="0,0,4,4" BorderThickness="2" BorderBrush="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
                 </controls1:PinHeader>
 
 
@@ -440,6 +442,7 @@
 
                     <!--Timeline-->
                     <Line IsHitTestVisible="False" 
+                              Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
                               X1="{x:Bind PinHeader.X, Mode=OneWay}" Y1="0" 
                               X2="{x:Bind PinHeader.X, Mode=OneWay}" Y2="512" 
                               StrokeThickness="2" Stroke="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
@@ -449,8 +452,25 @@
             </Canvas>
         </ScrollViewer>
 
+        
+        
+        <!--Timeline-->
+        <Line Grid.Row="2" IsHitTestVisible="False" 
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
+                X1="0" Y1="0" 
+                X2="0" Y2="{x:Bind RectangleCanvas.Height, Mode=OneWay}" 
+                StrokeThickness="2" Stroke="{ThemeResource AppBlueAbsoluteLinearGradientBrush}">
+            <UIElement.RenderTransformOrigin>
+                0, 0
+            </UIElement.RenderTransformOrigin>
+            <UIElement.RenderTransform>
+                <TranslateTransform X="0" Y="{StaticResource TimelineHeight}"/>
+            </UIElement.RenderTransform>
+        </Line>
 
-
+        
+        
         <!--AppBar-->
         <Grid x:Name="AppBarGrid" Grid.Row="1" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}">
 
