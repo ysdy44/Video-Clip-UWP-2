@@ -265,7 +265,7 @@
 
 
         <!--Track-->
-        <ScrollViewer Grid.Row="2" IsHitTestVisible="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}" Background="{ThemeResource AppBackground}">
+        <ScrollViewer x:Name="TrackScrollViewer" Grid.Row="2" IsHitTestVisible="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}" Background="{ThemeResource AppBackground}">
             <Canvas x:Name="TrackCanvas" Background="Transparent"
                         MinWidth="{x:Bind PositionCanvas.Width, Mode=OneWay}"
                         ManipulationMode="{x:Bind ToolTypeComboBox.Tool.TrackManipulationMode, Mode=OneWay}"
@@ -515,7 +515,7 @@
                             Pin
                         </ToolTip>
                     </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="MapPin"/>
+                    <SymbolIcon Symbol="Pin"/>
                 </Button>
                 <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                     <Button.Flyout>

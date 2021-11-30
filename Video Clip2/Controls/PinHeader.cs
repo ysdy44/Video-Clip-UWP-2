@@ -8,6 +8,9 @@ namespace Video_Clip2.Controls
     public sealed class PinHeader : ContentControl
     {
 
+        //@Delegate
+        public event EventHandler<double> XChanged;
+
         #region DependencyProperty
 
 
@@ -25,6 +28,7 @@ namespace Video_Clip2.Controls
             if (e.NewValue is double value)
             {
                 Canvas.SetLeft(control, value + control.TrackLeftWidth - 6);
+                control.XChanged?.Invoke(control, value); // Delegate
             }
         }));
 

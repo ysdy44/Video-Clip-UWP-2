@@ -33,10 +33,6 @@ namespace Video_Clip2.ViewModels
                 this.position = value;
                 this.OnPropertyChanged(nameof(Position)); // Notify 
 
-                //        double verticalOffset = position;
-                //        bool disableAnimation = this.IsPlayingCore == false;
-                //        this.thisScrollViewer.ChangeView(null, verticalOffset, null, disableAnimation);
-
                 this.Invalidate(); // Invalidate
             }
         }
@@ -49,7 +45,9 @@ namespace Video_Clip2.ViewModels
             set
             {
                 this.duration = value;
-                this.OnPropertyChanged(nameof(Duration)); // Notify 
+                this.OnPropertyChanged(nameof(Duration)); // Notify  
+
+                this.Invalidate(); // Invalidate
             }
         }
         private TimeSpan duration = TimeSpan.FromMinutes(1);
@@ -68,9 +66,6 @@ namespace Video_Clip2.ViewModels
                     item.Track.SetLeft(value, item.Delay);
                     item.Track.SetWidth(value, item.Duration);
                 }
-
-                //       // bool disableAnimation = true;
-                //       // this.thisScrollViewer.ChangeView(null, verticalOffset, null, disableAnimation);
 
                 this.SetMode(); // Selection
             }
@@ -233,17 +228,6 @@ namespace Video_Clip2.ViewModels
 
         public readonly IList<CanvasControl> Canvas = new List<CanvasControl>();
 
-        public void Pause()
-        {
-            this.IsPlaying = false;
-        }
-        public void Play()
-        {
-            if (this.Position >= this.Duration)
-                this.Position = TimeSpan.Zero;
-
-            this.IsPlaying = true;
-        }
 
         //@Notify 
         /// <summary> Multicast event for property change notifications. </summary>
