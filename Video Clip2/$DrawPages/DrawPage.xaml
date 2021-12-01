@@ -266,13 +266,13 @@
 
         <!--Track-->
         <ScrollViewer x:Name="TrackScrollViewer" Grid.Row="2" IsHitTestVisible="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}" Background="{ThemeResource AppBackground}">
-            <Canvas x:Name="TrackCanvas" Background="Transparent"
-                        MinWidth="{x:Bind PositionCanvas.Width, Mode=OneWay}"
+            <Border x:Name="TrackCanvas" Background="Transparent"
                         ManipulationMode="{x:Bind ToolTypeComboBox.Tool.TrackManipulationMode, Mode=OneWay}"
                         ManipulationStarted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationStarted, Mode=OneWay}"
                         ManipulationDelta="{x:Bind ToolTypeComboBox.Tool.TrackManipulationDelta, Mode=OneWay}"
                         ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationCompleted, Mode=OneWay}"
                         >
+                <Canvas Width="{x:Bind PositionCanvas.Width, Mode=OneWay}">
 
 
                 <!--Rectangle-->
@@ -449,7 +449,8 @@
 
                 </Canvas>
 
-            </Canvas>
+                </Canvas>
+            </Border>
         </ScrollViewer>
 
         

@@ -78,11 +78,12 @@ namespace Video_Clip2
             {
                 if (value)
                 {
-                    control.TrackCanvas.Margin = new Thickness(0);
+                    control.TrackCanvas.Padding = new Thickness(0);
                 }
                 else
                 {
                     control.UpdateTrackWidth(control.TrackScrollViewer.ActualWidth);
+                    control.UpdateTrackX();
                 }
             }
         }));
