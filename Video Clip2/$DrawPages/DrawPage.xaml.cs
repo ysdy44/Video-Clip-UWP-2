@@ -21,6 +21,7 @@ namespace Video_Clip2
         private string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
         private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;
+        private Symbol BooleanToFullScreenConverter(bool value) => value ? Symbol.BackToWindow : Symbol.FullScreen;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
@@ -105,11 +106,12 @@ namespace Video_Clip2
             this.ConstructAdd();
             this.ConstructMenu();
             this.ConstructEdit();
+
             base.Loaded += (s, e) =>
-            {
-                if (this.ViewModel.ObservableCollection.Count == 0)
-                    this.AddRing.Start();
-            };
+           {
+               if (this.ViewModel.ObservableCollection.Count == 0)
+                   this.AddRing.Start();
+           };
 
 
             this.TrackComboBox.SelectionChanged += (s, e) =>

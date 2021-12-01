@@ -30,7 +30,18 @@
         <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
         <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
         <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
-
+      
+        <!--Storyboard-->
+        <Storyboard x:Name="Storyboard">
+            <DoubleAnimation x:Name="Animation" From="{x:Null}" To="{x:Null}" Duration="0:0:0.6" 
+                             Storyboard.TargetProperty="Height" Storyboard.TargetName="PreviewGrid" 
+                             EnableDependentAnimation="True">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        
         <!--Style-->
         <Style TargetType="ScrollViewer">
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
@@ -272,10 +283,10 @@
                         ManipulationDelta="{x:Bind ToolTypeComboBox.Tool.TrackManipulationDelta, Mode=OneWay}"
                         ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationCompleted, Mode=OneWay}"
                         >
-                <Canvas Width="{x:Bind PositionCanvas.Width, Mode=OneWay}">
+                <Canvas Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" HorizontalAlignment="Left">
 
 
-                <!--Rectangle-->
+                    <!--Rectangle-->
                 <controls1:RectangleCanvas x:Name="RectangleCanvas"
                         MaximumRows="6" IsHitTestVisible="False"
                         Canvas.Left="{StaticResource TrackLeftWidth}"
@@ -506,18 +517,13 @@
                     </ToolTipService.ToolTip>
                     <SymbolIcon Symbol="Redo"/>
                 </Button>
-                <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                     <ToolTipService.ToolTip>
                         <ToolTip>
                             FullScreen
                         </ToolTip>
                     </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="FullScreen"/>
-                    <Button.Flyout>
-                        <Flyout Placement="Bottom">
-                            <elements:ThemeControl/>
-                        </Flyout>
-                    </Button.Flyout>
+                    <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
                 </Button>
             </StackPanel>
 

@@ -17,6 +17,9 @@ namespace Video_Clip2.Controls
         double StartingRectX;
         double StartingRectY;
 
+        bool IsSpliterManipulationStarted;
+        bool IsAnimationStarted;
+
         #region DependencyProperty
 
 
@@ -68,52 +71,125 @@ namespace Video_Clip2.Controls
         }));
 
 
+        /// <summary> Gets or set the full-screen state for <see cref="PreviewCanvas"/>. </summary>
+        public bool IsFullScreen
+        {
+            get => (bool)base.GetValue(IsFullScreenProperty);
+            set => SetValue(IsFullScreenProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "PreviewCanvas.IsFullScreen" /> dependency property. </summary>
+        public static readonly DependencyProperty IsFullScreenProperty = DependencyProperty.Register(nameof(IsFullScreen), typeof(bool), typeof(PreviewCanvas), new PropertyMetadata(false));
+
+
         #endregion
 
         public PreviewCanvas()
         {
-            base.SizeChanged += this.MainSizeChanged;
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                double width = e.NewSize.Width;
+                double height = e.NewSize.Height;
+
+                if (this.IsSpliterManipulationStarted)
+                {
+                }
+                else if (this.IsAnimationStarted)
+                {
+                    this.Delta(height);
+                }
+                else
+                {
+                    BitmapSize size = this.Size2;
+                    double scale = PreviewCanvas.GetScale(width, height, size);
+
+                    if (this.Scale2 != scale)
+                        this.Scale2 = scale;
+                    else
+                        this.UpdateRect(width, height, scale, size);
+                }
+            };
         }
 
-        private void MainSizeChanged(object sender, SizeChangedEventArgs e)
+
+        public void SetWindowHeight(double windowHeight)
         {
-            if (e.NewSize == Size.Empty) return;
-            if (e.NewSize == e.PreviousSize) return;
-
-            double width = e.NewSize.Width;
-            double height = e.NewSize.Height;
-            BitmapSize size = this.Size2;
-            double scale = PreviewCanvas.GetScale(width, height, size);
-
-            if (this.Scale2 != scale)
-                this.Scale2 = scale;
+            if (this.IsFullScreen)
+            {
+                base.Height = windowHeight;
+                base.MaxHeight = double.PositiveInfinity;
+            }
             else
-                this.UpdateRect(width, height, scale, size);
+            {
+                base.MaxHeight = windowHeight;
+            }
+        }
+        public void FullScreenCompleted()
+        {
+            this.IsAnimationStarted = false;
+
+            if (this.IsFullScreen)
+            {
+                this.IsFullScreen = false;
+                this.Completed(276);
+            }
+            else
+            {
+                this.IsFullScreen = true;
+                this.Completed(base.ActualHeight);
+            }
+        }
+        public double FullScreenStarted(double windowHeight)
+        {
+            this.IsAnimationStarted = true;
+            this.Started();
+
+            if (this.IsFullScreen)
+                return 276;
+            else
+                return windowHeight;
         }
 
 
         public void SpliterManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
         {
-            base.SizeChanged -= this.MainSizeChanged;
-            {
-                double width = base.ActualWidth;
-                double height = base.ActualHeight;
-                BitmapSize size = this.Size2;
-                double scale = this.Scale2;
-
-                PreviewCanvas.GetRect(width, height, scale, size, out double w, out double h, out double x, out double y);
-
-                this.StartingHeight = height;
-                this.StartingRectW = w;
-                this.StartingRectH = h;
-                this.StartingRectX = x;
-                this.StartingRectY = y;
-            }
+            this.IsSpliterManipulationStarted = true;
+            this.Started();
         }
         public void SpliterManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
+            this.Delta(this.StartingHeight + e.Cumulative.Translation.Y);
+        }
+        public void SpliterManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            this.IsFullScreen = false;
+
+            this.IsSpliterManipulationStarted = false;
+            this.Completed(this.StartingHeight + e.Cumulative.Translation.Y);
+        }
+
+
+        private void Started()
+        {
             double width = base.ActualWidth;
-            double height = Math.Min(base.MaxHeight, Math.Max(base.MinHeight, this.StartingHeight + e.Cumulative.Translation.Y));
+            double height = base.ActualHeight;
+            BitmapSize size = this.Size2;
+            double scale = this.Scale2;
+
+            PreviewCanvas.GetRect(width, height, scale, size, out double w, out double h, out double x, out double y);
+
+            this.StartingHeight = height;
+            this.StartingRectW = w;
+            this.StartingRectH = h;
+            this.StartingRectX = x;
+            this.StartingRectY = y;
+        }
+        private void Delta(double targetHeight)
+        {
+            double width = base.ActualWidth;
+            double height = Math.Min(base.MaxHeight, Math.Max(base.MinHeight, targetHeight));
             BitmapSize size = this.Size2;
             double scale = PreviewCanvas.GetScale(width, height, size);
 
@@ -131,33 +207,31 @@ namespace Video_Clip2.Controls
                 }
             }
         }
-        public void SpliterManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        private void Completed(double targetHeight)
         {
-            base.SizeChanged += this.MainSizeChanged;
+            double width = base.ActualWidth;
+            double height = Math.Min(base.MaxHeight, Math.Max(base.MinHeight, targetHeight));
+            BitmapSize size = this.Size2;
+            double scale = PreviewCanvas.GetScale(width, height, size);
+
+            base.Height = height;
+            foreach (FrameworkElement item in base.Children)
             {
-                double width = base.ActualWidth;
-                double height = Math.Min(base.MaxHeight, Math.Max(base.MinHeight, this.StartingHeight + e.Cumulative.Translation.Y));
-                BitmapSize size = this.Size2;
-                double scale = PreviewCanvas.GetScale(width, height, size);
-
-                base.Height = height;
-                foreach (FrameworkElement item in base.Children)
+                if (item.RenderTransform is CompositeTransform transform)
                 {
-                    if (item.RenderTransform is CompositeTransform transform)
-                    {
-                        transform.TranslateX = 0;
-                        transform.TranslateY = 0;
-                        transform.ScaleX = 1;
-                        transform.ScaleY = 1;
-                    }
+                    transform.TranslateX = 0;
+                    transform.TranslateY = 0;
+                    transform.ScaleX = 1;
+                    transform.ScaleY = 1;
                 }
-
-                if (this.Scale2 != scale)
-                    this.Scale2 = scale;
-                else
-                    this.UpdateRect(width, height, scale, size);
             }
+
+            if (this.Scale2 != scale)
+                this.Scale2 = scale;
+            else
+                this.UpdateRect(width, height, scale, size);
         }
+
 
         private void UpdateRect(double width, double height, double scale, BitmapSize size)
         {
