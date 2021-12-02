@@ -93,6 +93,13 @@
     <Button.Background>
         <SolidColorBrush x:Name="BackBrush" Color="White"/>
     </Button.Background>
+    
+    
+    <UIElement.ManipulationMode>
+        System,                   
+        TranslateX,                    
+        TranslateY
+    </UIElement.ManipulationMode>
 
 
     <Canvas x:Name="Canvas" IsHitTestVisible="False" Opacity="0">

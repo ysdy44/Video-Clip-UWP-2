@@ -69,14 +69,14 @@ namespace Video_Clip2.Clips.Models
             {
                 if (base.IsPlaying != isPlaying)
                 {
-                    base.Player.PlaybackSession.Position = position - base.Delay;
+                    base.Player.PlaybackSession.Position = position - (base.Delay - this.TrimTimeFromStart);
                     base.Player.Play();
                     base.IsPlaying = true;
                 }
             }
             else
             {
-                base.Player.PlaybackSession.Position = position - base.Delay;
+                base.Player.PlaybackSession.Position = position - (base.Delay - this.TrimTimeFromStart);
                 if (base.IsPlaying != isPlaying)
                 {
                     base.Player.Pause();
@@ -112,7 +112,7 @@ namespace Video_Clip2.Clips.Models
 
             do
             {
-                double seconds = 0.5 + (position + offset) / width * lenth;
+                double seconds = 0.5 + position + offset / width * lenth;
                 int index = (int)Math.Round(seconds, MidpointRounding.AwayFromZero);
 
                 CanvasBitmap bitmap = index < thumbnails.Count ? thumbnails[index] : thumbnails.Last();

@@ -36,18 +36,41 @@ namespace Video_Clip2
                 e.Handled = true;
             };
 
+            this.ItemCanvas.ItemRightTapped += (s, e) => this.ShowEdit(s);
+            this.ItemCanvas.ItemHolding += (s, e) => this.ShowEdit(s);
             this.ItemCanvas.ItemTapped += (s, e) => e.Handled = true;
-            this.ItemCanvas.ItemRightTapped += (s, e) => this.EditFlyout.ShowAt(s is FrameworkElement placementTarget ? placementTarget : this.ItemCanvas);
-            this.ItemCanvas.ItemHolding += (s, e) => this.EditFlyout.ShowAt(s is FrameworkElement placementTarget ? placementTarget : this.ItemCanvas);
 
-            this.ThumbDragger.RightTapped += (s, e) => this.EditFlyout.ShowAt(this.ThumbDragger);
-            this.ThumbDragger.Holding += (s, e) => this.EditFlyout.ShowAt(this.ThumbDragger);
+            this.ThumbDragger.RightTapped += (s, e) => this.ShowEdit();
+            this.ThumbDragger.Holding += (s, e) => this.ShowEdit();
             this.ThumbDragger.Tapped += (s, e) =>
             {
-                this.EditFlyout.ShowAt(this.ThumbDragger);
+                this.ShowEdit();
                 e.Handled = true;
             };
         }
-  
+
+        private void ShowEdit()
+        {
+            this.EditFlyout.ShowAt(this.ThumbDragger);
+        }
+        private void ShowEdit(object sender)
+        {
+            if (sender is FrameworkElement placementTarget)
+            {
+                if (placementTarget.DataContext is IClip clip)
+                {
+                    foreach (IClip item in this.ViewModel.ObservableCollection)
+                    {
+                        if (item.IsSelected) item.IsSelected = false;
+                    }
+
+                    clip.IsSelected = false;
+                    this.SelectionViewModel.SetModeSingle(clip); // Selection
+
+                    this.EditFlyout.ShowAt(placementTarget);
+                }
+            }
+        }
+
     }
 }

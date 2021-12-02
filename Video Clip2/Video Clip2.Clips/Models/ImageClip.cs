@@ -75,13 +75,18 @@ namespace Video_Clip2.Clips.Models
             const int scaledHeight = 50;
             int scaledWidth = (int)(scaledHeight * width / height);
 
+            float scaleX = 1f * scaledWidth / width;
+            float scaleY = 1f * scaledHeight / height;
+            float scale = Math.Max(0.01f, Math.Max(scaleX, scaleY));
+
             CanvasRenderTarget renderTarget = new CanvasRenderTarget(resourceCreator, scaledWidth, scaledHeight);
             using (CanvasDrawingSession drawingSession = renderTarget.CreateDrawingSession())
             {
                 drawingSession.DrawImage(new ScaleEffect
                 {
                     Source = bitmap,
-                    Scale = new Vector2(1f * scaledWidth / width, 1f * scaledHeight / height)
+                    InterpolationMode = CanvasImageInterpolation.NearestNeighbor,
+                    Scale = new Vector2(scale)
                 });
             }
             return renderTarget;

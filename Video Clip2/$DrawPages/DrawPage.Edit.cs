@@ -19,7 +19,7 @@ namespace Video_Clip2
                 if (clip == null) return;
 
                 this.GroupIndex = 2;
-                this.EditPivot.SelectedIndex = (int)clip.Type;
+                this.EditPivot.SelectedIndex = (int)clip.Type - 1;
             };
 
 
