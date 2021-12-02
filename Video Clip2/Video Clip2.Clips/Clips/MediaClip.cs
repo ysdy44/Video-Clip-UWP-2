@@ -57,44 +57,40 @@ namespace Video_Clip2.Clips
             this.StartingTrimTimeFromEnd = this.TrimTimeFromEnd.ToDouble(trackScale);
         }
 
-        public override void TrimDuration(double trackScale, TrimmerValue destinationValue, TrimmerValue sourceValue, double offset)
+        public override void TrimStart(double trackScale, double offset, TimeSpan position)
         {
-            double destination = destinationValue.Value;
-            double source = sourceValue.Value;
+            double minDuration = TimeSpan.FromSeconds(2).ToDouble(trackScale);
+            double innerStart = this.StartingDelay;
+            double start = innerStart - this.StartingTrimTimeFromStart;
+            double end = start + this.StartingOriginalDuration;
+            double innerEnd = end - this.StartingTrimTimeFromEnd;
 
-            double scale = (destination - sourceValue.GetValue(offset)) / (destination - source);
+            double newInnerStart = innerStart + offset;
+            if (newInnerStart < Math.Max(0, start)) newInnerStart = Math.Max(0, start);
+            if (newInnerStart > innerEnd - minDuration) newInnerStart = innerEnd - minDuration;
 
-            double start = destination - (destination - this.StartingDelay) * scale;
-            double end = destination - (destination - this.StartingDelay - this.StartingTrimmedDuration) * scale;
-
-            TimeSpan delay = start.ToTimeSpan(trackScale);
+            TimeSpan delay = newInnerStart.ToTimeSpan(trackScale);
             this.Delay = delay;
             this.Track.SetLeft(trackScale, this.Delay);
 
-            double distance = this.StartingOriginalDuration - (end - start);
-            if (distance < 0) distance = 0;
+            TimeSpan trimTimeFromEnd = (newInnerStart - start).ToTimeSpan(trackScale);
+            this.TrimTimeFromStart = trimTimeFromEnd;
+            this.Track.SetWidth(trackScale, this.TrimmedDuration);
+        }
+        public override void TrimEnd(double trackScale, double offset, TimeSpan position)
+        {
+            double minDuration = TimeSpan.FromSeconds(2).ToDouble(trackScale);
+            double innerStart = this.StartingDelay;
+            double start = innerStart - this.StartingTrimTimeFromStart;
+            double end = start + this.StartingOriginalDuration;
+            double innerEnd = end - this.StartingTrimTimeFromEnd;
 
-            if (this.StartingTrimTimeFromStart == this.StartingTrimTimeFromEnd)
-            {
-                this.TrimTimeFromStart =
-                this.TrimTimeFromEnd =
-                (distance / 2).ToTimeSpan(trackScale);
-            }
-            else if (this.StartingTrimTimeFromStart == 0)
-            {
-                this.TrimTimeFromEnd = distance.ToTimeSpan(trackScale);
-            }
-            else if (this.StartingTrimTimeFromEnd == 0)
-            {
-                this.TrimTimeFromStart = distance.ToTimeSpan(trackScale);
-            }
-            else
-            {
-                double sum = this.StartingTrimTimeFromStart + this.StartingTrimTimeFromEnd;
-                this.TrimTimeFromStart = (distance * this.StartingTrimTimeFromStart / sum).ToTimeSpan(trackScale);
-                this.TrimTimeFromEnd = (distance * this.StartingTrimTimeFromEnd / sum).ToTimeSpan(trackScale);
-            }
+            double newInnerEnd = innerEnd + offset;
+            if (newInnerEnd < innerStart + minDuration) newInnerEnd = innerStart + minDuration;
+            if (newInnerEnd > end) newInnerEnd = end;
 
+            TimeSpan trimTimeFromEnd = (end - newInnerEnd).ToTimeSpan(trackScale);
+            this.TrimTimeFromEnd = trimTimeFromEnd;
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 

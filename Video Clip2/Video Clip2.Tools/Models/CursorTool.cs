@@ -188,18 +188,18 @@ namespace Video_Clip2.Tools.Models
                 {
                     item.CacheDelay(this.ViewModel.TrackScale);
                     item.CacheDuration(this.ViewModel.TrackScale);
+
+                    this.SelectionViewModel.SetModeSingle(item); // Selection
+
+                    if (sender is TrimDragger dragger)
+                    {
+                        dragger.UpdateManipulationStarted();
+                    }
+
+                    e.Handled = true;
+                    return;
                 }
             }
-
-            this.SelectionViewModel.SetMode(); // Selection
-            this.SelectionViewModel.CacheTrimmer(); // Selection
-
-            if (sender is TrimDragger dragger)
-            {
-                dragger.UpdateManipulationStarted();
-            }
-
-            e.Handled = true;
         }
         public void LeftDraggerManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
@@ -207,12 +207,13 @@ namespace Video_Clip2.Tools.Models
             {
                 if (item.IsSelected)
                 {
-                    item.TrimDuration(this.ViewModel.TrackScale, this.ViewModel.StartingTrimmer.Right, this.ViewModel.StartingTrimmer.Left, e.Cumulative.Translation.X);
+                    item.TrimStart(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+
+                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                    e.Handled = true;
+                    return;
                 }
             }
-
-            this.SelectionViewModel.SetMode(); // Selection
-            e.Handled = true;
         }
         public void LeftDraggerManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
@@ -238,18 +239,18 @@ namespace Video_Clip2.Tools.Models
                 {
                     item.CacheDelay(this.ViewModel.TrackScale);
                     item.CacheDuration(this.ViewModel.TrackScale);
+
+                    this.SelectionViewModel.SetModeSingle(item); // Selection
+
+                    if (sender is TrimDragger dragger)
+                    {
+                        dragger.UpdateManipulationStarted();
+                    }
+
+                    e.Handled = true;
+                    return;
                 }
             }
-
-            this.SelectionViewModel.SetMode(); // Selection
-            this.SelectionViewModel.CacheTrimmer(); // Selection
-
-            if (sender is TrimDragger dragger)
-            {
-                dragger.UpdateManipulationStarted();
-            }
-
-            e.Handled = true;
         }
         public void RightDraggerManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
@@ -257,12 +258,13 @@ namespace Video_Clip2.Tools.Models
             {
                 if (item.IsSelected)
                 {
-                    item.TrimDuration(this.ViewModel.TrackScale, this.ViewModel.StartingTrimmer.Left, this.ViewModel.StartingTrimmer.Right, e.Cumulative.Translation.X);
+                    item.TrimEnd(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+
+                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                    e.Handled = true;
+                    return;
                 }
             }
-
-            this.SelectionViewModel.SetMode(); // Selection
-            e.Handled = true;
         }
         public void RightDraggerManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {

@@ -51,7 +51,8 @@ namespace Video_Clip2.Clips.Clips
 
         TimeSpan Duration { get; }
         void CacheDuration(double trackScale);
-        void TrimDuration(double trackScale, TrimmerValue destinationValue, TrimmerValue sourceValue, double offset);
+        void TrimStart(double trackScale, double offset, TimeSpan position);
+        void TrimEnd(double trackScale, double offset, TimeSpan position);
 
         #endregion
 

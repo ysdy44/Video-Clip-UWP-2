@@ -85,7 +85,8 @@ namespace Video_Clip2.Clips
 
         public abstract TimeSpan Duration { get; }
         public abstract void CacheDuration(double trackScale);
-        public abstract void TrimDuration(double trackScale, TrimmerValue destinationValue, TrimmerValue sourceValue, double offset);
+        public abstract void TrimStart(double trackScale, double offset, TimeSpan position);
+        public abstract void TrimEnd(double trackScale, double offset, TimeSpan position);
 
         #endregion
 
@@ -101,7 +102,7 @@ namespace Video_Clip2.Clips
 
             this.Index = index;
             this.Track.SetTop(index, trackHeight);
-            this.Track.SetHeight( trackHeight);
+            this.Track.SetHeight(trackHeight);
 
             this.Track.TrackUnloaded += (s, e) => this.Track.Draw -= this.DrawThumbnail;
             this.Track.TrackLoaded += (s, e) => this.Track.Draw += this.DrawThumbnail;
