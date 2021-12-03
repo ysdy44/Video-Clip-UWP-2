@@ -80,7 +80,7 @@ namespace Video_Clip2
             {
                 if (value)
                 {
-                    control.TrackCanvas.Padding = new Thickness(0);
+                    control.UpdateTrackWidth();
                 }
                 else
                 {

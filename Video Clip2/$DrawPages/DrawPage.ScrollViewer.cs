@@ -1,4 +1,5 @@
-﻿using Video_Clip2.Clips;
+﻿using System;
+using Video_Clip2.Clips;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -155,11 +156,16 @@ namespace Video_Clip2
             };
         }
 
+        private void UpdateTrackWidth()
+        {
+            double trackLeftWidth = this.PinHeader.TrackLeftWidth;
+            this.TrackCanvas.Padding = new Thickness(0, 0, trackLeftWidth + trackLeftWidth, 0);
+        }
         private void UpdateTrackWidth(double width)
         {
             double widthHalf = width / 2;
             double trackLeftWidth = this.PinHeader.TrackLeftWidth;
-            this.TrackCanvas.Padding = new Thickness(widthHalf - trackLeftWidth, 0, widthHalf + trackLeftWidth, 0);
+            this.TrackCanvas.Padding = new Thickness(Math.Max(0, widthHalf - trackLeftWidth), 0, widthHalf + trackLeftWidth, 0);
         }
         private void UpdateTrackX()
         {
