@@ -19,6 +19,7 @@ namespace Video_Clip2
         //@Converter
         private bool IntToBooleanConverter(int value) => value == 0;
         private string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
+        private Symbol BooleanToPinConverter(bool value) => value ? Symbol.UnPin : Symbol.Pin;
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
         private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;
         private Symbol BooleanToFullScreenConverter(bool value) => value ? Symbol.BackToWindow : Symbol.FullScreen;

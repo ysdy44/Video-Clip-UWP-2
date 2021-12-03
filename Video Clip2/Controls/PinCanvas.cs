@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Video_Clip2.Clips;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 namespace Video_Clip2.Controls
 {
@@ -15,12 +12,13 @@ namespace Video_Clip2.Controls
     {
 
         // Position & Pin
-        readonly IDictionary<TimeSpan, Rectangle> Rectangles = new Dictionary<TimeSpan, Rectangle>();
+        readonly IDictionary<TimeSpan, Button> Buttons = new Dictionary<TimeSpan, Button>();
+        Button CurrentButton;
 
         #region DependencyProperty
 
 
-        /// <summary> Gets or sets the source of<see cref = "PinCanvas" />'s items. </summary>
+        /// <summary> Gets or sets the source of <see cref = "PinCanvas" /> 's items. </summary>
         public object ItemSource
         {
             get => (object)base.GetValue(ItemSourceProperty);
@@ -38,11 +36,11 @@ namespace Video_Clip2.Controls
                     control.ItemSourceNotify.CollectionChanged -= control.ItemSourceNotify_CollectionChanged;
                     if (control.ItemSourceNotify is IEnumerable<TimeSpan> items)
                     {
-                        foreach (TimeSpan item in items)
+                        foreach (var item in control.Buttons)
                         {
-                            control.Children.Remove(control.Rectangles[item]);
-                            control.RemoveHandler2(item);
+                            item.Value.Click -= control.ItemClick;
                         }
+                        control.Children.Clear();
                     }
                 }
                 control.ItemSourceNotify = value as INotifyCollectionChanged;
@@ -54,10 +52,37 @@ namespace Video_Clip2.Controls
                         foreach (TimeSpan item in items)
                         {
                             control.Children.Add(control.Create(item, control.TrackScale));
-                            control.AddHandler2(item);
                         }
                     }
                 }
+            }
+        }));
+
+
+        /// <summary> Gets or sets state of <see cref = "PinCanvas" />'s position. </summary>
+        public bool IsPositionOnPin
+        {
+            get => (bool)base.GetValue(IsPositionOnPinProperty);
+            set => base.SetValue(IsPositionOnPinProperty, value);
+        }
+        /// <summary> Identifies the<see cref = "PinCanvas.IsPositionOnPin" /> dependency property. </summary>
+        public static readonly DependencyProperty IsPositionOnPinProperty = DependencyProperty.Register(nameof(IsPositionOnPin), typeof(bool), typeof(PinCanvas), new PropertyMetadata(false));
+
+
+        /// <summary> Gets or sets <see cref = "PinCanvas" />'s position. </summary>
+        public TimeSpan Position
+        {
+            get => (TimeSpan)base.GetValue(PositionProperty);
+            set => base.SetValue(PositionProperty, value);
+        }
+        /// <summary> Identifies the<see cref = "PinCanvas.Position" /> dependency property. </summary>
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(TimeSpan), typeof(PinCanvas), new PropertyMetadata(TimeSpan.FromMinutes(20), (sender, e) =>
+        {
+            PinCanvas control = (PinCanvas)sender;
+
+            if (e.NewValue is TimeSpan value)
+            {
+                control.UpdatePosition(value);
             }
         }));
 
@@ -80,26 +105,37 @@ namespace Video_Clip2.Controls
         }));
 
 
+        /// <summary> Gets or sets style of <see cref = "PinCanvas" />'s item. </summary>
+        public Style ItemStyle
+        {
+            get => (Style)base.GetValue(ItemStyleProperty);
+            set => base.SetValue(ItemStyleProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "PinCanvas.ItemStyle" /> dependency property. </summary>
+        public static readonly DependencyProperty ItemStyleProperty = DependencyProperty.Register(nameof(ItemStyle), typeof(Style), typeof(PinCanvas), new PropertyMetadata(null));
+
+
         #endregion
 
         private INotifyCollectionChanged ItemSourceNotify;
 
-        private Rectangle Create(TimeSpan itemAdd, double trackScale)
+        private Button Create(TimeSpan itemAdd, double trackScale)
         {
-            if (this.Rectangles.ContainsKey(itemAdd))
+            if (this.Buttons.ContainsKey(itemAdd))
             {
-                return this.Rectangles[itemAdd];
+                return this.Buttons[itemAdd];
             }
 
-            Rectangle rectangle = new Rectangle
+            Button button = new Button
             {
-                Width = 2,
-                Height = 32,
-                Fill = new SolidColorBrush(Colors.Red)
+                Tag = itemAdd,
+                Style = this.ItemStyle,
             };
-            Canvas.SetLeft(rectangle, itemAdd.ToDouble(trackScale) - 1);
-            this.Rectangles.Add(itemAdd, rectangle);
-            return rectangle;
+            button.Click += this.ItemClick;
+            Canvas.SetLeft(button, itemAdd.ToDouble(trackScale) - 9);
+            this.Buttons.Add(itemAdd, button);
+            this.UpdatePosition(this.Position);
+            return button;
         }
 
         private void ItemSourceNotify_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -111,21 +147,18 @@ namespace Video_Clip2.Controls
                     {
                         int index = e.NewStartingIndex;
                         base.Children.Insert(index, this.Create(itemAdd, this.TrackScale));
-                        this.AddHandler2(itemAdd);
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Move:
                     {
                         int index = e.OldStartingIndex;
-                        base.Children.RemoveAt(index);
-                        this.RemoveHandler2((TimeSpan)e.OldItems[index]);
                     }
                     if (e.NewItems[0] is TimeSpan itemMove)
                     {
                         int index = e.NewStartingIndex;
-                        base.Children.Insert(index, this.Rectangles[itemMove]);
-                        this.AddHandler2((TimeSpan)e.NewItems[index]);
+                        base.Children.Insert(index, this.Buttons[itemMove]);
+                        this.UpdatePosition(this.Position);
                     }
                     break;
 
@@ -133,33 +166,35 @@ namespace Video_Clip2.Controls
                     if (e.OldItems[0] is TimeSpan itemRemove)
                     {
                         int index = e.OldStartingIndex;
+                        this.Buttons[itemRemove].Click -= this.ItemClick;
                         base.Children.RemoveAt(index);
-                        this.RemoveHandler2(itemRemove);
+                        this.UpdatePosition(this.Position);
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     {
                         int index = e.OldStartingIndex;
-                        TimeSpan time = (TimeSpan)(base.Children[index] as FrameworkElement).Tag;
+                        Button item = base.Children[index] as Button;
+                        item.Click -= this.ItemClick;
+                        TimeSpan time = (TimeSpan)item.Tag;
                         base.Children.RemoveAt(index);
-                        this.Rectangles.Remove(time);
-                        this.RemoveHandler2((TimeSpan)e.OldItems[index]);
+                        this.Buttons.Remove(time);
                     }
                     if (e.NewItems[0] is TimeSpan itemReplace)
                     {
                         int index = e.NewStartingIndex;
                         this.Children.Insert(index, this.Create(itemReplace, this.TrackScale));
-                        this.AddHandler2((TimeSpan)e.NewItems[index]);
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
-                    foreach (FrameworkElement item in base.Children)
+                    foreach (Button item in base.Children)
                     {
-                        this.RemoveHandler2((TimeSpan)item.Tag);
+                        item.Click -= this.ItemClick;
                     }
                     base.Children.Clear();
+                    this.UpdatePosition(this.Position);
                     break;
 
                 default:
@@ -167,25 +202,27 @@ namespace Video_Clip2.Controls
             };
         }
 
-
-        private void AddHandler2(TimeSpan time)
+        private void ItemClick(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void RemoveHandler2(TimeSpan time)
-        {
+            Button item = sender as Button;
+            this.Position = (TimeSpan)item.Tag;
         }
 
         private void UpdateWidth(double trackScale)
         {
-            foreach (var item in this.Rectangles)
+            foreach (var item in this.Buttons)
             {
-                TimeSpan time = item.Key;
-                Rectangle rectangle = item.Value;
-                Canvas.SetLeft(rectangle, time.ToDouble(trackScale) - 1);
+                Canvas.SetLeft(item.Value, item.Key.ToDouble(trackScale) - 9);
             }
         }
 
+        private void UpdatePosition(TimeSpan position)
+        {
+            if (this.CurrentButton != null) this.CurrentButton.IsEnabled = true;
+            this.IsPositionOnPin = this.Buttons.ContainsKey(position);
+            this.CurrentButton = this.IsPositionOnPin ? this.Buttons[position] : null;
+            if (this.CurrentButton != null) this.CurrentButton.IsEnabled = false;
+        }
 
         //@Static
         public static bool Pin(TimeSpan position, ObservableCollection<TimeSpan> collection)

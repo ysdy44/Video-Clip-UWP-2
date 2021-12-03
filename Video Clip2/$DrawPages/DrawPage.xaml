@@ -30,7 +30,7 @@
         <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
         <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
         <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
-      
+
         <!--Storyboard-->
         <Storyboard x:Name="Storyboard">
             <DoubleAnimation x:Name="Animation" From="{x:Null}" To="{x:Null}" Duration="0:0:0.6" 
@@ -41,7 +41,7 @@
                 </DoubleAnimation.EasingFunction>
             </DoubleAnimation>
         </Storyboard>
-        
+
         <!--Style-->
         <Style TargetType="ScrollViewer">
             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
@@ -287,29 +287,29 @@
 
 
                     <!--Rectangle-->
-                <controls1:RectangleCanvas x:Name="RectangleCanvas"
+                    <controls1:RectangleCanvas x:Name="RectangleCanvas"
                         MaximumRows="6" IsHitTestVisible="False"
                         Canvas.Left="{StaticResource TrackLeftWidth}"
                         Canvas.Top="{StaticResource TimelineHeight}"
                         ItemWidth="{x:Bind PositionCanvas.Width, Mode=OneWay}"
                         ItemHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}">
-                    <controls1:RectangleCanvas.LightStyle>
-                        <Style TargetType="Rectangle">
-                            <Setter Property="StrokeThickness" Value="1"/>
-                            <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
-                            <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumLight}"/>
-                        </Style>
-                    </controls1:RectangleCanvas.LightStyle>
-                    <controls1:RectangleCanvas.DarkStyle>
-                        <Style TargetType="Rectangle">
-                            <Setter Property="StrokeThickness" Value="1"/>
-                            <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
-                            <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumDark}"/>
-                        </Style>
-                    </controls1:RectangleCanvas.DarkStyle>
-                </controls1:RectangleCanvas>
-                <!--Items-->
-                <controls1:ItemCanvas x:Name="ItemCanvas"
+                        <controls1:RectangleCanvas.LightStyle>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="StrokeThickness" Value="1"/>
+                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
+                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumLight}"/>
+                            </Style>
+                        </controls1:RectangleCanvas.LightStyle>
+                        <controls1:RectangleCanvas.DarkStyle>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="StrokeThickness" Value="1"/>
+                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
+                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumDark}"/>
+                            </Style>
+                        </controls1:RectangleCanvas.DarkStyle>
+                    </controls1:RectangleCanvas>
+                    <!--Items-->
+                    <controls1:ItemCanvas x:Name="ItemCanvas"
                         Canvas.Left="{StaticResource TrackLeftWidth}"
                         Canvas.Top="{StaticResource TimelineHeight}"
                         Width="{x:Bind PositionCanvas.Width, Mode=OneWay}"
@@ -321,94 +321,155 @@
                          />
 
 
-                <StackPanel Width="{StaticResource TrackLeftWidth}">
-                    <!--Track-->
-                    <ComboBox x:Name="TrackComboBox"
-                          SelectedIndex="2" 
-                          Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"
-                          BorderThickness="0" BorderBrush="{ThemeResource AppBorderBrush}" Background="Transparent">
-                        <UIElement.ManipulationMode>
-                            None
-                        </UIElement.ManipulationMode>
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                Track Height
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <x:Int32>30</x:Int32>
-                        <x:Int32>40</x:Int32>
-                        <x:Int32>50</x:Int32>
-                        <x:Int32>60</x:Int32>
-                        <x:Int32>70</x:Int32>
-                    </ComboBox>
-                    <!--Mute-->
-                    <ToggleButton 
-                          IsChecked="{x:Bind ViewModel.IsMuted, Mode=TwoWay}"
-                          Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
-                          Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
-                        <UIElement.ManipulationMode>
-                            None
-                        </UIElement.ManipulationMode>
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                Mute
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <SymbolIcon Symbol="{x:Bind BooleanToMuteConverter(ViewModel.IsMuted), Mode=OneWay}"/>
-                    </ToggleButton>
-                    <!--Freedom-->
-                    <ToggleButton 
-                          IsChecked="{x:Bind IsDirectFreedom, Mode=TwoWay}"
-                          Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
-                          Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
-                        <UIElement.ManipulationMode>
-                            None
-                        </UIElement.ManipulationMode>
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                Freedom
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <SymbolIcon Symbol="{x:Bind BooleanToFreedomConverter(IsDirectFreedom), Mode=OneWay}"/>
-                    </ToggleButton>
-                </StackPanel>
+                    <StackPanel Width="{StaticResource TrackLeftWidth}">
+                        <!--Track-->
+                        <ComboBox x:Name="TrackComboBox"
+                             SelectedIndex="2" 
+                             Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"
+                              BorderThickness="0" BorderBrush="{ThemeResource AppBorderBrush}" Background="Transparent">
+                            <UIElement.ManipulationMode>
+                                None
+                            </UIElement.ManipulationMode>
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    Track Height
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <x:Int32>30</x:Int32>
+                            <x:Int32>40</x:Int32>
+                            <x:Int32>50</x:Int32>
+                            <x:Int32>60</x:Int32>
+                            <x:Int32>70</x:Int32>
+                        </ComboBox>
+                        <!--Mute-->
+                        <ToggleButton 
+                             IsChecked="{x:Bind ViewModel.IsMuted, Mode=TwoWay}"
+                             Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
+                             Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
+                            <UIElement.ManipulationMode>
+                                None
+                            </UIElement.ManipulationMode>
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    Mute
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <SymbolIcon Symbol="{x:Bind BooleanToMuteConverter(ViewModel.IsMuted), Mode=OneWay}"/>
+                        </ToggleButton>
+                        <!--Freedom-->
+                        <ToggleButton 
+                             IsChecked="{x:Bind IsDirectFreedom, Mode=TwoWay}"
+                             Width="{StaticResource TrackLeftWidth}" Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
+                             Foreground="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorMediumLight}" Style="{StaticResource TextBlockButtonStyle}">
+                            <UIElement.ManipulationMode>
+                                None
+                            </UIElement.ManipulationMode>
+                            <ToolTipService.ToolTip>
+                                <ToolTip>
+                                    Freedom
+                                </ToolTip>
+                            </ToolTipService.ToolTip>
+                            <SymbolIcon Symbol="{x:Bind BooleanToFreedomConverter(IsDirectFreedom), Mode=OneWay}"/>
+                        </ToggleButton>
+                    </StackPanel>
 
 
-                <!--Position-->
-                <controls1:PositionCanvas x:Name="PositionCanvas"
+                    <!--Position-->
+                    <controls1:PositionCanvas x:Name="PositionCanvas"
                         Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
                         IsHitTestVisible="{x:Bind IsDirectFreedom, Mode=OneWay}"
                         Duration="{x:Bind ViewModel.Duration, Mode=OneWay}"
                         TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
                         Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" Height="{StaticResource TimelineHeight}"
                         Background="Transparent">
-                    <UIElement.ManipulationMode>
-                        System,
-                        TranslateX
-                    </UIElement.ManipulationMode>
-                </controls1:PositionCanvas>
-                <controls1:PinCanvas IsHitTestVisible="False"
-                    Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
-                    ItemSource="{x:Bind ViewModel.PinCollection, Mode=OneWay}"
-                    TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
-                    Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" Height="{StaticResource TimelineHeight}">
-                </controls1:PinCanvas>
-                <controls1:PinHeader x:Name="PinHeader"
+                        <UIElement.ManipulationMode>
+                            System,
+                            TranslateX
+                        </UIElement.ManipulationMode>
+                    </controls1:PositionCanvas>
+                    <controls1:PinCanvas x:Name="PinCanvas"
+                        Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
+                        ItemSource="{x:Bind ViewModel.PinCollection, Mode=OneWay}"
+                        Position="{x:Bind ViewModel.Position, Mode=TwoWay}"
+                        TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
+                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" Height="{StaticResource TimelineHeight}">
+                        <controls1:PinCanvas.ItemStyle>
+                            <Style TargetType="Button">
+                                <Setter Property="Width" Value="18"/>
+                                <Setter Property="Height" Value="32"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Polygon 
+                                                StrokeThickness="2"
+                                                Fill="{ThemeResource AppRedLinearGradientBrush}">
+
+                                                <Polygon.Stroke>
+                                                    <SolidColorBrush x:Name="SolidColorBrush" Color="Transparent"/>
+                                                </Polygon.Stroke>
+
+                                                <!--VisualState-->
+                                                <VisualStateManager.VisualStateGroups>
+                                                    <VisualStateGroup x:Name="CommonStates">
+
+                                                        <VisualState x:Name="Normal"/>
+
+                                                        <VisualState x:Name="PointerOver">
+                                                            <Storyboard>
+                                                                <ColorAnimation Storyboard.TargetName="SolidColorBrush" Storyboard.TargetProperty="Color"
+                                                                                Duration="00:00:00.2" To="White">
+                                                                </ColorAnimation>
+                                                            </Storyboard>
+                                                        </VisualState>
+
+                                                        <VisualState x:Name="Pressed">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SolidColorBrush" Storyboard.TargetProperty="Color">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+
+                                                        <VisualState x:Name="Disabled">
+                                                            <Storyboard>
+                                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SolidColorBrush" Storyboard.TargetProperty="Color">
+                                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="White" />
+                                                                </ObjectAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </VisualState>
+
+                                                    </VisualStateGroup>
+                                                </VisualStateManager.VisualStateGroups>
+
+                                                <Polygon.Points>
+                                                    9, 2
+                                                    0, 14
+                                                    9, 26
+                                                    18, 14
+                                                </Polygon.Points>
+                                            </Polygon>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </controls1:PinCanvas.ItemStyle>
+                    </controls1:PinCanvas>
+                    <controls1:PinHeader x:Name="PinHeader"
                        IsHitTestVisible="False" 
                        Width="12" Height="{StaticResource TimelineHeight}"
                        Position="{x:Bind ViewModel.Position, Mode=OneWay}"
                        TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}">
-                    <Border IsHitTestVisible="False" 
+                        <Border IsHitTestVisible="False" 
                           Width="12" Height="{StaticResource TimelineHeight}"
                           Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
                           CornerRadius="0,0,4,4" BorderThickness="2" BorderBrush="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
-                </controls1:PinHeader>
+                    </controls1:PinHeader>
 
 
-                <Canvas Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="{StaticResource TimelineHeight}">
+                    <Canvas Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="{StaticResource TimelineHeight}">
 
-                    <!--Dragger-->
-                    <draggers:ThumbDragger x:Name="ThumbDragger" Visibility="Collapsed" 
+                        <!--Dragger-->
+                        <draggers:ThumbDragger x:Name="ThumbDragger" Visibility="Collapsed" 
                                            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                            Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                            TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
@@ -416,13 +477,13 @@
                                            ManipulationDelta="{x:Bind ToolTypeComboBox.Tool.ThumbDraggerManipulationDelta, Mode=OneWay}"
                                            ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.ThumbDraggerManipulationCompleted, Mode=OneWay}"
                                            >
-                        <UIElement.ManipulationMode>
-                            System,
-                            TranslateX,
-                            TranslateY
-                        </UIElement.ManipulationMode>
-                    </draggers:ThumbDragger>
-                    <draggers:LeftDragger x:Name="LeftDragger" Visibility="Collapsed" 
+                            <UIElement.ManipulationMode>
+                                System,
+                                TranslateX,
+                                TranslateY
+                            </UIElement.ManipulationMode>
+                        </draggers:ThumbDragger>
+                        <draggers:LeftDragger x:Name="LeftDragger" Visibility="Collapsed" 
                                           SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                           Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                           TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
@@ -431,12 +492,12 @@
                                           ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.LeftDraggerManipulationCompleted, Mode=OneWay}"
                                           Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
                                           >
-                        <UIElement.ManipulationMode>
-                            System,
-                            TranslateX
-                        </UIElement.ManipulationMode>
-                    </draggers:LeftDragger>
-                    <draggers:RightDragger x:Name="RightDragger" Visibility="Collapsed" 
+                            <UIElement.ManipulationMode>
+                                System,
+                                TranslateX
+                            </UIElement.ManipulationMode>
+                        </draggers:LeftDragger>
+                        <draggers:RightDragger x:Name="RightDragger" Visibility="Collapsed" 
                                            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                            Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                            TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
@@ -445,27 +506,27 @@
                                            ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.RightDraggerManipulationCompleted, Mode=OneWay}"
                                            Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
                                            >
-                        <UIElement.ManipulationMode>
-                            System,
-                            TranslateX
-                        </UIElement.ManipulationMode>
-                    </draggers:RightDragger>
+                            <UIElement.ManipulationMode>
+                                System,
+                                TranslateX
+                            </UIElement.ManipulationMode>
+                        </draggers:RightDragger>
 
-                    <!--Timeline-->
-                    <Line IsHitTestVisible="False" 
+                        <!--Timeline-->
+                        <Line IsHitTestVisible="False" 
                               Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
                               X1="{x:Bind PinHeader.X, Mode=OneWay}" Y1="0" 
                               X2="{x:Bind PinHeader.X, Mode=OneWay}" Y2="512" 
                               StrokeThickness="2" Stroke="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
 
-                </Canvas>
+                    </Canvas>
 
                 </Canvas>
             </Border>
         </ScrollViewer>
 
-        
-        
+
+
         <!--Timeline-->
         <Line Grid.Row="2" IsHitTestVisible="False" 
                 HorizontalAlignment="Center" VerticalAlignment="Top"
@@ -481,8 +542,8 @@
             </UIElement.RenderTransform>
         </Line>
 
-        
-        
+
+
         <!--AppBar-->
         <Grid x:Name="AppBarGrid" Grid.Row="1" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}">
 
@@ -559,7 +620,7 @@
                             Pin
                         </ToolTip>
                     </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Pin"/>
+                    <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
                 </Button>
                 <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                     <Button.Flyout>
