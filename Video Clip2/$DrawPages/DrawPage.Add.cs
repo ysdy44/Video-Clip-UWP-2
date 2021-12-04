@@ -22,7 +22,6 @@ namespace Video_Clip2
         {
             this.AddVideoItem.Click += async (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)
@@ -56,7 +55,6 @@ namespace Video_Clip2
 
             this.AddAudioItem.Click += async (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)
@@ -87,7 +85,6 @@ namespace Video_Clip2
 
             this.AddImageItem.Click += async (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)
@@ -122,7 +119,6 @@ namespace Video_Clip2
 
             this.AddColorItem.Click += (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)
@@ -145,7 +141,6 @@ namespace Video_Clip2
 
             this.AddTextItem.Click += (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)
@@ -168,7 +163,6 @@ namespace Video_Clip2
 
             this.AddSubtitleItem.Click += (s, e) =>
             {
-                this.AddFlyout.Hide();
                 this.ViewModel.IsPlaying = false;
 
                 foreach (IClip item in this.ViewModel.ObservableCollection)

@@ -107,59 +107,14 @@ namespace Video_Clip2
             this.ConstructAdd();
             this.ConstructMenu();
             this.ConstructEdit();
-
-            base.Loaded += (s, e) =>
-           {
-               if (this.ViewModel.ObservableCollection.Count == 0)
-                   this.AddRing.Start();
-           };
-
-
+        
             this.TrackComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.TrackComboBox.SelectedItem is int item)
                 {
                     this.ViewModel.TrackHeight = item;
                 }
-            };
-
-            this.PlayButton.Click += (s, e) =>
-            {
-                if (this.ViewModel.Position >= this.ViewModel.Duration)
-                    this.ViewModel.Position = TimeSpan.Zero;
-
-                this.ViewModel.IsPlaying = true;
-                this.PlayRing.Ding();
-                this.PauseButton.Focus(FocusState.Programmatic);
-            };
-            this.PauseButton.Click += (s, e) =>
-            {
-                this.ViewModel.IsPlaying = false;
-                this.PlayRing.Ding();
-                this.PlayButton.Focus(FocusState.Programmatic);
-            };
-
-            this.AddButton.Click += (s, e) => this.AddFlyout.ShowAt(this.AddButton);
-            this.AddButton.RightTapped += (s, e) => this.AddFlyout.ShowAt(this.AddButton);
-            this.AddButton.Holding += (s, e) => this.AddFlyout.ShowAt(this.AddButton);
-            this.AddFlyout.Opened += (s, e) => this.AddRing.Stop();
-
-            this.PinButton.Click += (s, e) => Controls.PinCanvas.Pin(this.ViewModel.Position, this.ViewModel.PinCollection);
-            this.TrimButton.Click += (s, e) => this.ViewModel.MethodEditTrim();
-            this.ColorPicker.ColorChanged += (s, e) =>
-            {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
-                {
-                    if (item.IsSelected)
-                    {
-                        if (item is Clips.Models.ColorClip colorClip)
-                        {
-                            colorClip.SetColor(e.NewColor);
-                        }
-                    }
-                }
-                this.ViewModel.Invalidate(); // Invalidate
-            };
+            };       
         }
     }
 

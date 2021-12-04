@@ -11,6 +11,8 @@ namespace Video_Clip2
 
         private void ConstructPosition()
         {
+            this.PinButton.Click += (s, e) => Controls.PinCanvas.Pin(this.ViewModel.Position, this.ViewModel.PinCollection);
+
             this.ScaleSlider.ValueChangedStarted += (s, e) => this.ViewModel.IsPlayingCore = false;
             this.ScaleSlider.ValueChangedCompleted += (s, e) => this.ViewModel.IsPlayingCore = this.ViewModel.IsPlaying;
 

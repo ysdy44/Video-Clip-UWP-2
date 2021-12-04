@@ -66,110 +66,6 @@
                     <Setter Property="Padding" Value="0"/>
                 </Style>
             </MenuFlyout.MenuFlyoutPresenterStyle>
-            <MenuFlyoutItem x:Name="EditEditItem" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Edit" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Edit
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="EditEasingItem" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Attach" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Easing
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="EditEffectItem" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="OutlineStar" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Effect
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutSeparator/>
-            <MenuFlyoutItem x:Name="EditCutItem" IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Cut" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Cut
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="EditPasteItem" IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Paste" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Paste
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="EditDeleteItem" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Delete" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Delete
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-        </MenuFlyout>
-        <MenuFlyout x:Name="AddFlyout" Placement="Left">
-            <MenuFlyout.MenuFlyoutPresenterStyle>
-                <Style TargetType="MenuFlyoutPresenter">
-                    <Setter Property="Padding" Value="0"/>
-                </Style>
-            </MenuFlyout.MenuFlyoutPresenterStyle>
-            <MenuFlyoutItem x:Name="AddVideoItem" BorderThickness="3,0,0,0" BorderBrush="BlueViolet" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Video"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Video
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="AddAudioItem" BorderThickness="3,0,0,0" BorderBrush="Fuchsia" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Audio"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Audio
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="AddImageItem" BorderThickness="3,0,0,0" BorderBrush="DodgerBlue" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Pictures"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Image
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="AddColorItem" BorderThickness="3,0,0,0" BorderBrush="DarkGray" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="Flag"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Color
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="AddTextItem" BorderThickness="3,0,0,0" BorderBrush="Orange" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="FontSize"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Text
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
-            <MenuFlyoutItem x:Name="AddSubtitleItem" BorderThickness="3,0,0,0" BorderBrush="OrangeRed" Style="{StaticResource MenuFlyoutItemStyle}">
-                <MenuFlyoutItem.Icon>
-                    <SymbolIcon Symbol="FontColor"/>
-                </MenuFlyoutItem.Icon>
-                <MenuFlyoutItem.Text>
-                    Add From Subtitle
-                </MenuFlyoutItem.Text>
-            </MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
 
@@ -186,15 +82,26 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TimeButton.Visibility" Value="Collapsed"/>
-                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
+                        <Setter Target="HelpButton2.Visibility" Value=" Visible"/>
+                        <Setter Target="FullScreenButton2.Visibility" Value=" Visible"/>
+                        <Setter Target="HelpButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
 
                         <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
-
+                        <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
+                        
+                        <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
+                        <Setter Target="TimeButton.Margin" Value="0"/>
+                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftStackPanel.HorizontalAlignment" Value="Right"/>
+                        <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
                         <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarGrid.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarLeftBorder.Visibility" Value="Collapsed"/>
-                        <Setter Target="AppBarRightBorder.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="0"/>
+                        <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
+                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
+                        <Setter Target="SpliterButton.(Grid.Row)" Value="3"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -204,8 +111,21 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TimeButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
+                        <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
+
+                        <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
+                        <Setter Target="TimeButton.Margin" Value="0"/>
+                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftStackPanel.HorizontalAlignment" Value="Right"/>
+                        <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
+                        <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="0"/>
+                        <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
                         <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
+                        <Setter Target="SpliterButton.(Grid.Row)" Value="3"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -213,6 +133,25 @@
                 <VisualState x:Name="PC">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="900" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TimeButton.(Grid.Row)" Value="0"/>
+                        <Setter Target="TimeButton.Margin" Value="0"/>
+                        <Setter Target="TimeButton.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftStackPanel.Margin" Value="72,0,0,0"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="0,0,72,0"/>
+                        <Setter Target="ScaleSlider.(Grid.Row)" Value="0"/>
+                        <Setter Target="ScaleSlider.Margin" Value="0"/>
+                        <Setter Target="ScaleSlider.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="ScaleSlider.RequestedTheme" Value="Dark"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!--Hub-->
+                <VisualState x:Name="Hub">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1100" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                     </VisualState.Setters>
@@ -254,7 +193,15 @@
         </controls1:PreviewCanvas>
 
         <Grid Padding="12" RequestedTheme="Dark" VerticalAlignment="Top">
-            <Button IsEnabled="False" HorizontalAlignment="Left" Background="{ThemeResource AppBackgroundLight}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!--Home-->
+            <Button IsEnabled="False" Background="{ThemeResource AppBackgroundLight}">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="Home" Width="32"/>
                     <TextBlock Margin="4,0">
@@ -262,8 +209,26 @@
                     </TextBlock>
                 </StackPanel>
             </Button>
-
-            <Button x:Name="ExportButton" HorizontalAlignment="Right" Background="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource AccentButtonStyle}">
+            <!--Help-->
+            <Button x:Name="HelpButton2" IsEnabled="False" Grid.Column="1" Visibility="Collapsed" Width="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Help
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Help"/>
+            </Button>
+            <!--FullScreen-->
+            <Button x:Name="FullScreenButton2" Grid.Column="3" Visibility="Collapsed" Width="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Full Screen
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
+            </Button>
+            <!--Export-->
+            <Button x:Name="ExportButton" Grid.Column="4" Background="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource AccentButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="NewWindow" Width="32"/>
                     <TextBlock Margin="4,0">
@@ -527,6 +492,189 @@
 
 
 
+        <!--Button-->
+        <ListView Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{x:Null}">
+            <ListView.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
+                    <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Width" Value="{StaticResource AppBarHeight}"/>
+                    <Setter Property="Height" Value="{StaticResource AppBarHeight}"/>
+                    <Setter Property="MinWidth" Value="32"/>
+                    <Setter Property="MinHeight" Value="32"/>
+                    <Setter Property="Padding" Value="2"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderBrush" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
+                    <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border CornerRadius="3" Margin="{TemplateBinding Padding}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="ListViewItemContentPresenter"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Header>
+                <Border Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"/>
+            </ListView.Header>
+            <!--Add-->
+            <Button>
+                <ToolTipService.ToolTip>
+                    <ToolTip Placement="Left">
+                        Add
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
+                    <MenuFlyout Placement="Left">
+                        <MenuFlyout.MenuFlyoutPresenterStyle>
+                            <Style TargetType="MenuFlyoutPresenter">
+                                <Setter Property="Padding" Value="0"/>
+                            </Style>
+                        </MenuFlyout.MenuFlyoutPresenterStyle>
+                        <MenuFlyoutItem x:Name="AddVideoItem" BorderThickness="3,0,0,0" BorderBrush="BlueViolet" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Video"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Video
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="AddAudioItem" BorderThickness="3,0,0,0" BorderBrush="Fuchsia" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Audio"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Audio
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="AddImageItem" BorderThickness="3,0,0,0" BorderBrush="DodgerBlue" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Pictures"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Image
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="AddColorItem" BorderThickness="3,0,0,0" BorderBrush="DarkGray" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Flag"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Color
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="AddTextItem" BorderThickness="3,0,0,0" BorderBrush="Orange" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="FontSize"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Text
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="AddSubtitleItem" BorderThickness="3,0,0,0" BorderBrush="OrangeRed" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="FontColor"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Add From Subtitle
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+                <SymbolIcon Symbol="Add"/>
+            </Button>
+            <!--Edit-->
+            <Button x:Name="EditButton">
+                <ToolTipService.ToolTip>
+                    <ToolTip Placement="Left">
+                        Edit
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
+                    <MenuFlyout Placement="Left">
+                        <MenuFlyout.MenuFlyoutPresenterStyle>
+                            <Style TargetType="MenuFlyoutPresenter">
+                                <Setter Property="Padding" Value="0"/>
+                            </Style>
+                        </MenuFlyout.MenuFlyoutPresenterStyle>
+                        <MenuFlyoutItem x:Name="EditCutItem" IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Cut" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Cut
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="EditCopyItem" IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Copy" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Copy
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="EditPasteItem" IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Paste" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Paste
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem x:Name="EditClearItem" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Delete" Foreground="{ThemeResource AppRedLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Clear
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="SelectAll" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                SelectAll
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem IsEnabled="False" Style="{StaticResource MenuFlyoutItemStyle}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="ClearSelection" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                            <MenuFlyoutItem.Text>
+                                Deselect
+                            </MenuFlyoutItem.Text>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+                <SymbolIcon Symbol="Preview"/>
+            </Button>
+            <!--Transition-->
+            <Button x:Name="TransitionButton">
+                <ToolTipService.ToolTip>
+                    <ToolTip Placement="Left">
+                        Transition
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <PathIcon>
+                    <PathIcon.Data>
+                        M20.019,13.154C20.019,13.341 19.94,13.519 19.802,13.646L17.837,15.44L17.726,15.509L17.605,15.555L17.485,15.577L17.362,15.576L17.246,15.553L17.212,15.543C17.159,15.524 17.108,15.499 17.06,15.467L16.971,15.396L10.01,8.788L3.024,15.418L2.959,15.467C2.911,15.499 2.86,15.524 2.807,15.543L2.687,15.572L2.569,15.579L2.443,15.563L2.322,15.523L2.208,15.459L2.14,15.404L0.217,13.646C0.079,13.519 -0,13.341 0,13.154L0,2.425C0,2.238 0.079,2.059 0.217,1.933L2.182,0.139L2.293,0.069L2.414,0.023L2.534,0.002L2.657,0.003L2.773,0.025L2.807,0.036C2.86,0.054 2.911,0.079 2.959,0.111L3.048,0.183L10.01,6.79L16.995,0.161L17.06,0.111C17.108,0.079 17.159,0.054 17.212,0.036L17.332,0.007L17.45,0L17.576,0.016L17.697,0.056L17.811,0.119L17.88,0.174L19.802,1.933C19.94,2.059 20.019,2.238 20.019,2.425L20.019,13.154ZM1.333,2.861L1.333,12.718C1.333,12.718 2.596,13.977 2.596,13.977L8.97,7.789L2.596,1.602L1.333,2.861ZM11.049,7.789L17.423,13.977L18.686,12.718L18.686,2.861C18.686,2.861 17.423,1.602 17.423,1.602L11.049,7.789Z
+                    </PathIcon.Data>
+                </PathIcon>
+            </Button>
+        </ListView>
+
+
+
         <!--Timeline-->
         <Line Grid.Row="2" IsHitTestVisible="False" 
                 HorizontalAlignment="Center" VerticalAlignment="Top"
@@ -545,121 +693,10 @@
 
 
         <!--AppBar-->
-        <Grid x:Name="AppBarGrid" Grid.Row="1" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}">
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Border x:Name="AppBarLeftBorder" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Background="{ThemeResource AppBackgroundColorMediumLight}"/>
-                <times:TimeButton x:Name="TimeButton" Padding="12,0" Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
-                        <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration ), Mode=OneWay}"/>
-                    </TextBlock>
-                </times:TimeButton>
-                <Button IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Save
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Save"/>
-                </Button>
-                <Button IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Undo
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Undo"/>
-                </Button>
-                <Button IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Redo
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Redo"/>
-                </Button>
-                <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            FullScreen
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
-                </Button>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Grid>
-                    <elements:TimerPlayRing x:Name="AddRing" HorizontalAlignment="Center">
-                        <ToolTipService.ToolTip>
-                            <ToolTip Padding="12,4" Background="{ThemeResource AppBlueLinearGradientBrush}" FontSize="16" Foreground="White">
-                                Click me to Add Clip
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                    </elements:TimerPlayRing>
-                    <Button x:Name="AddButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                        <ToolTipService.ToolTip>
-                            <ToolTip>
-                                Add
-                            </ToolTip>
-                        </ToolTipService.ToolTip>
-                        <SymbolIcon Symbol="Add"/>
-                    </Button>
-                </Grid>
-                <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Trim
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Cut"/>
-                </Button>
-                <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip>
-                            Pin
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
-                </Button>
-                <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <Button.Flyout>
-                        <Flyout Placement="Left">
-                            <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
-                        </Flyout>
-                    </Button.Flyout>
-                    <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </Button>
-                <elements:TimeSlider x:Name="ScaleSlider" Padding="12,0" Width="190" 
-                        Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
-                        VerticalAlignment="Center" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-                <Border x:Name="AppBarRightBorder" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Background="{ThemeResource AppBackgroundColorMediumLight}"/>
-            </StackPanel>
-
-        </Grid>
-        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" >
-            <elements1:ToolTypeComboBox x:Name="ToolTypeComboBox" HorizontalAlignment="Left" 
-                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                    ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
-            <Button HorizontalAlignment="Right" 
-                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" 
-                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
-                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
-                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
-                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
-                    Style="{StaticResource TextBlockButtonStyle}">
-                <UIElement.ManipulationMode>
-                    TranslateY
-                </UIElement.ManipulationMode>
-                <SymbolIcon Symbol="GlobalNavigationButton"/>
-            </Button>
-
-            <elements:PlayRing x:Name="PlayRing" HorizontalAlignment="Center"/>
-
+        <Border x:Name="AppBarBorder"  Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
+        <Border Grid.Row="3" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundColorDark}"/>
+        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center">
+            <elements:PlayRing x:Name="PlayRing"/>
             <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
                         Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
                 <ToolTipService.ToolTip>
@@ -679,6 +716,128 @@
                 <SymbolIcon Symbol="Pause"/>
             </Button>
         </Grid>
+   
+        <elements1:ToolTypeComboBox x:Name="ToolTypeComboBox" Grid.Row="1" HorizontalAlignment="Left"
+                        Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                        ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
+        <times:TimeButton x:Name="TimeButton" Grid.Row="1" Width="180" Margin="72,0,0,0" Padding="2,0" Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+            <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
+                    <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
+            </TextBlock>
+        </times:TimeButton>
+        <StackPanel x:Name="AppBarLeftStackPanel" Grid.Row="1" Orientation="Horizontal" Margin="252,0,0,0" HorizontalAlignment="Left">
+            <Button IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Undo
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Undo"/>
+            </Button>
+            <Button IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Redo
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Redo"/>
+            </Button>
+            <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Full Screen
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
+            </Button>
+            <!--Help-->
+            <Button x:Name="HelpButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Help
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Help"/>
+            </Button>
+            <!--Pin-->
+            <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Pin
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
+            </Button>
+        </StackPanel>
+     
+        <StackPanel x:Name="AppBarRightStackPanel" Grid.Row="1" Orientation="Horizontal" Margin="0,0,252,0" HorizontalAlignment="Right"
+                        BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}">
+            <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Trim
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Cut"/>
+            </Button>
+            <Button x:Name="PropertyButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Property
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Important"/>
+            </Button>
+            <Button x:Name="EasingButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Easing
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Attach"/>
+            </Button>
+            <Button x:Name="EffectButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Effect
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="OutlineStar"/>
+            </Button>
+            <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip>
+                        Color
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
+                    <Flyout Placement="Left">
+                        <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
+                    </Flyout>
+                </Button.Flyout>
+                <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </Button>
+        </StackPanel>
+        <elements:TimeSlider x:Name="ScaleSlider" Grid.Row="1" Width="180" Margin="0,0,72,0" Padding="12,0" HorizontalAlignment="Right"
+                        Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
+                        VerticalAlignment="Center" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+        <Button x:Name="SpliterButton" Grid.Row="1" HorizontalAlignment="Right"
+                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
+                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
+                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
+                    Style="{StaticResource TextBlockButtonStyle}">
+            <UIElement.ManipulationMode>
+                TranslateY
+            </UIElement.ManipulationMode>
+            <SymbolIcon Symbol="GlobalNavigationButton"/>
+        </Button>
+
 
 
 
@@ -732,9 +891,9 @@
                 <Grid>
                     <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
                     <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <Pivot x:Name="EditPivot">
+                    <Pivot x:Name="PropertyPivot">
                         <Pivot.LeftHeader>
-                            <Button x:Name="EditBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                            <Button x:Name="PropertyBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip>Back</ToolTip>
                                 </ToolTipService.ToolTip>
@@ -803,6 +962,32 @@
                 </Grid>
             </transitions:IndexTransitionPanel>
 
+            <transitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <Grid>
+                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
+                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
+                    <Pivot x:Name="TransitionPivot">
+                        <Pivot.LeftHeader>
+                            <Button x:Name="TransitionBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>Back</ToolTip>
+                                </ToolTipService.ToolTip>
+                                <SymbolIcon Symbol="Back"/>
+                            </Button>
+                        </Pivot.LeftHeader>
+
+                        <Pivot.RightHeader>
+                            <Button x:Name="TransitionClearButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip>Clear</ToolTip>
+                                </ToolTipService.ToolTip>
+                                <SymbolIcon Symbol="Clear"/>
+                            </Button>
+                        </Pivot.RightHeader>
+
+                    </Pivot>
+                </Grid>
+            </transitions:IndexTransitionPanel>
 
             <transitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
                 <Grid>
