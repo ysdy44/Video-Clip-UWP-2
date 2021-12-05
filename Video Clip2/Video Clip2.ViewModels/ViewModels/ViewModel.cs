@@ -146,10 +146,10 @@ namespace Video_Clip2.ViewModels
         {
         };
 
-        private readonly TimeSpan SpeedInterval = TimeSpan.FromMilliseconds(100);
+        private readonly TimeSpan SpeedInterval = TimeSpan.FromMilliseconds(25);
         private readonly DispatcherTimer Timer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(100)
+            Interval = TimeSpan.FromMilliseconds(25)
         };
 
 

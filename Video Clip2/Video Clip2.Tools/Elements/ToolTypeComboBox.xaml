@@ -12,7 +12,7 @@
 
     <ComboBox x:Name="ComboBox" 
               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+              BorderThickness="{x:Bind BorderThickness, Mode=OneWay}" BorderBrush="{x:Bind BorderBrush, Mode=OneWay}" Background="{x:Bind Background, Mode=OneWay}">
 
         <local:ToolTypeComboBoxItem x:Name="Cursor" Type="Cursor" Index="0" >
             <Polygon StrokeThickness="1" Stroke="White" Fill="Black" HorizontalAlignment="Center">

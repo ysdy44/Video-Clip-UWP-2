@@ -26,7 +26,7 @@ namespace Video_Clip2
             {
                 double height = base.ActualHeight;
                 this.Animation.To = this.PreviewGrid.FullScreenStarted(height - 48);
-                this.Storyboard.Begin();
+                this.Storyboard.Begin(); // Storyboard
             };
             this.Storyboard.Completed += (s, e) => this.PreviewGrid.FullScreenCompleted();
 

@@ -48,7 +48,7 @@ namespace Video_Clip2.ViewModels
                 remove.Dispose();
             }
 
-            this.SetMode(); // Selection
+            this.SetModeNone(); // Selection
             this.Invalidate(); // Invalidate
         }
 
