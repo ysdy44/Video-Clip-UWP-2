@@ -195,6 +195,18 @@
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Menus\EasingControl.xaml.cs">
+      <DependentUpon>EasingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\EffectControl.xaml.cs">
+      <DependentUpon>EffectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\SettingMenu.xaml.cs">
+      <DependentUpon>SettingMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\TransitionControl.xaml.cs">
+      <DependentUpon>TransitionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Tools\Elements\ToolTypeComboBox.xaml.cs">
       <DependentUpon>ToolTypeComboBox.xaml</DependentUpon>
     </Compile>
@@ -345,6 +357,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\EasingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\EffectControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\SettingMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\TransitionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
