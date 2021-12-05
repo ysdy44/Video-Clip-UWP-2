@@ -76,7 +76,7 @@ namespace Video_Clip2.Controls
             set => base.SetValue(PositionProperty, value);
         }
         /// <summary> Identifies the<see cref = "PinCanvas.Position" /> dependency property. </summary>
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(TimeSpan), typeof(PinCanvas), new PropertyMetadata(TimeSpan.FromMinutes(20), (sender, e) =>
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register(nameof(Position), typeof(TimeSpan), typeof(PinCanvas), new PropertyMetadata(TimeSpan.Zero, (sender, e) =>
         {
             PinCanvas control = (PinCanvas)sender;
 
@@ -166,8 +166,10 @@ namespace Video_Clip2.Controls
                     if (e.OldItems[0] is TimeSpan itemRemove)
                     {
                         int index = e.OldStartingIndex;
-                        this.Buttons[itemRemove].Click -= this.ItemClick;
+                        Button item = base.Children[index] as Button;
+                        item.Click -= this.ItemClick;
                         base.Children.RemoveAt(index);
+                        this.Buttons.Remove(itemRemove);
                         this.UpdatePosition(this.Position);
                     }
                     break;
@@ -218,16 +220,27 @@ namespace Video_Clip2.Controls
 
         private void UpdatePosition(TimeSpan position)
         {
-            if (this.CurrentButton != null) this.CurrentButton.IsEnabled = true;
-            this.IsPositionOnPin = this.Buttons.ContainsKey(position);
-            this.CurrentButton = this.IsPositionOnPin ? this.Buttons[position] : null;
-            if (this.CurrentButton != null) this.CurrentButton.IsEnabled = false;
+            if (position == TimeSpan.Zero)
+            {
+                this.IsPositionOnPin = true;
+            }
+            else
+            {
+                if (this.CurrentButton != null) this.CurrentButton.IsEnabled = true;
+                this.IsPositionOnPin = this.Buttons.ContainsKey(position);
+                this.CurrentButton = this.IsPositionOnPin ? this.Buttons[position] : null;
+                if (this.CurrentButton != null) this.CurrentButton.IsEnabled = false;
+            }
         }
 
         //@Static
         public static bool Pin(TimeSpan position, ObservableCollection<TimeSpan> collection)
         {
-            if (collection.Contains(position))
+            if (position == TimeSpan.Zero)
+            {
+                return false;
+            }
+            else if (collection.Contains(position))
             {
                 collection.Remove(position);
                 return false;
