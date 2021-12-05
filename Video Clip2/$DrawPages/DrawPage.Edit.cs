@@ -15,13 +15,68 @@ namespace Video_Clip2
             this.TrimButton.Click += (s, e) => this.ViewModel.MethodEditTrim();
 
 
+            this.VolumeButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Video:
+                            case ClipType.Audio:
+                                if (item is MediaClip mediaClip)
+                                {
+                                    this.VolumeSlider.Value = mediaClip.Volume * 100;
+                                    break;
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.VolumeSlider.Width = this.AppBarRightStackPanel.ActualWidth;
+                this.VolumeFlyout.ShowAt(this.AppBarRightStackPanel);
+            };
+            this.VolumeSlider.ValueChangedStarted += (s, e) =>
+            {
+
+            };
+            this.VolumeSlider.ValueChangedDelta += (s, e) =>
+            {
+                float volume = (float)(e.NewValue / 100);
+                bool isMuted = e.NewValue == 0;
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Video:
+                            case ClipType.Audio:
+                                if (item is MediaClip mediaClip)
+                                {
+                                    mediaClip.SetVolume(volume);
+                                    mediaClip.SetIsMuted(this.ViewModel.IsMuted, isMuted);
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+            };
+            this.VolumeSlider.ValueChangedCompleted += (s, e) =>
+            {
+
+            };
+
+
             this.OpacityButton.Click += (s, e) =>
             {
                 foreach (IClip item in this.ViewModel.ObservableCollection)
                 {
                     if (item.IsSelected)
                     {
-                        this.OpacitySlider.Opacity = item.Opacity * 100;
+                        this.OpacitySlider.Value = item.Opacity * 100;
                         break;
                     }
                 }

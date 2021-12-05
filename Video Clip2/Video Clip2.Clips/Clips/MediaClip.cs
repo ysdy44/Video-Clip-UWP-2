@@ -25,6 +25,7 @@ namespace Video_Clip2.Clips
         protected readonly MediaPlayer Player;
         protected bool IsPlaying;
         public double PlaybackRate => this.Player.PlaybackSession.PlaybackRate;
+        public double Volume => this.Player.Volume;
 
         protected MediaClip(MediaPlayer player, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, index, trackHeight, trackScale)
@@ -36,10 +37,18 @@ namespace Video_Clip2.Clips
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
-        public override void SetIsMuted(bool value, bool isMuted)
+        public void SetPlaybackRate(double value)
         {
-            base.SetIsMuted(value, isMuted);
-            this.Player.IsMuted = value || isMuted;
+            this.Player.PlaybackSession.PlaybackRate = value;
+        }
+        public void SetVolume(double value)
+        {
+            this.Player.Volume = value;
+        }
+        public override void SetIsMuted(bool isMuted, bool isMutedCore)
+        {
+            base.SetIsMuted(isMuted, isMutedCore);
+            this.Player.IsMuted = isMuted || isMutedCore;
         }
 
         public override bool InRange(TimeSpan position)
