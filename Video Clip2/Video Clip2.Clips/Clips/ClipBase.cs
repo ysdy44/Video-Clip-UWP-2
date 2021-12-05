@@ -24,6 +24,8 @@ namespace Video_Clip2.Clips
         public abstract ClipType Type { get; }
         public string Name { get; set; }
 
+        public float Opacity { get; set; } = 1;
+
         public Visibility Visibility { get; set; }
         public abstract bool InRange(TimeSpan position);
 

@@ -24,6 +24,8 @@ namespace Video_Clip2.Clips
         ClipType Type { get; }
         string Name { get; set; }
 
+        float Opacity { get; set; }
+
         Visibility Visibility { get; set; }
 
         bool IsMuted { get; }
