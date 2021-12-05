@@ -66,13 +66,20 @@
         </Style>
 
         <!--Flyout-->
-        <MenuFlyout x:Name="EditFlyout" Placement="Top">
+        <MenuFlyout x:Name="EditFlyout" Placement="Left">
             <MenuFlyout.MenuFlyoutPresenterStyle>
                 <Style TargetType="MenuFlyoutPresenter">
                     <Setter Property="Padding" Value="0"/>
                 </Style>
             </MenuFlyout.MenuFlyoutPresenterStyle>
         </MenuFlyout>
+        <Flyout x:Name="OpacityFlyout" Placement="top">
+            <elements:TimeSlider x:Name="OpacitySlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                <Slider.Header>
+                    Opacity
+                </Slider.Header>
+            </elements:TimeSlider>
+        </Flyout>
     </Page.Resources>
 
 

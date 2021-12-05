@@ -13,7 +13,42 @@ namespace Video_Clip2
         private void ConstructEdit()
         {
             this.TrimButton.Click += (s, e) => this.ViewModel.MethodEditTrim();
-         
+
+
+            this.OpacityButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        this.OpacitySlider.Opacity = item.Opacity * 100;
+                        break;
+                    }
+                }
+                this.OpacitySlider.Width = this.AppBarRightStackPanel.ActualWidth;
+                this.OpacityFlyout.ShowAt(this.AppBarRightStackPanel);
+            };
+            this.OpacitySlider.ValueChangedStarted += (s, e) =>
+            {
+
+            };
+            this.OpacitySlider.ValueChangedDelta += (s, e) =>
+            {
+                float opacity = (float)(e.NewValue / 100);
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        item.Opacity = opacity;
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+            };
+            this.OpacitySlider.ValueChangedCompleted += (s, e) =>
+            {
+
+            };
+
 
             this.ColorPicker.ColorChanged += (s, e) =>
             {
