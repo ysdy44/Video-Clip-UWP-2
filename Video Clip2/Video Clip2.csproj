@@ -169,9 +169,6 @@
     <Compile Include="Video Clip2.Clips\Models\TextClip.cs" />
     <Compile Include="Video Clip2.Clips\Models\VideoClip.cs" />
     <Compile Include="Video Clip2.Clips\Trimmer.cs" />
-    <Compile Include="Video Clip2.Easings\EasingControl.xaml.cs">
-      <DependentUpon>EasingControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Video Clip2.Easings\EasingManager.cs" />
     <Compile Include="Video Clip2.Easings\EasingType.cs" />
     <Compile Include="Video Clip2.Effects\Effect.cs" />
@@ -333,10 +330,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Clips\Draggers\TrimDragger.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Video Clip2.Easings\EasingControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
