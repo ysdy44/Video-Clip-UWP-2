@@ -1,6 +1,7 @@
 ﻿using System;
 using Video_Clip2.Clips.Clips;
 using Video_Clip2.ViewModels;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -23,6 +24,8 @@ namespace Video_Clip2
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
         private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;
         private Symbol BooleanToFullScreenConverter(bool value) => value ? Symbol.BackToWindow : Symbol.FullScreen;
+        private Visibility IntToVisibilityConverter(int value) => value == 0 ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility ReverseIntToVisibilityConverter(int value) => value == 0 ? Visibility.Collapsed : Visibility.Visible;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
@@ -107,14 +110,24 @@ namespace Video_Clip2
             this.ConstructAdd();
             this.ConstructMenu();
             this.ConstructEdit();
-        
+
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                ScrollViewer element = this.AppBarRightStackPanel;
+                int half = element.HorizontalAlignment == HorizontalAlignment.Right ? 2 : 1;
+                element.MaxWidth = e.NewSize.Width / half - element.Margin.Left - element.Margin.Right;
+            };
+
             this.TrackComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.TrackComboBox.SelectedItem is int item)
                 {
                     this.ViewModel.TrackHeight = item;
                 }
-            };       
+            };
         }
     }
 

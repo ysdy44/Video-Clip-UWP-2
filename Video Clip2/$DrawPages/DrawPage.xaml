@@ -7,11 +7,11 @@
     xmlns:xaml="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:draggers="using:Video_Clip2.Clips.Draggers"
     xmlns:controls1="using:Video_Clip2.Controls"
-    xmlns:easings="using:Video_Clip2.Easings"
     xmlns:elements="using:Video_Clip2.Elements"
     xmlns:times="using:Video_Clip2.Elements.Times"
-    xmlns:transitions="using:Video_Clip2.Elements.Transitions"
-    xmlns:elements1="using:Video_Clip2.Tools.Elements"
+    xmlns:elementsTransitions="using:Video_Clip2.Elements.Transitions"
+    xmlns:menus="using:Video_Clip2.Menus"
+    xmlns:toolsElements="using:Video_Clip2.Tools.Elements"
     Background="Black" 
     mc:Ignorable="d"
     >
@@ -96,6 +96,7 @@
                         <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
 
+                        <Setter Target="BackButton.(Grid.Row)" Value="3"/>
                         <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
                         <Setter Target="TimeButton.Margin" Value="0"/>
                         <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
@@ -103,7 +104,7 @@
                         <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
                         <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
                         <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="0"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="72,0,72,0"/>
                         <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
                         <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
                         <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
@@ -120,6 +121,7 @@
                         <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
 
+                        <Setter Target="BackButton.(Grid.Row)" Value="3"/>
                         <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
                         <Setter Target="TimeButton.Margin" Value="0"/>
                         <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
@@ -127,7 +129,7 @@
                         <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
                         <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
                         <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="0"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="72,0,72,0"/>
                         <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
                         <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
                         <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
@@ -146,7 +148,7 @@
                         <Setter Target="TimeButton.VerticalAlignment" Value="Bottom"/>
                         <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
                         <Setter Target="AppBarLeftStackPanel.Margin" Value="72,0,0,0"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="0,0,72,0"/>
+                        <Setter Target="AppBarRightStackPanel.Margin" Value="24,0,72,0"/>
                         <Setter Target="ScaleSlider.(Grid.Row)" Value="0"/>
                         <Setter Target="ScaleSlider.Margin" Value="0"/>
                         <Setter Target="ScaleSlider.VerticalAlignment" Value="Bottom"/>
@@ -207,7 +209,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <!--Home-->
-            <Button IsEnabled="False" Background="{ThemeResource AppBackgroundLight}">
+            <Button Background="{ThemeResource AppBackgroundLight}"
+                        IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="Home" Width="32"/>
                     <TextBlock Margin="4,0">
@@ -234,7 +237,9 @@
                 <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
             </Button>
             <!--Export-->
-            <Button x:Name="ExportButton" Grid.Column="4" Background="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource AccentButtonStyle}">
+            <Button x:Name="ExportButton" Grid.Column="4"
+                    IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}"
+                    Background="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource AccentButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Symbol="NewWindow" Width="32"/>
                     <TextBlock Margin="4,0">
@@ -723,15 +728,22 @@
             </Button>
         </Grid>
 
-        <elements1:ToolTypeComboBox x:Name="ToolTypeComboBox" Grid.Row="1" HorizontalAlignment="Left"
+        <toolsElements:ToolTypeComboBox x:Name="ToolTypeComboBox" Grid.Row="1" HorizontalAlignment="Left"
                         Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                        Background="{ThemeResource AppBackgroundMediumDark}" 
+                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
                         ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
-        <times:TimeButton x:Name="TimeButton" Grid.Row="1" Width="180" Margin="72,0,0,0" Padding="2,0" Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+        <times:TimeButton x:Name="TimeButton" Grid.Row="1" Width="180" Margin="72,0,0,0" Padding="2,0" 
+                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
+                        Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" 
+                        Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
             <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
-                    <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
+                <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
             </TextBlock>
         </times:TimeButton>
-        <StackPanel x:Name="AppBarLeftStackPanel" Grid.Row="1" Orientation="Horizontal" Margin="252,0,0,0" HorizontalAlignment="Left">
+        <StackPanel x:Name="AppBarLeftStackPanel" Grid.Row="1" Margin="252,0,0,0" HorizontalAlignment="Left"
+                    Orientation="Horizontal" 
+                    Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
             <!--Undo-->
             <Button x:Name="UndoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                 <ToolTipService.ToolTip>
@@ -779,72 +791,121 @@
             </Button>
         </StackPanel>
 
-        <StackPanel x:Name="AppBarRightStackPanel" Grid.Row="1" Orientation="Horizontal" Margin="0,0,252,0" HorizontalAlignment="Right"
-                        BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}">
-            <!--Trim-->
-            <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Trim
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <PathIcon>
-                    <PathIcon.Data>
-                        M14.523,0.381L5.135,20.208C4.978,20.541 5.12,20.938 5.453,21.096C5.785,21.253 6.183,21.111 6.34,20.779L15.728,0.952C15.886,0.619 15.744,0.222 15.411,0.064C15.079,-0.093 14.681,0.049 14.523,0.381ZM0,16.722C0,17.09 0.298,17.388 0.667,17.388L4.16,17.388C4.421,17.388 4.657,17.237 4.766,17.001L10.43,4.717C10.526,4.511 10.509,4.27 10.387,4.079C10.264,3.887 10.052,3.772 9.825,3.772L0.667,3.772C0.298,3.772 -0,4.07 0,4.438L0,16.722ZM20.864,4.438C20.864,4.07 20.565,3.772 20.197,3.772L16.703,3.772C16.443,3.772 16.207,3.923 16.098,4.159L10.433,16.443C10.338,16.649 10.355,16.89 10.477,17.081C10.6,17.273 10.811,17.388 11.039,17.388L20.197,17.388C20.565,17.388 20.864,17.09 20.864,16.722L20.864,4.438ZM1.333,16.055L1.333,5.105C1.333,5.105 8.784,5.105 8.784,5.105C8.784,5.105 3.734,16.055 3.734,16.055L1.333,16.055ZM19.53,5.105L19.53,16.055C19.53,16.055 12.08,16.055 12.08,16.055C12.08,16.055 17.13,5.105 17.13,5.105L19.53,5.105Z
-                    </PathIcon.Data>
-                </PathIcon>
-            </Button>
-            <!--Property-->
-            <Button x:Name="PropertyButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Property
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Important"/>
-            </Button>
-            <!--Easing-->
-            <Button x:Name="EasingButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Easing
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Attach"/>
-            </Button>
-            <!--Effect-->
-            <Button x:Name="EffectButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Effect
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="OutlineStar"/>
-            </Button>
-            <!--Color-->
-            <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Color
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <Button.Flyout>
-                    <Flyout Placement="Left">
-                        <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
-                    </Flyout>
-                </Button.Flyout>
-                <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
-                    <Ellipse.Fill>
-                        <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
-                    </Ellipse.Fill>
-                </Ellipse>
-            </Button>
-        </StackPanel>
-        <elements:TimeSlider x:Name="ScaleSlider" Grid.Row="1" Width="180" Margin="0,0,72,0" Padding="12,0" HorizontalAlignment="Right"
-                        Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
-                        VerticalAlignment="Center" Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-        <Button x:Name="SpliterButton" Grid.Row="1" HorizontalAlignment="Right"
+        <ScrollViewer x:Name="AppBarRightStackPanel" Grid.Row="1" Margin="24,0,252,0" HorizontalAlignment="Right"
+                      HorizontalScrollBarVisibility="Hidden"
+                      BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}">
+            <StackPanel Orientation="Horizontal" >
+                <!--Trim-->
+                <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Trim
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M14.523,0.381L5.135,20.208C4.978,20.541 5.12,20.938 5.453,21.096C5.785,21.253 6.183,21.111 6.34,20.779L15.728,0.952C15.886,0.619 15.744,0.222 15.411,0.064C15.079,-0.093 14.681,0.049 14.523,0.381ZM0,16.722C0,17.09 0.298,17.388 0.667,17.388L4.16,17.388C4.421,17.388 4.657,17.237 4.766,17.001L10.43,4.717C10.526,4.511 10.509,4.27 10.387,4.079C10.264,3.887 10.052,3.772 9.825,3.772L0.667,3.772C0.298,3.772 -0,4.07 0,4.438L0,16.722ZM20.864,4.438C20.864,4.07 20.565,3.772 20.197,3.772L16.703,3.772C16.443,3.772 16.207,3.923 16.098,4.159L10.433,16.443C10.338,16.649 10.355,16.89 10.477,17.081C10.6,17.273 10.811,17.388 11.039,17.388L20.197,17.388C20.565,17.388 20.864,17.09 20.864,16.722L20.864,4.438ZM1.333,16.055L1.333,5.105C1.333,5.105 8.784,5.105 8.784,5.105C8.784,5.105 3.734,16.055 3.734,16.055L1.333,16.055ZM19.53,5.105L19.53,16.055C19.53,16.055 12.08,16.055 12.08,16.055C12.08,16.055 17.13,5.105 17.13,5.105L19.53,5.105Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                </Button>
+                <!--Duration-->
+                <Button x:Name="DurationButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Duration
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Trim"/>
+                </Button>
+                <!--Speed-->
+                <Button x:Name="SpeedButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Speed
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Rotate"/>
+                </Button>
+                <!--Property-->
+                <Button x:Name="PropertyButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Property
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Important"/>
+                </Button>
+                <!--Easing-->
+                <Button x:Name="EasingButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Easing
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Attach"/>
+                </Button>
+                <!--Effect-->
+                <Button x:Name="EffectButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Effect
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="OutlineStar"/>
+                </Button>
+                <!--Volume-->
+                <Button x:Name="VolumeButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Volume
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Volume"/>
+                </Button>
+                <!--Flip-->
+                <Button x:Name="FlipButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Flip
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="TwoPage"/>
+                </Button>
+                <!--Opacity-->
+                <Button x:Name="OpacityButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Opacity
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Stop"/>
+                </Button>
+                <!--Color-->
+                <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Color
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <Button.Flyout>
+                        <Flyout Placement="Left">
+                            <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
+                        </Flyout>
+                    </Button.Flyout>
+                    <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <elements:TimeSlider x:Name="ScaleSlider" Grid.Row="1" Width="180" Margin="0,0,72,0" Padding="12,0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                       Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
+                       Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+        <Button x:Name="SpliterButton" Grid.Row="1" HorizontalAlignment="Right" 
                     Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                    Padding="0" Background="{ThemeResource AppBackgroundMediumDark}" 
                     Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
                     ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
                     ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
@@ -856,225 +917,44 @@
             <SymbolIcon Symbol="GlobalNavigationButton"/>
         </Button>
 
+        <Button x:Name="BackButton" Grid.Row="1" HorizontalAlignment="Left"
+                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                Padding="0" Background="{ThemeResource AppBackgroundMediumDark}" 
+                Visibility="{x:Bind ReverseIntToVisibilityConverter(GroupIndex), Mode=OneWay}"
+                Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+            <ToolTipService.ToolTip>
+                <ToolTip Style="{StaticResource AppToolTipStyle}">
+                    Back
+                </ToolTip>
+            </ToolTipService.ToolTip>
+            <SymbolIcon Symbol="Back"/>
+        </Button>
 
 
 
         <!--Menu-->
-        <Grid Grid.Row="1" Grid.RowSpan="3">
-
+        <Grid Grid.Row="2">
             <!--Export-->
-            <transitions:IndexTransitionPanel Index="1" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Grid>
-                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
-                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <Pivot>
-                        <Pivot.LeftHeader>
-                            <Button x:Name="ExportBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Back
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Back"/>
-                            </Button>
-                        </Pivot.LeftHeader>
-
-                        <Pivot.RightHeader>
-                            <Button x:Name="ExportOKButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Export
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="NewWindow"/>
-                            </Button>
-                        </Pivot.RightHeader>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Video Setting
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Audio Setting
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                    </Pivot>
-                </Grid>
-            </transitions:IndexTransitionPanel>
-
+            <elementsTransitions:IndexTransitionPanel Index="1" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:SettingMenu/>
+            </elementsTransitions:IndexTransitionPanel>
             <!--Property-->
-            <transitions:IndexTransitionPanel Index="2" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Grid>
-                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
-                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <Pivot x:Name="PropertyPivot">
-                        <Pivot.LeftHeader>
-                            <Button x:Name="PropertyBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Back
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Back"/>
-                            </Button>
-                        </Pivot.LeftHeader>
-
-                        <Pivot.RightHeader>
-                            <Button x:Name="PropertyClearButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Clear
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Clear"/>
-                            </Button>
-                        </Pivot.RightHeader>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                     Video
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Audio
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Image
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Color
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Text
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                        <PivotItem Padding="0" Margin="0">
-                            <PivotItem.Header>
-                                <TextBlock FontSize="14">
-                                    Subtitle
-                                </TextBlock>
-                            </PivotItem.Header>
-                        </PivotItem>
-
-                    </Pivot>
-                </Grid>
-            </transitions:IndexTransitionPanel>
-
+            <elementsTransitions:IndexTransitionPanel Index="2" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                </Border>
+            </elementsTransitions:IndexTransitionPanel>
             <!--Transition-->
-            <transitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Grid>
-                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
-                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <Pivot x:Name="TransitionPivot">
-                        <Pivot.LeftHeader>
-                            <Button x:Name="TransitionBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Back
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Back"/>
-                            </Button>
-                        </Pivot.LeftHeader>
-
-                        <Pivot.RightHeader>
-                            <Button x:Name="TransitionClearButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Clear
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Clear"/>
-                            </Button>
-                        </Pivot.RightHeader>
-
-                    </Pivot>
-                </Grid>
-            </transitions:IndexTransitionPanel>
-
+            <elementsTransitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:TransitionMenu/>
+            </elementsTransitions:IndexTransitionPanel>
             <!--Easing-->
-            <transitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Grid>
-                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
-                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <easings:EasingControl x:Name="EasingControl">
-                        <easings:EasingControl.LeftHeader>
-                            <Button x:Name="EasingBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Back
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Back"/>
-                            </Button>
-                        </easings:EasingControl.LeftHeader>
-                    </easings:EasingControl>
-                </Grid>
-            </transitions:IndexTransitionPanel>
-
+            <elementsTransitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:EasingMenu/>
+            </elementsTransitions:IndexTransitionPanel>
             <!--Effect-->
-            <transitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Grid>
-                    <Border Background="{ThemeResource SystemControlAcrylicElementBrush}"/>
-                    <Border Height="{StaticResource AppBarHeight}" VerticalAlignment="Top" BorderThickness="0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-                    <Pivot>
-
-                        <Pivot.LeftHeader>
-                            <Button x:Name="EffectBackButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Back
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Back"/>
-                            </Button>
-                        </Pivot.LeftHeader>
-
-                        <Pivot.RightHeader>
-                            <Button x:Name="EffectCleanButton" Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                                <ToolTipService.ToolTip>
-                                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                                        Clean
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <SymbolIcon Symbol="Delete"/>
-                            </Button>
-                        </Pivot.RightHeader>
-
-                    </Pivot>
-                </Grid>
-            </transitions:IndexTransitionPanel>
-
+            <elementsTransitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:EffectMenu/>
+            </elementsTransitions:IndexTransitionPanel>
         </Grid>
 
 
