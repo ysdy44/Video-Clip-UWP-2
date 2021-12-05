@@ -3,7 +3,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.UI;

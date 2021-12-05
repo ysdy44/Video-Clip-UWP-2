@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Video_Clip2.Clips.ClipManagers;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Video_Clip2.Effects;
 using Windows.Foundation;
 using Windows.UI.Xaml;

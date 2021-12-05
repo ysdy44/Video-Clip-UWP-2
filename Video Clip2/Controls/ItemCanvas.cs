@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;

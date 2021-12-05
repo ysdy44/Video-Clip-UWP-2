@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 
 namespace Video_Clip2.ViewModels
 {

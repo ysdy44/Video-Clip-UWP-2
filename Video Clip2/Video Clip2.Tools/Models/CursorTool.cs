@@ -1,4 +1,4 @@
-﻿using Video_Clip2.Clips.Clips;
+﻿using Video_Clip2.Clips;
 using Video_Clip2.Clips.Draggers;
 using Video_Clip2.ViewModels;
 using Windows.UI.Xaml;

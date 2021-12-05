@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;

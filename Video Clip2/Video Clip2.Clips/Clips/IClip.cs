@@ -6,7 +6,7 @@ using Video_Clip2.Effects;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 
-namespace Video_Clip2.Clips.Clips
+namespace Video_Clip2.Clips
 {
     public interface IClip : IDisposable
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using Video_Clip2.Clips.Clips;
+using Video_Clip2.Clips;
 using Video_Clip2.ViewModels;
 using Windows.Foundation;
 using Windows.UI.Xaml;
