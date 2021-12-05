@@ -30,6 +30,23 @@ namespace Video_Clip2
             };
             this.Storyboard.Completed += (s, e) => this.PreviewGrid.FullScreenCompleted();
 
+
+
+            this.PlayButton.Click += (s, e) =>
+            {
+                this.ViewModel.IsPlaying = false;
+                this.PlayRing.Ding();
+                this.PauseButton.Focus(FocusState.Programmatic);
+            };
+            this.PauseButton.Click += (s, e) =>
+            {
+                this.ViewModel.IsPlaying = true;
+                this.PlayRing.Ding();
+                this.PlayButton.Focus(FocusState.Programmatic);
+            };
+
+
+
             this.PreviewCanvas.UseSharedDevice = true;
             this.PreviewCanvas.CustomDevice = ClipManager.CanvasDevice;
             this.PreviewCanvas.Draw += (s, args) =>
