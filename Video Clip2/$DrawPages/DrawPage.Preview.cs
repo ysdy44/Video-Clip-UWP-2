@@ -34,13 +34,13 @@ namespace Video_Clip2
 
             this.PlayButton.Click += (s, e) =>
             {
-                this.ViewModel.IsPlaying = false;
+                this.ViewModel.IsPlaying = true;
                 this.PlayRing.Ding();
                 this.PauseButton.Focus(FocusState.Programmatic);
             };
             this.PauseButton.Click += (s, e) =>
             {
-                this.ViewModel.IsPlaying = true;
+                this.ViewModel.IsPlaying = false;
                 this.PlayRing.Ding();
                 this.PlayButton.Focus(FocusState.Programmatic);
             };
