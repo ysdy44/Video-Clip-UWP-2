@@ -32,8 +32,8 @@ namespace Video_Clip2.Clips.Models
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
 
-        public VideoClip(IMediaPlaybackSource source, uint width, uint height, IList<CanvasBitmap> thumbnails, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
-            : base(new MediaPlayer { IsVideoFrameServerEnabled = true, Source = source, IsMuted = isMuted }, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        private VideoClip(IMediaPlaybackSource source, uint width, uint height, IList<CanvasBitmap> thumbnails, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
+            : base(new MediaPlayer { IsVideoFrameServerEnabled = true, Source = source, IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
             this.Width = width;
             this.Height = height;
@@ -49,40 +49,27 @@ namespace Video_Clip2.Clips.Models
             };
         }
         public VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
-            : this(MediaSource.CreateFromStorageFile(file), width, height, thumbnails, isMuted, position, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale, resourceCreator)
+            : this(MediaSource.CreateFromStorageFile(file), width, height, thumbnails, 1, isMuted, position, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale, resourceCreator)
         {
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
         {
-            double lenth = base.TrimmedDuration.TotalSeconds;
             double width = sender.ActualWidth;
-            double position = base.TrimTimeFromStart.TotalSeconds;
-            VideoClip.DrawThumbnails(this.Thumbnails, args.DrawingSession, lenth, width, position);
+            double position = base.PlaybackRate * base.TrimTimeFromStart.TotalSeconds;
+            double lenth = base.PlaybackRate * base.TrimmedDuration.TotalSeconds;
+            VideoClip.DrawThumbnails(this.Thumbnails, args.DrawingSession, width, position, lenth);
         }
 
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
         {
-            if (base.InRange(position) == false) return null;
+            if (base.InRange(position) == false)
+            {
+                if (this.IsPlaying) this.Player.Pause();
+                return null;
+            }
 
-            if (isPlaying)
-            {
-                if (base.IsPlaying != isPlaying)
-                {
-                    base.Player.PlaybackSession.Position = position - (base.Delay - this.TrimTimeFromStart);
-                    base.Player.Play();
-                    base.IsPlaying = true;
-                }
-            }
-            else
-            {
-                base.Player.PlaybackSession.Position = position - (base.Delay - this.TrimTimeFromStart);
-                if (base.IsPlaying != isPlaying)
-                {
-                    base.Player.Pause();
-                    base.IsPlaying = false;
-                }
-            }
+            base.SetPlayer(isPlaying, position);
 
             if (this.VideoFrameAvailable)
             {
@@ -92,9 +79,9 @@ namespace Video_Clip2.Clips.Models
             return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
+        protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new VideoClip(base.Player.Source, this.Width, this.Height, this.Thumbnails, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale, this.ResourceCreator);
+            return new VideoClip(base.Player.Source, this.Width, this.Height, this.Thumbnails, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale, this.ResourceCreator);
         }
 
         public void Dispose()
@@ -106,7 +93,7 @@ namespace Video_Clip2.Clips.Models
 
 
         //@Static
-        public static void DrawThumbnails(IList<CanvasBitmap> thumbnails, CanvasDrawingSession drawingSession, double lenth, double width, double position)
+        public static void DrawThumbnails(IList<CanvasBitmap> thumbnails, CanvasDrawingSession drawingSession, double width, double position, double lenth)
         {
             double offset = 0;
 

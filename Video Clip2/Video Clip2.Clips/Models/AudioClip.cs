@@ -18,12 +18,12 @@ namespace Video_Clip2.Clips.Models
         public override ClipType Type => ClipType.Audio;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
-        private AudioClip(IMediaPlaybackSource source, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(new MediaPlayer { Source = source, IsMuted = isMuted }, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        private AudioClip(IMediaPlaybackSource source, double playbackRate, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+            : base(new MediaPlayer { Source = source, IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
         }
         public AudioClip(IStorageFile file, bool isMuted, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale)
-            : this(MediaSource.CreateFromStorageFile(file), isMuted, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
+            : this(MediaSource.CreateFromStorageFile(file), 1, isMuted, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
         {
         }
 
@@ -33,33 +33,20 @@ namespace Video_Clip2.Clips.Models
 
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
         {
-            if (base.InRange(position) == false) return null;
+            if (base.InRange(position) == false)
+            {
+                if (this.IsPlaying) this.Player.Pause();
+                return null;
+            }
 
-            if (isPlaying)
-            {
-                if (base.IsPlaying != isPlaying)
-                {
-                    base.Player.PlaybackSession.Position = position - base.Delay - base.TrimTimeFromStart;
-                    base.Player.Play();
-                    base.IsPlaying = true;
-                }
-            }
-            else
-            {
-                base.Player.PlaybackSession.Position = position - base.Delay - base.TrimTimeFromStart;
-                if (base.IsPlaying != isPlaying)
-                {
-                    base.Player.Pause();
-                    base.IsPlaying = false;
-                }
-            }
+            base.SetPlayer(isPlaying, position);
 
             return null;
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
+        protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new AudioClip(base.Player.Source, isMuted, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            return new AudioClip(base.Player.Source, playbackRate, isMuted, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
