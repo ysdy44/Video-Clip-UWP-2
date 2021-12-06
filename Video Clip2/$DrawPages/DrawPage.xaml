@@ -73,6 +73,13 @@
                 </Style>
             </MenuFlyout.MenuFlyoutPresenterStyle>
         </MenuFlyout>
+        <Flyout x:Name="SpeedFlyout" Placement="top">
+            <elements:TimeSlider x:Name="SpeedSlider" Value="1" Minimum="0.25" Maximum="4" StepFrequency="0.25" TickPlacement="Outside" TickFrequency="0.25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                <Slider.Header>
+                    Speed
+                </Slider.Header>
+            </elements:TimeSlider>
+        </Flyout>
         <Flyout x:Name="VolumeFlyout" Placement="top">
             <elements:TimeSlider x:Name="VolumeSlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
                 <Slider.Header>
