@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips;
+using System.Diagnostics;
 using Video_Clip2.Tools;
 using Windows.UI.Xaml;
 
@@ -146,7 +146,8 @@ namespace Video_Clip2.ViewModels
         {
         };
 
-        private readonly TimeSpan SpeedInterval = TimeSpan.FromMilliseconds(25);
+        private TimeSpan Delay = TimeSpan.Zero;
+        private readonly Stopwatch Stopwatch = new Stopwatch();
         private readonly DispatcherTimer Timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(25)
@@ -171,10 +172,18 @@ namespace Video_Clip2.ViewModels
             get => this.isPlayingCore;
             set
             {
+                this.Delay = this.Position;
+
                 if (value)
+                {
+                    this.Stopwatch.Restart();
                     this.Timer.Start();
+                }
                 else
+                {
+                    this.Stopwatch.Restart();
                     this.Timer.Stop();
+                }
 
                 this.isPlayingCore = value;
 
@@ -208,8 +217,8 @@ namespace Video_Clip2.ViewModels
             {
                 if (this.Duration == TimeSpan.Zero || this.Position >= this.Duration)
                     this.IsPlaying = false;
-
-                this.Position += this.SpeedInterval;
+                 
+                this.Position = this.Delay + this.Stopwatch.Elapsed;
             };
         }
 
