@@ -12,10 +12,6 @@ namespace Video_Clip2.Controls
     public class PositionCanvas : Canvas
     {
 
-        int Power = 0;
-        // Index & Point
-        readonly IDictionary<int, Ellipse> Ellipses = new Dictionary<int, Ellipse>();
-
         #region DependencyProperty
 
 
@@ -33,7 +29,6 @@ namespace Video_Clip2.Controls
             if (e.NewValue is TimeSpan value)
             {
                 control.UpdateWidth(value, control.TrackScale);
-                control.UpdateItemsWidth(value, control.TrackScale);
             }
         }));
 
@@ -52,7 +47,6 @@ namespace Video_Clip2.Controls
             if (e.NewValue is double value)
             {
                 control.UpdateWidth(control.Duration, value);
-                control.UpdateItemsWidth(control.Duration, value);
             }
         }));
 
@@ -68,55 +62,43 @@ namespace Video_Clip2.Controls
             base.Loaded += (s, e) =>
             {
                 this.UpdateWidth(this.Duration, this.TrackScale);
-                this.UpdateItemsWidth(this.Duration, this.TrackScale);
             };
         }
 
         private void UpdateWidth(TimeSpan duration, double trackScale)
         {
-            base.Width = duration.ToDouble(trackScale);
-        }
-
-        public void UpdateItemsWidth(TimeSpan duration, double trackScale)
-        {
             double space = 20 * trackScale;
-            int power = 0;
 
             while (space > 50)
-            {
                 space /= 5;
-                power--;
-            }
             while (space < 5)
-            {
                 space *= 5;
-                power++;
-            }
 
+            double width = duration.ToDouble(trackScale);
+            int count = (int)(width / space);
 
-            if (this.Power == power)
+            base.Width = width;
+            if (base.Children.Count == count)
             {
-                foreach (var item in this.Ellipses)
+                for (int i = 0; i < count; i++)
                 {
-                    int i = item.Key;
-                    Ellipse ellipse = item.Value;
-                    Canvas.SetLeft(ellipse, i * space);
+                    bool isFive = i % 5 == 0;
+                    double left = isFive ? 3.0 : 1.5;
+
+                    UIElement ellipse = base.Children[i];
+
+                    Canvas.SetLeft(ellipse, i * space - left);
                 }
             }
             else
             {
-                this.Power = power;
-
-                double width = duration.ToDouble(trackScale);
-                int count = (int)(width / space);
-
                 base.Children.Clear();
-                this.Ellipses.Clear();
 
                 for (int i = 0; i < count; i++)
                 {
                     bool isFive = i % 5 == 0;
                     double spuare = isFive ? 6.0 : 3.0;
+                    double left = isFive ? 3.0 : 1.5;
                     double top = isFive ? 12.0 : 13.5;
 
                     Ellipse ellipse = new Ellipse
@@ -126,10 +108,9 @@ namespace Video_Clip2.Controls
                         Fill = new SolidColorBrush(Colors.Gray)
                     };
 
-                    Canvas.SetLeft(ellipse, i * space);
+                    Canvas.SetLeft(ellipse, i * space - left);
                     Canvas.SetTop(ellipse, top);
 
-                    this.Ellipses.Add(i, ellipse);
                     base.Children.Add(ellipse);
                 }
             }
