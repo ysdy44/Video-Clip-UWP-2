@@ -41,7 +41,7 @@ namespace Video_Clip2.Clips
 
         bool InRange(TimeSpan position);
         void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize);
+        ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize);
 
         int Index { get; }
         void CacheIndex();

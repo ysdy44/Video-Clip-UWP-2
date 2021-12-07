@@ -2,7 +2,7 @@
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
-using Video_Clip2.Clips;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.UI;
@@ -12,8 +12,6 @@ namespace Video_Clip2.Clips.Models
 {
     public class TextClip : FrameClip, IClip
     {
-
-        protected readonly ICanvasResourceCreatorWithDpi ResourceCreator;
 
         public CanvasCommandList CommandList { get; protected set; }
         public string Text { get; protected set; }
@@ -25,11 +23,10 @@ namespace Video_Clip2.Clips.Models
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
         }
-        public TextClip(string text, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
+        public TextClip(string text, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
-            this.ResourceCreator = resourceCreator;
-            this.CommandList = new CanvasCommandList(resourceCreator);
+            this.CommandList = new CanvasCommandList(ClipManager.CanvasDevice);
             this.Text = text;
             if (this.Text != null) TextClip.Render(this.CommandList, this.Text);
             base.ChangeView(position, delay, duration);
@@ -40,7 +37,7 @@ namespace Video_Clip2.Clips.Models
             args.DrawingSession.DrawText(this.Text, Vector2.One, Colors.White);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (this.Text == null) return null;
             else if (base.InRange(position) == false) return null;
@@ -49,7 +46,7 @@ namespace Video_Clip2.Clips.Models
 
         protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-            return new TextClip(this.Text, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale, this.ResourceCreator);
+            return new TextClip(this.Text, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()

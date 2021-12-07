@@ -34,7 +34,7 @@ namespace Video_Clip2.Clips.Models
             args.DrawingSession.Clear(this.Color);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
             else return this.Source;

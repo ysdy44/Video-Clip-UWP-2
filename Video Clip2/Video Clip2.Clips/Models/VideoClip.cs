@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Video_Clip2.Clips;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -24,7 +24,6 @@ namespace Video_Clip2.Clips.Models
         readonly uint Width;
         readonly uint Height;
         readonly IList<CanvasBitmap> Thumbnails;
-        readonly ICanvasResourceCreatorWithDpi ResourceCreator;
 
         CanvasBitmap Bitmap;
         bool VideoFrameAvailable;
@@ -32,15 +31,14 @@ namespace Video_Clip2.Clips.Models
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
 
-        private VideoClip(IMediaPlaybackSource source, uint width, uint height, IList<CanvasBitmap> thumbnails, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
-            : base(new MediaPlayer { IsVideoFrameServerEnabled = true, Source = source, IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        private VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+            : base(file, new MediaPlayer { IsVideoFrameServerEnabled = true, Source = MediaSource.CreateFromStorageFile(file), IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
             this.Width = width;
             this.Height = height;
             this.Thumbnails = thumbnails;
-            this.ResourceCreator = resourceCreator;
 
-            this.Bitmap = new CanvasRenderTarget(resourceCreator, width, height);
+            this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, width, height, 96);
 
             base.Player.PlaybackSession.Position = position - base.Delay;
             base.Player.VideoFrameAvailable += (s, e) =>
@@ -48,8 +46,8 @@ namespace Video_Clip2.Clips.Models
                 this.VideoFrameAvailable = true;
             };
         }
-        public VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
-            : this(MediaSource.CreateFromStorageFile(file), width, height, thumbnails, 1, isMuted, position, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale, resourceCreator)
+        public VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale)
+            : this(file, width, height, thumbnails, 1, isMuted, position, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
         {
         }
 
@@ -61,7 +59,7 @@ namespace Video_Clip2.Clips.Models
             VideoClip.DrawThumbnails(this.Thumbnails, args.DrawingSession, width, position, lenth);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false)
             {
@@ -81,7 +79,7 @@ namespace Video_Clip2.Clips.Models
 
         protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new VideoClip(base.Player.Source, this.Width, this.Height, this.Thumbnails, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale, this.ResourceCreator);
+            return new VideoClip(base.File, this.Width, this.Height, this.Thumbnails, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
@@ -110,7 +108,7 @@ namespace Video_Clip2.Clips.Models
             } while (offset < width);
         }
 
-        public static async Task<IList<CanvasBitmap>> LoadThumbnailsAsync(ICanvasResourceCreator resourceCreator, IStorageFile file, TimeSpan duration, uint width, uint height)
+        public static async Task<IList<CanvasBitmap>> LoadThumbnailsAsync(IStorageFile file, TimeSpan duration, uint width, uint height)
         {
             Windows.Media.Editing.MediaComposition composition = new Windows.Media.Editing.MediaComposition
             {
@@ -129,7 +127,7 @@ namespace Video_Clip2.Clips.Models
             IList<CanvasBitmap> thumbnails2 = new List<CanvasBitmap>();
             foreach (ImageStream item in thumbnails)
             {
-                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(resourceCreator, item);
+                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(ClipManager.CanvasDevice, item);
                 thumbnails2.Add(bitmap);
             }
             return thumbnails2;

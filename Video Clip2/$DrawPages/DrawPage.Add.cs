@@ -40,8 +40,8 @@ namespace Video_Clip2
                     uint width = poperties.Width;
                     uint height = poperties.Height;
                     TimeSpan duration = poperties.Duration;
-                    IList<CanvasBitmap> thumbnails = await VideoClip.LoadThumbnailsAsync(this.PreviewCanvas, item, duration, poperties.Width, poperties.Height);
-                    this.ViewModel.ObservableCollection.Add(new VideoClip(item, width, height, thumbnails, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale, this.PreviewCanvas)
+                    IList<CanvasBitmap> thumbnails = await VideoClip.LoadThumbnailsAsync(item, duration, poperties.Width, poperties.Height);
+                    this.ViewModel.ObservableCollection.Add(new VideoClip(item, width, height, thumbnails, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
                         IsSelected = true
                     });
@@ -99,16 +99,12 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    using (IRandomAccessStream stream = await item.OpenReadAsync())
+                    CanvasBitmap bitmap = await ImageClip.LoadBitmapAsync(item);
+                    TimeSpan duration = TimeSpan.FromSeconds(10);
+                    this.ViewModel.ObservableCollection.Add(new ImageClip(bitmap, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
-                        ICanvasResourceCreatorWithDpi resourceCreator = this.PreviewCanvas;
-                        CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(resourceCreator, stream);
-                        TimeSpan duration = TimeSpan.FromSeconds(10);
-                        this.ViewModel.ObservableCollection.Add(new ImageClip(bitmap, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale, this.PreviewCanvas)
-                        {
-                            IsSelected = true
-                        });
-                    }
+                        IsSelected = true
+                    });
                 }
                 this.IsLoading = false;
 
@@ -150,7 +146,7 @@ namespace Video_Clip2
 
                 string text = "Click to change text";
                 TimeSpan duration = TimeSpan.FromSeconds(10);
-                TextClip clip = new TextClip(text, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale, this.PreviewCanvas)
+                TextClip clip = new TextClip(text, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                 {
                     IsSelected = true
                 };
@@ -181,7 +177,7 @@ namespace Video_Clip2
                         Duration = duration
                     }
                 };
-                SubtitleClip clip = new SubtitleClip(subtitles, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale, this.PreviewCanvas)
+                SubtitleClip clip = new SubtitleClip(subtitles, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                 {
                     IsSelected = true
                 };

@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.Media.Playback;
+using Windows.Storage;
 
 namespace Video_Clip2.Clips
 {
@@ -23,20 +24,24 @@ namespace Video_Clip2.Clips
         protected double StartingTrimTimeFromStart;
         protected double StartingTrimTimeFromEnd;
 
+        protected readonly IStorageFile File;
         protected readonly MediaPlayer Player;
         protected bool IsPlaying => this.Player.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
         public double PlaybackRate => this.Player.PlaybackSession.PlaybackRate;
         public double Volume => this.Player.Volume;
 
-        protected MediaClip(MediaPlayer player, double playbackRate, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+        protected MediaClip(IStorageFile file, MediaPlayer player, double playbackRate, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, index, trackHeight, trackScale)
         {
-            player.PlaybackSession.PlaybackRate = playbackRate;
+            this.File = file;
+            this.Player = player;
+            this.Player.PlaybackSession.PlaybackRate = playbackRate;
+
             this.OriginalDuration = originalDuration;
             this.SpeedDuration = playbackRate == 1 ? originalDuration : (originalDuration.ToDouble() / playbackRate).ToTimeSpan();
             this.TrimTimeFromStart = timTimeFromStart;
             this.TrimTimeFromEnd = trimTimeFromEnd;
-            this.Player = player;
+
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
@@ -146,8 +151,8 @@ namespace Video_Clip2.Clips
             TimeSpan trimTimeFromStart = this.TrimTimeFromStart;
             TimeSpan trimTimeFromEnd = this.TrimTimeFromEnd;
 
-            TimeSpan lastTrimTimeFromEnd = base.Delay - trimTimeFromStart + this.OriginalDuration - position;
-            TimeSpan nextTrimTimeFromStart = position - Delay + trimTimeFromStart;
+            TimeSpan lastTrimTimeFromEnd = base.Delay - trimTimeFromStart + this.SpeedDuration - position;
+            TimeSpan nextTrimTimeFromStart = position - base.Delay + trimTimeFromStart;
 
             this.TrimTimeFromEnd = lastTrimTimeFromEnd;
             this.Track.SetWidth(trackScale, this.TrimmedDuration);

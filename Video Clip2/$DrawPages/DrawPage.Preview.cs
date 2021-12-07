@@ -62,7 +62,7 @@ namespace Video_Clip2
                         if (item.Opacity == 0) continue;
                         if (item.Index != i) continue;
 
-                        ICanvasImage image = item.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, this.PreviewCanvas, s.Size);
+                        ICanvasImage image = item.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, s.Size);
                         if (image == null) continue;
 
                         // Clip

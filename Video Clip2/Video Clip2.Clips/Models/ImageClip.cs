@@ -3,9 +3,12 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
-using Video_Clip2.Clips;
+using System.Threading.Tasks;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
+using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -30,8 +33,8 @@ namespace Video_Clip2.Clips.Models
             this.Bitmap = bitmap;
             base.ChangeView(position, delay, duration);
         }
-        public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale, ICanvasResourceCreatorWithDpi resourceCreator)
-            : this(bitmap, ImageClip.LoadThumbnail(resourceCreator, bitmap), isMuted, position, delay, duration, index, trackHeight, trackScale)
+        public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+            : this(bitmap, ImageClip.LoadThumbnail(bitmap), isMuted, position, delay, duration, index, trackHeight, trackScale)
         {
         }
 
@@ -45,7 +48,7 @@ namespace Video_Clip2.Clips.Models
             });
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, ICanvasResourceCreatorWithDpi resourceCreator, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
             else return ImageClip.Render(this.Stretch, this.Bitmap, previewSize);
@@ -67,7 +70,15 @@ namespace Video_Clip2.Clips.Models
         }
 
         //@Static
-        public static CanvasBitmap LoadThumbnail(ICanvasResourceCreatorWithDpi resourceCreator, CanvasBitmap bitmap)
+        public static async Task<CanvasBitmap> LoadBitmapAsync(IStorageFile item)
+        {
+            using (IRandomAccessStream stream = await item.OpenReadAsync())
+            {
+                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(ClipManager.CanvasDevice, stream);
+                return bitmap;
+            }
+        }
+        public static CanvasBitmap LoadThumbnail(CanvasBitmap bitmap)
         {
             uint width = bitmap.SizeInPixels.Width;
             uint height = bitmap.SizeInPixels.Height;
@@ -79,7 +90,7 @@ namespace Video_Clip2.Clips.Models
             float scaleY = 1f * scaledHeight / height;
             float scale = Math.Max(0.01f, Math.Max(scaleX, scaleY));
 
-            CanvasRenderTarget renderTarget = new CanvasRenderTarget(resourceCreator, scaledWidth, scaledHeight);
+            CanvasRenderTarget renderTarget = new CanvasRenderTarget(ClipManager.CanvasDevice, scaledWidth, scaledHeight, 96);
             using (CanvasDrawingSession drawingSession = renderTarget.CreateDrawingSession())
             {
                 drawingSession.DrawImage(new ScaleEffect
