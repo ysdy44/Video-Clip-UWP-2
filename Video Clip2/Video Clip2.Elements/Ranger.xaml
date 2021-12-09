@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="Video_Clip2.Elements.Ranger"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    MinWidth="100" 
+    MinHeight="90" 
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch"
+    BorderBrush="{ThemeResource AppBackgroundLight}"
+    Background="{ThemeResource AppBlueLinearGradientBrush}"
+    Foreground="{ThemeResource AppForeground}"
+    >
+
+    <Canvas x:Name="Canvas">
+
+
+        <Line x:Name="LeftLine" IsHitTestVisible="False" StrokeThickness="2" Stroke="{x:Bind Background, Mode=OneWay}" StrokeDashArray="2 3" />
+        <Line x:Name="RightLine" IsHitTestVisible="False" StrokeThickness="2" Stroke="{x:Bind Background, Mode=OneWay}" StrokeDashArray="2 3" />
+        <Line x:Name="StartLine" IsHitTestVisible="False" StrokeThickness="2" Stroke="{x:Bind Background, Mode=OneWay}" StrokeDashArray="2 3" />
+        <Line x:Name="EndLine" IsHitTestVisible="False" StrokeThickness="2" Stroke="{x:Bind Background, Mode=OneWay}" StrokeDashArray="2 3" />
+
+
+        <Rectangle x:Name="TrackRect" IsHitTestVisible="False" Opacity="0.1" StrokeThickness="4" Stroke="{x:Bind BorderBrush, Mode=OneWay}" Fill="{x:Bind Background, Mode=OneWay}"/>
+        <Rectangle x:Name="DecreaseRect" StrokeThickness="4" Stroke="{x:Bind BorderBrush, Mode=OneWay}" StrokeDashArray="2 1" Fill="{x:Bind Background, Mode=OneWay}">
+            <UIElement.ManipulationMode>
+                TranslateX
+            </UIElement.ManipulationMode>
+        </Rectangle>
+
+        <Rectangle x:Name="StartThumb" StrokeThickness="4" Stroke="{x:Bind BorderBrush, Mode=OneWay}" Fill="{x:Bind Foreground, Mode=OneWay}">
+            <UIElement.ManipulationMode>
+                TranslateX
+            </UIElement.ManipulationMode>
+        </Rectangle>
+        <Rectangle x:Name="EndThumb" StrokeThickness="4" Stroke="{x:Bind BorderBrush, Mode=OneWay}" Fill="{x:Bind Foreground, Mode=OneWay}">
+            <UIElement.ManipulationMode>
+                TranslateX
+            </UIElement.ManipulationMode>
+        </Rectangle>
+
+
+        <TextBlock x:Name="DurationTextBlock" IsHitTestVisible="False"/>
+
+        <TextBlock x:Name="StartTextBlock" IsHitTestVisible="False"/>
+        <TextBlock x:Name="EndTextBlock" IsHitTestVisible="False"/>
+
+    </Canvas>
+
+</UserControl>

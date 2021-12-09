@@ -177,6 +177,9 @@
     <Compile Include="Video Clip2.Elements\PlayRing.xaml.cs">
       <DependentUpon>PlayRing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Elements\Ranger.xaml.cs">
+      <DependentUpon>Ranger.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Elements\ThemeControl.xaml.cs">
       <DependentUpon>ThemeControl.xaml</DependentUpon>
     </Compile>
@@ -334,6 +337,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Elements\PlayRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\Ranger.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
