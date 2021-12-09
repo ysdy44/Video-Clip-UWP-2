@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Video_Clip2.Clips;
+using Video_Clip2.Elements;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

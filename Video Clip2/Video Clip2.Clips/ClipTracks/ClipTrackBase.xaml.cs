@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips.ClipManagers;
+using Video_Clip2.Elements;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -10,9 +11,6 @@ namespace Video_Clip2.Clips.ClipTracks
 {
     public abstract partial class ClipTrackBase : Button
     {
-
-        //@Converter
-        private string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
 
         public Button Self => this;
 
@@ -66,7 +64,7 @@ namespace Video_Clip2.Clips.ClipTracks
         public void SetWidth(double trackScale, TimeSpan duration)
         {
             this.Width = duration.ToDouble(trackScale);
-            this.DurationTextBlock.Text = this.TimeSpanToStringConverter(duration);
+            this.DurationTextBlock.Text = duration.ToText();
         }
         public void SetHeight(double trackHeight) => base.Height = trackHeight;
         public void SetisSelected(bool isSelected)

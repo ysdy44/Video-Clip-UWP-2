@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Video_Clip2.Clips
+namespace Video_Clip2.Elements
 {
     public static class Extensions
     {
@@ -8,5 +8,6 @@ namespace Video_Clip2.Clips
         public static TimeSpan ToTimeSpan(this double value, double trackScale) => TimeSpan.FromSeconds(value / trackScale);
         public static double ToDouble(this TimeSpan value) => value.TotalSeconds;
         public static double ToDouble(this TimeSpan value, double trackScale) => value.TotalSeconds * trackScale;
+        public static string ToText(this TimeSpan value) => value.ToString("mm':'ss'.'ff");
     }
 }

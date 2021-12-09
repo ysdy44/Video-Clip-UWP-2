@@ -1,5 +1,5 @@
 ﻿using System;
-using Video_Clip2.Clips;
+using Video_Clip2.Elements;
 using Video_Clip2.ViewModels;
 using Windows.Foundation;
 using Windows.UI.Xaml;
@@ -19,7 +19,7 @@ namespace Video_Clip2
 
         //@Converter
         private bool IntToBooleanConverter(int value) => value == 0;
-        private string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
+        private string TimeSpanToStringConverter(TimeSpan value) => value.ToText();
         private Symbol BooleanToPinConverter(bool value) => value ? Symbol.UnPin : Symbol.Pin;
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
         private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;

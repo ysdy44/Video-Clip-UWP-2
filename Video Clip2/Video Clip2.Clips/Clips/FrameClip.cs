@@ -1,6 +1,5 @@
 ﻿using System;
-using Video_Clip2.Clips;
-using Windows.Foundation;
+using Video_Clip2.Elements;
 
 namespace Video_Clip2.Clips
 {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Video_Clip2.Clips;
+using Video_Clip2.Elements;
 using System.Diagnostics;
 using Video_Clip2.Tools;
 using Windows.UI.Xaml;

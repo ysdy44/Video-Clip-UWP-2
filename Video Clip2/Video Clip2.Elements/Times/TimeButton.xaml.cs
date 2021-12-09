@@ -14,9 +14,6 @@ namespace Video_Clip2.Elements.Times
     public sealed partial class TimeButton : Button
     {
 
-        //@Converter
-        public string TimeSpanToStringConverter(TimeSpan value) => value.ToString("mm':'ss'.'ff");
-
 
         #region DependencyProperty
 
