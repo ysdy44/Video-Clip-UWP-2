@@ -1,10 +1,6 @@
-﻿using System.Linq;
+﻿using System;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips;
-using Video_Clip2.Clips.Models;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2
 {
@@ -13,7 +9,41 @@ namespace Video_Clip2
 
         private void ConstructMenu()
         {
-            this.BackButton.Click += (s, e) => this.GroupIndex = 0;
+            this.BackButton.Click += (s, e) =>
+            {
+                switch (this.GroupIndex)
+                {
+                    case 6:
+                        {
+                            this.DurationRanger.GetDuration(out TimeSpan trimTimeFromStart, out TimeSpan trimTimeFromEnd);
+
+                            foreach (IClip item in this.ViewModel.ObservableCollection)
+                            {
+                                if (item.IsSelected)
+                                {
+                                    switch (item.Type)
+                                    {
+                                        case ClipType.Video:
+                                        case ClipType.Audio:
+                                            if (item is MediaClip mediaClip)
+                                            {
+                                                mediaClip.SetDuration(this.ViewModel.TrackScale, trimTimeFromStart, trimTimeFromEnd);
+                                                break;
+                                            }
+                                            break;
+                                    }
+                                }
+                            }
+
+                            this.SelectionViewModel.SetMode(); // Selection
+                            this.ViewModel.Invalidate(); // Invalidate
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                this.GroupIndex = 0;
+            };
 
 
             this.ExportButton.Click += (s, e) =>

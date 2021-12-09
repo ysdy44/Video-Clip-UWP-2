@@ -976,6 +976,12 @@
             <elementsTransitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
                 <menus:EffectMenu/>
             </elementsTransitions:IndexTransitionPanel>
+            <!--Duration-->
+            <elementsTransitions:IndexTransitionPanel Index = "6" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                    <elements:Ranger x:Name = "DurationRanger" Margin = "40" />
+                </Border>
+            </elementsTransitions:IndexTransitionPanel>
         </Grid>
 
 

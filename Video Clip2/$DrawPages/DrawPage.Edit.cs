@@ -1,9 +1,7 @@
-﻿using System.Linq;
+﻿using System;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml;
-using Video_Clip2.Clips;
 
 namespace Video_Clip2
 {
@@ -13,6 +11,29 @@ namespace Video_Clip2
         private void ConstructEdit()
         {
             this.TrimButton.Click += (s, e) => this.ViewModel.MethodEditTrim();
+
+
+            this.DurationButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Video:
+                            case ClipType.Audio:
+                                if (item is MediaClip mediaClip)
+                                {
+                                    this.DurationRanger.SetDuration(mediaClip.OriginalDuration, TimeSpan.FromSeconds(2), mediaClip.TrimTimeFromStart, mediaClip.TrimTimeFromEnd);
+                                    break;
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.GroupIndex = 6;
+            };
 
 
             this.SpeedButton.Click += (s, e) =>
