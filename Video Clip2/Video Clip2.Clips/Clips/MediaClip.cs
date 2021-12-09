@@ -13,11 +13,11 @@ namespace Video_Clip2.Clips
 
         public override TimeSpan Duration => this.TrimmedDuration;
 
-        protected readonly TimeSpan OriginalDuration;
+        public readonly TimeSpan OriginalDuration;
         protected TimeSpan TrimmedDuration => this.SpeedDuration - this.TrimTimeFromStart - this.TrimTimeFromEnd;
-        protected TimeSpan SpeedDuration;
-        protected TimeSpan TrimTimeFromStart;
-        protected TimeSpan TrimTimeFromEnd;
+        protected TimeSpan SpeedDuration { get; private set; }
+        public TimeSpan TrimTimeFromStart { get; private set; }
+        public TimeSpan TrimTimeFromEnd { get; private set; }
 
         protected double StartingOriginalDuration;
         protected double StartingTrimmedDuration;
@@ -99,6 +99,13 @@ namespace Video_Clip2.Clips
                     this.Player.Pause();
                 }
             }
+        }
+
+        public void SetDuration(double trackScale, TimeSpan trimTimeFromStart, TimeSpan trimTimeFromEnd)
+        {
+            this.TrimTimeFromStart = trimTimeFromStart;
+            this.TrimTimeFromEnd = trimTimeFromEnd;
+            this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
         public override void CacheDuration(double trackScale)
