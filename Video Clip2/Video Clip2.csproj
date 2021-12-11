@@ -196,6 +196,9 @@
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Menus\DurationMenu.xaml.cs">
+      <DependentUpon>DurationMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Menus\EasingControl.xaml.cs">
       <DependentUpon>EasingControl.xaml</DependentUpon>
     </Compile>
@@ -358,6 +361,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\DurationMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

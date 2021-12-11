@@ -25,7 +25,7 @@ namespace Video_Clip2
                             case ClipType.Audio:
                                 if (item is MediaClip mediaClip)
                                 {
-                                    this.DurationRanger.SetDuration(mediaClip.OriginalDuration, TimeSpan.FromSeconds(2), mediaClip.TrimTimeFromStart, mediaClip.TrimTimeFromEnd);
+                                    this.DurationRanger.SetDuration(mediaClip.PlaybackRate, mediaClip.OriginalDuration, mediaClip.TrimTimeFromStart, mediaClip.TrimTimeFromEnd, TimeSpan.FromSeconds(2));
                                     break;
                                 }
                                 break;

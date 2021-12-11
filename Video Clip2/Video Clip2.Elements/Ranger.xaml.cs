@@ -9,17 +9,21 @@ namespace Video_Clip2.Elements
     public sealed partial class Ranger : UserControl
     {
 
+        //@Delegate
+        /// <summary> Occurs when the position changed. </summary>
+        public event EventHandler<TimeSpan> PositionChanged;
+
         readonly double ThumbWidth = 22;
         readonly double ThumbHeight = 50;
 
         TimeSpan MinDuration = TimeSpan.FromSeconds(2);
-        TimeSpan OriginalDuration = TimeSpan.FromSeconds(10);
+        TimeSpan SpeedDuration = TimeSpan.FromSeconds(10);
         double TrimmedDuration => 1 - this.TrimTimeFromStart - this.TrimTimeFromEnd;
         double TrimTimeFromStart = 0;
         double TrimTimeFromEnd = 0;
 
         double StartingMinDuration; // Percentage
-        double StartingOriginalDuration; // Length
+        double StartingSpeedDuration; // Length
         double StartingTrimTimeFromStart; // Percentage
         double StartingTrimTimeFromEnd; // Percentage
 
@@ -72,13 +76,18 @@ namespace Video_Clip2.Elements
 
             this.DecreaseRect.PointerReleased += this.ThumbPointerReleased;
             this.DecreaseRect.PointerPressed += this.ThumbPointerPressed;
-            this.DecreaseRect.ManipulationStarted += this.ThumbManipulationStarted;
+            this.DecreaseRect.ManipulationStarted += (s, e) =>
+            {
+                this.CacheWidth();
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
+            };
             this.DecreaseRect.ManipulationDelta += (s, e) =>
             {
                 double width = this.Canvas.ActualWidth;
                 double cumulative = Math.Max(-this.StartingTrimTimeFromStart, Math.Min(this.StartingTrimTimeFromEnd, e.Cumulative.Translation.X / width));
                 this.TrimTimeFromStart = this.StartingTrimTimeFromStart + cumulative;
                 this.TrimTimeFromEnd = this.StartingTrimTimeFromEnd - cumulative;
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
                 this.UpdateWidth(width);
                 e.Handled = true;
             };
@@ -88,17 +97,23 @@ namespace Video_Clip2.Elements
                 double cumulative = Math.Max(-this.StartingTrimTimeFromStart, Math.Min(this.StartingTrimTimeFromEnd, e.Cumulative.Translation.X / width));
                 this.TrimTimeFromStart = this.StartingTrimTimeFromStart + cumulative;
                 this.TrimTimeFromEnd = this.StartingTrimTimeFromEnd - cumulative;
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
                 e.Handled = true;
             };
 
 
             this.StartThumb.PointerReleased += this.ThumbPointerReleased;
             this.StartThumb.PointerPressed += this.ThumbPointerPressed;
-            this.StartThumb.ManipulationStarted += this.ThumbManipulationStarted;
+            this.StartThumb.ManipulationStarted += (s, e) =>
+            {
+                this.CacheWidth();
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
+            };
             this.StartThumb.ManipulationDelta += (s, e) =>
             {
                 double width = this.Canvas.ActualWidth;
                 this.TrimTimeFromStart = this.GetTrimTimeFromStart(e.Cumulative.Translation.X / width);
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
                 this.UpdateWidth(width);
                 e.Handled = true;
             };
@@ -106,17 +121,23 @@ namespace Video_Clip2.Elements
             {
                 double width = this.Canvas.ActualWidth;
                 this.TrimTimeFromStart = this.GetTrimTimeFromStart(e.Cumulative.Translation.X / width);
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(this.TrimTimeFromStart)); // Delegate
                 e.Handled = true;
             };
 
 
             this.EndThumb.PointerReleased += this.ThumbPointerReleased;
             this.EndThumb.PointerPressed += this.ThumbPointerPressed;
-            this.EndThumb.ManipulationStarted += this.ThumbManipulationStarted;
+            this.EndThumb.ManipulationStarted += (s, e) =>
+            {
+                this.CacheWidth();
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(1d - this.TrimTimeFromEnd)); // Delegate
+            };
             this.EndThumb.ManipulationDelta += (s, e) =>
             {
                 double width = this.Canvas.ActualWidth;
                 this.TrimTimeFromEnd = this.GetTrimTimeFromEnd(e.Cumulative.Translation.X / width);
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(1d - this.TrimTimeFromEnd)); // Delegate
                 this.UpdateWidth(width);
                 e.Handled = true;
             };
@@ -124,6 +145,7 @@ namespace Video_Clip2.Elements
             {
                 double width = this.Canvas.ActualWidth;
                 this.TrimTimeFromEnd = this.GetTrimTimeFromEnd(e.Cumulative.Translation.X / width);
+                this.PositionChanged?.Invoke(this, this.SpeedDuration.Scale(1d - this.TrimTimeFromEnd)); // Delegate
                 e.Handled = true;
             };
         }
@@ -131,36 +153,36 @@ namespace Video_Clip2.Elements
 
         public void GetDuration(out TimeSpan trimTimeFromStart, out TimeSpan trimTimeFromEnd)
         {
-            double width = this.OriginalDuration.ToDouble();
-            trimTimeFromStart = (width * this.TrimTimeFromStart).ToTimeSpan();
-            trimTimeFromEnd = (width * this.TrimTimeFromEnd).ToTimeSpan();
+            trimTimeFromStart = this.SpeedDuration.Scale(this.TrimTimeFromStart);
+            trimTimeFromEnd = this.SpeedDuration.Scale(this.TrimTimeFromEnd);
         }
-        public void SetDuration(TimeSpan originalDuration, TimeSpan minDuration, TimeSpan trimTimeFromStart, TimeSpan trimTimeFromEnd)
+        public void SetDuration(double playbackRate, TimeSpan originalDuration, TimeSpan trimTimeFromStart, TimeSpan trimTimeFromEnd, TimeSpan minDuration)
         {
-            this.OriginalDuration = originalDuration;
+            TimeSpan speedDuration = originalDuration.Scale(1d / playbackRate);
+            this.SpeedDuration = speedDuration;
+            this.TrimTimeFromStart = trimTimeFromStart.ToDouble() / speedDuration.ToDouble();
+            this.TrimTimeFromEnd = trimTimeFromEnd.ToDouble() / speedDuration.ToDouble();
             this.MinDuration = minDuration;
-            this.TrimTimeFromStart = trimTimeFromStart.ToDouble() / originalDuration.ToDouble();
-            this.TrimTimeFromEnd = trimTimeFromEnd.ToDouble() / originalDuration.ToDouble();
-         
+
             double width = this.Canvas.ActualWidth;
+            this.CacheWidth();
             this.UpdateWidth(width);
         }
 
 
         private void ThumbPointerReleased(object sender, PointerRoutedEventArgs e) => base.ReleasePointerCapture(e.Pointer);
         private void ThumbPointerPressed(object sender, PointerRoutedEventArgs e) => base.CapturePointer(e.Pointer);
-        private void ThumbManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
-        {
-            this.StartingMinDuration = this.MinDuration.ToDouble() / this.OriginalDuration.ToDouble();
-            this.StartingOriginalDuration = this.OriginalDuration.ToDouble();
-            this.StartingTrimTimeFromStart = this.TrimTimeFromStart;
-            this.StartingTrimTimeFromEnd = this.TrimTimeFromEnd;
-            e.Handled = true;
-        }
 
 
         private double GetTrimTimeFromStart(double cumulative) => Math.Max(0, Math.Min(1 - this.StartingTrimTimeFromEnd - this.StartingMinDuration, this.StartingTrimTimeFromStart + cumulative));
         private double GetTrimTimeFromEnd(double cumulative) => Math.Max(0, Math.Min(1 - this.StartingTrimTimeFromStart - this.StartingMinDuration, this.StartingTrimTimeFromEnd - cumulative));
+        private void CacheWidth()
+        {
+            this.StartingMinDuration = this.MinDuration.ToDouble() / this.SpeedDuration.ToDouble();
+            this.StartingSpeedDuration = this.SpeedDuration.ToDouble();
+            this.StartingTrimTimeFromStart = this.TrimTimeFromStart;
+            this.StartingTrimTimeFromEnd = this.TrimTimeFromEnd;
+        }
         private void UpdateWidth(double width)
         {
             // Start
@@ -172,7 +194,7 @@ namespace Video_Clip2.Elements
                 this.StartLine.X1 = left;
                 this.StartLine.X2 = left;
 
-                this.StartTextBlock.Text = TimeSpan.FromSeconds(this.StartingOriginalDuration * this.TrimTimeFromStart).ToText();
+                this.StartTextBlock.Text = (this.StartingSpeedDuration * this.TrimTimeFromStart).ToTimeSpan().ToText();
                 double textWidth = this.StartTextBlock.ActualWidth;
                 if (left < textWidth)
                     this.StartTextBlock.Visibility = Visibility.Collapsed;
@@ -192,7 +214,7 @@ namespace Video_Clip2.Elements
                 this.EndLine.X1 = left;
                 this.EndLine.X2 = left;
 
-                this.EndTextBlock.Text = TimeSpan.FromSeconds(this.StartingOriginalDuration * this.TrimTimeFromEnd).ToText();
+                this.EndTextBlock.Text = (this.StartingSpeedDuration * this.TrimTimeFromEnd).ToTimeSpan().ToText();
                 double textWidth = this.EndTextBlock.ActualWidth;
                 if (end < textWidth)
                     this.EndTextBlock.Visibility = Visibility.Collapsed;
@@ -209,7 +231,7 @@ namespace Video_Clip2.Elements
                 double duration = width * this.TrimmedDuration;
                 this.DecreaseRect.Width = duration;
 
-                this.DurationTextBlock.Text = TimeSpan.FromSeconds(this.StartingOriginalDuration * this.TrimmedDuration).ToText();
+                this.DurationTextBlock.Text = (this.StartingSpeedDuration * this.TrimmedDuration).ToTimeSpan().ToText();
                 double textWidth = this.DurationTextBlock.ActualWidth;
                 if (duration < textWidth)
                     this.DurationTextBlock.Visibility = Visibility.Collapsed;
