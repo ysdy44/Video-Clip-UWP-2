@@ -1,5 +1,7 @@
 ﻿using System;
 using Video_Clip2.Clips;
+using Windows.Media.Core;
+using Windows.Media.Playback;
 using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2
@@ -9,48 +11,15 @@ namespace Video_Clip2
 
         private void ConstructMenu()
         {
-            this.BackButton.Click += (s, e) =>
-            {
-                switch (this.GroupIndex)
-                {
-                    case 6:
-                        {
-                            this.DurationRanger.GetDuration(out TimeSpan trimTimeFromStart, out TimeSpan trimTimeFromEnd);
-
-                            foreach (IClip item in this.ViewModel.ObservableCollection)
-                            {
-                                if (item.IsSelected)
-                                {
-                                    switch (item.Type)
-                                    {
-                                        case ClipType.Video:
-                                        case ClipType.Audio:
-                                            if (item is MediaClip mediaClip)
-                                            {
-                                                mediaClip.SetDuration(this.ViewModel.TrackScale, trimTimeFromStart, trimTimeFromEnd);
-                                                break;
-                                            }
-                                            break;
-                                    }
-                                }
-                            }
-
-                            this.SelectionViewModel.SetMode(); // Selection
-                            this.ViewModel.Invalidate(); // Invalidate
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                this.GroupIndex = 0;
-            };
+            this.BackButton.Click += (s, e) =>  this.GroupIndex = 0;
+            this.SpeedButton.Click += (s, e) =>  this.GroupIndex = 0;
 
 
             this.ExportButton.Click += (s, e) =>
             {
                 this.ViewModel.IsPlaying = false;
 
-                this.GroupIndex = 1;
+                this.GroupIndex = this.GroupIndex == 0 ? 1 : 0;
             };
 
 
@@ -58,13 +27,13 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                this.GroupIndex = 2;
+                this.GroupIndex = this.GroupIndex == 0 ? 2 : 0;
             };
 
 
             this.TransitionButton.Click += (s, e) =>
             {
-                this.GroupIndex = 3;
+                this.GroupIndex = this.GroupIndex == 0 ? 3 : 0;
             };
 
 
@@ -72,7 +41,7 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                this.GroupIndex = 4;
+                this.GroupIndex = this.GroupIndex == 0 ? 4 : 0;
             };
 
 
@@ -80,7 +49,15 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                this.GroupIndex = 5;
+                this.GroupIndex = this.GroupIndex == 0 ? 5 : 0;
+            };
+
+
+            this.DurationButton.Click += (s, e) =>
+            {
+                this.ViewModel.IsPlaying = false;
+
+                this.GroupIndex = this.GroupIndex == 0 ? 6 : 0;
             };
         }
 

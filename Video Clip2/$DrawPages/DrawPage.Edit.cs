@@ -13,29 +13,6 @@ namespace Video_Clip2
             this.TrimButton.Click += (s, e) => this.ViewModel.MethodEditTrim();
 
 
-            this.DurationButton.Click += (s, e) =>
-            {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
-                {
-                    if (item.IsSelected)
-                    {
-                        switch (item.Type)
-                        {
-                            case ClipType.Video:
-                            case ClipType.Audio:
-                                if (item is MediaClip mediaClip)
-                                {
-                                    this.DurationRanger.SetDuration(mediaClip.PlaybackRate, mediaClip.OriginalDuration, mediaClip.TrimTimeFromStart, mediaClip.TrimTimeFromEnd, TimeSpan.FromSeconds(2));
-                                    break;
-                                }
-                                break;
-                        }
-                    }
-                }
-                this.GroupIndex = 6;
-            };
-
-
             this.SpeedButton.Click += (s, e) =>
             {
                 foreach (IClip item in this.ViewModel.ObservableCollection)

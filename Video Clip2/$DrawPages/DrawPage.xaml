@@ -323,7 +323,7 @@
                         <ComboBox x:Name="TrackComboBox"
                              SelectedIndex="2" 
                              Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"
-                              BorderThickness="0" BorderBrush="{ThemeResource AppBorderBrush}" Background="Transparent">
+                             BorderThickness="0" BorderBrush="{ThemeResource AppBorderBrush}" Background="Transparent">
                             <UIElement.ManipulationMode>
                                 None
                             </UIElement.ManipulationMode>
@@ -463,7 +463,9 @@
                     </controls1:PinHeader>
 
 
-                    <Canvas Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="{StaticResource TimelineHeight}">
+                    <Canvas 
+                        Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="{StaticResource TimelineHeight}"
+                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}">
 
                         <!--Dragger-->
                         <draggers:ThumbDragger x:Name="ThumbDragger" Visibility="Collapsed" 
@@ -525,7 +527,7 @@
 
 
         <!--Button-->
-        <ListView Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{x:Null}">
+        <ListView Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Style="{x:Null}">
             <ListView.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                     <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
@@ -724,10 +726,42 @@
 
 
 
+        <!--Menu-->
+        <Grid Grid.Row="2">
+            <!--Export-->
+            <elementsTransitions:IndexTransitionPanel Index="1" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:SettingMenu/>
+            </elementsTransitions:IndexTransitionPanel>
+            <!--Property-->
+            <elementsTransitions:IndexTransitionPanel Index="2" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
+                </Border>
+            </elementsTransitions:IndexTransitionPanel>
+            <!--Transition-->
+            <elementsTransitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:TransitionMenu/>
+            </elementsTransitions:IndexTransitionPanel>
+            <!--Easing-->
+            <elementsTransitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:EasingMenu/>
+            </elementsTransitions:IndexTransitionPanel>
+            <!--Effect-->
+            <elementsTransitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:EffectMenu/>
+            </elementsTransitions:IndexTransitionPanel>
+            <!--Duration-->
+            <elementsTransitions:IndexTransitionPanel Index="6" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
+                <menus:DurationMenu x:Name="DurationMenu"/>
+            </elementsTransitions:IndexTransitionPanel>
+        </Grid>
+
+
+
         <!--AppBar-->
         <Border x:Name="AppBarBorder"  Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
         <Border Grid.Row="3" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundColorDark}"/>
-        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center">
+        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center"
+                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
             <elements:PlayRing x:Name="PlayRing"/>
             <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
                         Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
@@ -950,39 +984,6 @@
             </ToolTipService.ToolTip>
             <SymbolIcon Symbol="Back"/>
         </Button>
-
-
-
-        <!--Menu-->
-        <Grid Grid.Row="2">
-            <!--Export-->
-            <elementsTransitions:IndexTransitionPanel Index="1" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:SettingMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Property-->
-            <elementsTransitions:IndexTransitionPanel Index="2" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
-                </Border>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Transition-->
-            <elementsTransitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:TransitionMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Easing-->
-            <elementsTransitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:EasingMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Effect-->
-            <elementsTransitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:EffectMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Duration-->
-            <elementsTransitions:IndexTransitionPanel Index = "6" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
-                    <elements:Ranger x:Name = "DurationRanger" Margin = "40" />
-                </Border>
-            </elementsTransitions:IndexTransitionPanel>
-        </Grid>
 
 
 

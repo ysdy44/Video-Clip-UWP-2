@@ -1,11 +1,12 @@
 ﻿using Microsoft.Graphics.Canvas;
-using Video_Clip2.Clips.ClipManagers;
+using Microsoft.Graphics.Canvas.Effects;
+using System;
 using Video_Clip2.Clips;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Effects;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Graphics.Canvas.Effects;
 
 namespace Video_Clip2
 {
@@ -34,6 +35,9 @@ namespace Video_Clip2
 
             this.PlayButton.Click += (s, e) =>
             {
+                if (this.ViewModel.Position >= this.ViewModel.Duration)
+                    this.ViewModel.Position = TimeSpan.Zero;
+
                 this.ViewModel.IsPlaying = true;
                 this.PlayRing.Ding();
                 this.PauseButton.Focus(FocusState.Programmatic);
@@ -53,35 +57,43 @@ namespace Video_Clip2
             {
                 float scale = (float)this.ViewModel.Scale;
                 int rows = this.RectangleCanvas.MaximumRows;
-
-                for (int i = 0; i < rows; i++)
+                switch (GroupIndex)
                 {
-                    foreach (IClip item in this.ViewModel.ObservableCollection)
-                    {
-                        if (item.Visibility == Visibility.Collapsed) continue;
-                        if (item.Opacity == 0) continue;
-                        if (item.Index != i) continue;
+                    case 6:
+                        this.DurationMenu.Draw(args.DrawingSession, s.Size);
+                        break;
 
-                        ICanvasImage image = item.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, s.Size);
-                        if (image == null) continue;
-
-                        // Clip
-                        ICanvasImage currentImage = Effect.Render(item.Effect, image, scale);
-
-                        // Opacity
-                        if (item.Opacity < 1)
+                    default:
+                        for (int i = 0; i < rows; i++)
                         {
-                            args.DrawingSession.DrawImage(new OpacityEffect
+                            foreach (IClip item in this.ViewModel.ObservableCollection)
                             {
-                                Opacity = item.Opacity,
-                                Source = currentImage
-                            });
+                                if (item.Visibility == Visibility.Collapsed) continue;
+                                if (item.Opacity == 0) continue;
+                                if (item.Index != i) continue;
+
+                                ICanvasImage image = item.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, s.Size);
+                                if (image == null) continue;
+
+                                // Clip
+                                ICanvasImage currentImage = Effect.Render(item.Effect, image, scale);
+
+                                // Opacity
+                                if (item.Opacity < 1)
+                                {
+                                    args.DrawingSession.DrawImage(new OpacityEffect
+                                    {
+                                        Opacity = item.Opacity,
+                                        Source = currentImage
+                                    });
+                                }
+                                else
+                                {
+                                    args.DrawingSession.DrawImage(currentImage);
+                                }
+                            }
                         }
-                        else
-                        {
-                            args.DrawingSession.DrawImage(currentImage);
-                        }
-                    }
+                        break;
                 }
             };
         }
