@@ -8,12 +8,12 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
+using Video_Clip2.Elements;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
-using Windows.Media.Core;
-using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2.Clips.Models
@@ -24,26 +24,33 @@ namespace Video_Clip2.Clips.Models
         readonly uint Width;
         readonly uint Height;
         readonly IList<CanvasBitmap> Thumbnails;
-
-        CanvasBitmap Bitmap;
-        bool VideoFrameAvailable;
+        readonly DispatcherTimer Timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(10)
+        };
+        readonly CanvasBitmap Bitmap;
 
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
 
         private VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(file, new MediaPlayer { IsVideoFrameServerEnabled = true, Source = MediaSource.CreateFromStorageFile(file), IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+            : base(file, playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
             this.Width = width;
             this.Height = height;
             this.Thumbnails = thumbnails;
-
             this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, width, height, 96);
-
-            base.Player.PlaybackSession.Position = position - base.Delay;
             base.Player.VideoFrameAvailable += (s, e) =>
             {
-                this.VideoFrameAvailable = true;
+                base.Player.CopyFrameToVideoSurface(this.Bitmap);
+            };
+            this.Timer.Tick += (s, e) =>
+            {
+                this.Timer.Stop();
+                if (base.IsPlaying == false)
+                {
+                    base.Player.IsVideoFrameServerEnabled = false;
+                }
             };
         }
         public VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale)
@@ -59,21 +66,56 @@ namespace Video_Clip2.Clips.Models
             VideoClip.DrawThumbnails(this.Thumbnails, args.DrawingSession, width, position, lenth);
         }
 
+        public ICanvasImage GetPlayerRender(TimeSpan position, Size previewSize)
+        {
+            base.Player.PlaybackSession.Position = position.Scale(this.PlaybackRate);
+
+            if (base.IsPlaying)
+            {
+                base.Player.Pause();
+            }
+
+            this.Timer.Stop();
+            this.Timer.Start();
+            base.Player.IsVideoFrameServerEnabled = true;
+
+            return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
+        }
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false)
             {
-                if (this.IsPlaying) this.Player.Pause();
+                if (base.IsPlaying) base.Player.Pause();
                 return null;
             }
 
-            base.SetPlayer(isPlaying, position);
-
-            if (this.VideoFrameAvailable)
+            if (isPlaying)
             {
-                base.Player.CopyFrameToVideoSurface(this.Bitmap);
-                this.VideoFrameAvailable = false;
+                if (base.IsPlaying == false)
+                {
+                    base.Player.PlaybackSession.Position = base.GetSpeedPlayerPosition(position);
+
+                    base.Player.IsVideoFrameServerEnabled = true;
+                    base.Player.Play();
+                }
             }
+            else
+            {
+                base.Player.PlaybackSession.Position = base.GetSpeedPlayerPosition(position);
+
+                if (base.IsPlaying)
+                {
+                    base.Player.IsVideoFrameServerEnabled = false;
+                    base.Player.Pause();
+                }
+                else
+                {
+                    this.Timer.Stop();
+                    this.Timer.Start();
+                    base.Player.IsVideoFrameServerEnabled = true;
+                }
+            }
+
             return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
         }
 

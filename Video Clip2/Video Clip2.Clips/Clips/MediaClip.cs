@@ -1,5 +1,6 @@
 ﻿using System;
 using Video_Clip2.Elements;
+using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
 
@@ -31,12 +32,17 @@ namespace Video_Clip2.Clips
         public double PlaybackRate => this.Player.PlaybackSession.PlaybackRate;
         public double Volume => this.Player.Volume;
 
-        protected MediaClip(IStorageFile file, MediaPlayer player, double playbackRate, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+        protected MediaClip(IStorageFile file, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, index, trackHeight, trackScale)
         {
             this.File = file;
-            this.Player = player;
+            this.Player = new MediaPlayer
+            {
+                Source = MediaSource.CreateFromStorageFile(file),
+                IsMuted = isMuted
+            };
             this.Player.PlaybackSession.PlaybackRate = playbackRate;
+            this.Player.PlaybackSession.Position = this.GetSpeedPlayerPosition(position);
 
             this.OriginalDuration = originalDuration;
             this.SpeedDuration = playbackRate == 1 ? originalDuration : (originalDuration.ToDouble() / playbackRate).ToTimeSpan();
@@ -75,30 +81,11 @@ namespace Video_Clip2.Clips
             if (position > this.Delay + this.TrimmedDuration) return false;
             return true;
         }
-        protected void SetPlayer(bool isPlaying, TimeSpan position)
+        protected TimeSpan GetSpeedPlayerPosition(TimeSpan position)
         {
-            if (isPlaying)
-            {
-                if (this.IsPlaying == false)
-                {
-                    TimeSpan playerPosition = position - (base.Delay - this.TrimTimeFromStart);
-                    TimeSpan speedPlayerPositionn = this.PlaybackRate == 1 ? playerPosition : (this.PlaybackRate * playerPosition.ToDouble()).ToTimeSpan();
-
-                    this.Player.PlaybackSession.Position = speedPlayerPositionn;
-                    this.Player.Play();
-                }
-            }
-            else
-            {
-                TimeSpan playerPosition = position - (base.Delay - this.TrimTimeFromStart);
-                TimeSpan speedPlayerPositionn = this.PlaybackRate == 1 ? playerPosition : (this.PlaybackRate * playerPosition.ToDouble()).ToTimeSpan();
-
-                this.Player.PlaybackSession.Position = speedPlayerPositionn;
-                if (this.IsPlaying)
-                {
-                    this.Player.Pause();
-                }
-            }
+            TimeSpan playerPosition = position - (base.Delay - this.TrimTimeFromStart);
+            TimeSpan speedPlayerPosition = playerPosition.Scale(this.PlaybackRate);
+            return speedPlayerPosition;
         }
 
         public void SetDuration(double trackScale, TimeSpan trimTimeFromStart, TimeSpan trimTimeFromEnd)

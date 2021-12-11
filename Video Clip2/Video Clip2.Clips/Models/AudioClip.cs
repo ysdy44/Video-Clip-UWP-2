@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips.ClipTracks;
+using Video_Clip2.Elements;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -18,12 +19,12 @@ namespace Video_Clip2.Clips.Models
         public override ClipType Type => ClipType.Audio;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
-        private AudioClip(IStorageFile file, double playbackRate, bool isMuted, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(file, new MediaPlayer { Source = MediaSource.CreateFromStorageFile(file), IsMuted = isMuted }, playbackRate, isMuted, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        private AudioClip(IStorageFile file, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+            : base(file, playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
         }
         public AudioClip(IStorageFile file, bool isMuted, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale)
-            : this(file, 1, isMuted, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
+            : this(file, 1, isMuted, delay, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
         {
         }
 
@@ -35,18 +36,34 @@ namespace Video_Clip2.Clips.Models
         {
             if (base.InRange(position) == false)
             {
-                if (this.IsPlaying) this.Player.Pause();
+                if (base.IsPlaying) base.Player.Pause();
                 return null;
             }
 
-            base.SetPlayer(isPlaying, position);
+            if (isPlaying)
+            {
+                if (base.IsPlaying == false)
+                {
+                    base.Player.PlaybackSession.Position = base.GetSpeedPlayerPosition(position);
+
+                    base.Player.Play();
+                }
+            }
+            else
+            {
+                base.Player.PlaybackSession.Position = base.GetSpeedPlayerPosition(position);
+                if (base.IsPlaying)
+                {
+                    base.Player.Pause();
+                }
+            }
 
             return null;
         }
 
         protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new AudioClip(base.File, playbackRate, isMuted, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            return new AudioClip(base.File, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
