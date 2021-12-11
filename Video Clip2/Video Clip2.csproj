@@ -191,6 +191,7 @@
       <DependentUpon>TimeButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Video Clip2.Elements\Transitions\IndexTransitionPanel.cs" />
+    <Compile Include="Video Clip2.Elements\Transitions\ITransitionElement.cs" />
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanel.cs" />
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>

@@ -52,6 +52,20 @@ namespace Video_Clip2.Elements.Transitions
         public TransitionPanelBase()
         {
             this.InitializeComponent();
+            this.HideStoryboard.Completed += (s, e) =>
+            {
+                if (base.Content is ITransitionElement child)
+                {
+                    child.OnNavigatedFrom();
+                }
+            };
+            this.ShowStoryboard.Completed += (s, e) =>
+            {
+                if (base.Content is ITransitionElement child)
+                {
+                    child.OnNavigatedTo();
+                }
+            };
         }
     }
 }
