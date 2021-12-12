@@ -15,13 +15,15 @@ using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Clips.Models
 {
-    public class ImageClip : FrameClip, IClip
+    public class ImageClip : FrameClip, IClip, IStretchClip
     {
 
         readonly CanvasBitmap Thumbnail;
-        readonly CanvasBitmap Bitmap;
 
-        public Stretch Stretch { get; private set; } = Stretch.Uniform;
+        public Stretch Stretch { get; set; } = Stretch.Uniform;
+        public CanvasBitmap Bitmap { get; private set; }
+        public uint Width { get; private set; }
+        public uint Height { get; private set; }
 
         public override ClipType Type => ClipType.Image;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
@@ -31,6 +33,8 @@ namespace Video_Clip2.Clips.Models
         {
             this.Thumbnail = thumbnail;
             this.Bitmap = bitmap;
+            this.Width = bitmap.SizeInPixels.Width;
+            this.Height = bitmap.SizeInPixels.Height;
             base.ChangeView(position, delay, duration);
         }
         public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -48,15 +52,11 @@ namespace Video_Clip2.Clips.Models
             });
         }
 
+        public ICanvasImage Render(Size previewSize) => ClipBase.Render(this.Stretch, this.Bitmap, this.Width, this.Height, previewSize);
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
-            else return ImageClip.Render(this.Stretch, this.Bitmap, previewSize);
-        }
-
-        public void SetStretch(Stretch stretch)
-        {
-            this.Stretch = stretch;
+            else return this.Render(previewSize);
         }
 
         protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
@@ -101,33 +101,6 @@ namespace Video_Clip2.Clips.Models
                 });
             }
             return renderTarget;
-        }
-
-        private static ICanvasImage Render(Stretch stretch, CanvasBitmap bitmap, Size previewSize)
-        {
-            if (stretch == Stretch.None) return bitmap;
-
-            double scaleX = previewSize.Width / bitmap.SizeInPixels.Width;
-            double scaleY = previewSize.Height / bitmap.SizeInPixels.Height;
-            if (stretch == Stretch.Fill) return new ScaleEffect
-            {
-                Scale = new Vector2((float)scaleX, (float)scaleY),
-                Source = bitmap
-            };
-
-            double scale =
-                stretch == Stretch.Uniform ?
-                Math.Min(scaleX, scaleY) :
-                Math.Max(scaleX, scaleY);
-
-            return new Transform2DEffect
-            {
-                TransformMatrix =
-                   Matrix3x2.CreateTranslation(-bitmap.SizeInPixels.Width / 2, -bitmap.SizeInPixels.Height / 2) *
-                   Matrix3x2.CreateScale(new Vector2((float)scale)) *
-                   Matrix3x2.CreateTranslation((float)previewSize.Width / 2, (float)previewSize.Height / 2),
-                Source = bitmap
-            };
         }
 
     }

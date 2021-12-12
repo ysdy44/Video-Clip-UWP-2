@@ -15,20 +15,23 @@ using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Clips.Models
 {
-    public partial class VideoClip : MediaClip, IClip
+    public partial class VideoClip : MediaClip, IClip, IStretchClip
     {
 
-        readonly uint Width;
-        readonly uint Height;
         readonly IList<CanvasBitmap> Thumbnails;
         readonly DispatcherTimer Timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(10)
         };
-        readonly CanvasBitmap Bitmap;
+
+        public Stretch Stretch { get; set; } = Stretch.Uniform;
+        public CanvasBitmap Bitmap { get; private set; }
+        public uint Width { get; private set; }
+        public uint Height { get; private set; }
 
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
@@ -81,6 +84,7 @@ namespace Video_Clip2.Clips.Models
 
             return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
         }
+        public ICanvasImage Render(Size previewSize) => ClipBase.Render(this.Stretch, this.Bitmap, this.Width, this.Height, previewSize);
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false)
@@ -116,7 +120,7 @@ namespace Video_Clip2.Clips.Models
                 }
             }
 
-            return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
+            return this.Render(previewSize);
         }
 
         protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)

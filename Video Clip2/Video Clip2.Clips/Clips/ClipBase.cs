@@ -1,11 +1,14 @@
 ﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Numerics;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Effects;
 using Video_Clip2.Elements;
 using Windows.Foundation;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Clips
 {
@@ -109,6 +112,34 @@ namespace Video_Clip2.Clips
 
             this.Track.TrackUnloaded += (s, e) => this.Track.Draw -= this.DrawThumbnail;
             this.Track.TrackLoaded += (s, e) => this.Track.Draw += this.DrawThumbnail;
+        }
+
+        //@Static
+        protected static ICanvasImage Render(Stretch stretch, CanvasBitmap bitmap, uint width, uint height, Size previewSize)
+        {
+            if (stretch == Stretch.None) return bitmap;
+
+            double scaleX = previewSize.Width / width;
+            double scaleY = previewSize.Height / height;
+            if (stretch == Stretch.Fill) return new ScaleEffect
+            {
+                Scale = new Vector2((float)scaleX, (float)scaleY),
+                Source = bitmap
+            };
+
+            double scale =
+                stretch == Stretch.Uniform ?
+                Math.Min(scaleX, scaleY) :
+                Math.Max(scaleX, scaleY);
+
+            return new Transform2DEffect
+            {
+                TransformMatrix =
+                   Matrix3x2.CreateTranslation(-bitmap.SizeInPixels.Width / 2, -bitmap.SizeInPixels.Height / 2) *
+                   Matrix3x2.CreateScale(new Vector2((float)scale)) *
+                   Matrix3x2.CreateTranslation((float)previewSize.Width / 2, (float)previewSize.Height / 2),
+                Source = bitmap
+            };
         }
 
     }
