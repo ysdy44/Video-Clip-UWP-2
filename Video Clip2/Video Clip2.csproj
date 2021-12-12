@@ -211,6 +211,9 @@
     <Compile Include="Video Clip2.Menus\TransitionControl.xaml.cs">
       <DependentUpon>TransitionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Tools\Elements\StretchListView.xaml.cs">
+      <DependentUpon>StretchListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Tools\Elements\ToolTypeComboBox.xaml.cs">
       <DependentUpon>ToolTypeComboBox.xaml</DependentUpon>
     </Compile>
@@ -381,6 +384,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Menus\TransitionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Tools\Elements\StretchListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

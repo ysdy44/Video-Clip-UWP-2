@@ -1,0 +1,41 @@
+﻿<UserControl
+    x:Class="Video_Clip2.Tools.Elements.StretchListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Video_Clip2.Tools.Elements"
+    mc:Ignorable="d"
+    d:DesignWidth="100"
+    d:DesignHeight="50"
+    >
+
+    <ListView x:Name="ListView" IsItemClickEnabled="True" SelectionMode="Single">
+        <ListView.Items>
+
+            <elements:StretchListViewItem x:Name="None" Type="None" Index="0">
+                <ContentControl>
+                    None
+                </ContentControl>
+            </elements:StretchListViewItem>
+            <elements:StretchListViewItem x:Name="Fill" Type="Fill" Index="1">
+                <ContentControl>
+                    Fill
+                </ContentControl>
+            </elements:StretchListViewItem>
+            <elements:StretchListViewItem x:Name="Uniform" Type="Uniform" Index="2">
+                <ContentControl>
+                    Uniform
+                </ContentControl>
+            </elements:StretchListViewItem>
+            <elements:StretchListViewItem x:Name="UniformToFill" Type="UniformToFill" Index="3">
+                <ContentControl>
+                    UniformToFill
+                </ContentControl>
+            </elements:StretchListViewItem>
+
+        </ListView.Items>
+    </ListView>
+
+
+</UserControl>

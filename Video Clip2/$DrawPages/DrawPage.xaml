@@ -89,6 +89,14 @@
                 </Slider.Header>
             </elements:TimeSlider>
         </Flyout>
+        <Flyout x:Name="StretchFlyout" Placement="Top">
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="Padding" Value="0,4"/>
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+            <toolsElements:StretchListView x:Name="StretchListView"/>
+        </Flyout>
         <Flyout x:Name="VolumeFlyout" Placement="top">
             <elements:TimeSlider x:Name="VolumeSlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
                 <Slider.Header>
@@ -866,6 +874,15 @@
                         </ToolTip>
                     </ToolTipService.ToolTip>
                     <SymbolIcon Symbol="Rotate"/>
+                </Button>
+                <!--Stretch-->
+                <Button x:Name="StretchButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Stretch
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Switch"/>
                 </Button>
                 <!--Property-->
                 <Button x:Name="PropertyButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">

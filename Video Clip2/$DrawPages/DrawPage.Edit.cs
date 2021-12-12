@@ -80,6 +80,52 @@ namespace Video_Clip2
             };
 
 
+            this.StretchButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is IStretchClip stretchClip)
+                                {
+                                    this.StretchListView.Stretch = stretchClip.Stretch;
+                                    break;
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.StretchListView.Width = this.AppBarRightScrollViewer.ActualWidth;
+                this.StretchFlyout.ShowAt(this.AppBarRightScrollViewer);
+            };
+            this.StretchListView.StretchChanged += (s, stretch) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is IStretchClip stretchClip)
+                                {
+                                    stretchClip.Stretch = stretch;
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+
+                this.StretchFlyout.Hide();
+            };
+
+
             this.VolumeButton.Click += (s, e) =>
             {
                 foreach (IClip item in this.ViewModel.ObservableCollection)
