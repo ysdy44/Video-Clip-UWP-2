@@ -22,9 +22,15 @@ namespace Video_Clip2
             // Touch Move
             // Touch Scale
             // Slider Scale
-            this.PinHeader.XChanged += (s, value) =>
+            this.PinCanvas.XChanged += (s, value) =>
             {
-                if (this.IsDirectFreedom) return;
+                if (this.IsDirectFreedom)
+                {
+                    this.Timeline.X1 = value;
+                    this.Timeline.X2 = value;
+                    Canvas.SetLeft(this.PinHeader, value - 6);
+                    return;
+                }
                 if (this.IsDirectSliderScale) return;
                 if (this.IsDirectTouchScale) return;
                 if (this.IsDirectWheelMove) return;
@@ -158,18 +164,18 @@ namespace Video_Clip2
 
         private void UpdateTrackWidth()
         {
-            double trackLeftWidth = this.PinHeader.TrackLeftWidth;
-            this.TrackCanvas.Padding = new Thickness(0, 0, trackLeftWidth + trackLeftWidth, 0);
+            double trackLeftWidth = this.AppBarLeftBorder.Width;
+            double trackRightWidth = this.AppBarRightBorder.Width;
+            this.TrackCanvas.Padding = new Thickness(trackLeftWidth, 0, trackRightWidth, 0);
         }
         private void UpdateTrackWidth(double width)
         {
             double widthHalf = width / 2;
-            double trackLeftWidth = this.PinHeader.TrackLeftWidth;
-            this.TrackCanvas.Padding = new Thickness(Math.Max(0, widthHalf - trackLeftWidth), 0, widthHalf + trackLeftWidth, 0);
+            this.TrackCanvas.Padding = new Thickness(widthHalf, 0, widthHalf, 0);
         }
         private void UpdateTrackX()
         {
-            double horizontalOffset = this.PinHeader.X;
+            double horizontalOffset = this.ViewModel.Position.ToDouble(this.ViewModel.TrackScale);
             bool disableAnimation = true;
             this.TrackScrollViewer.ChangeView(horizontalOffset, null, null, disableAnimation);
         }

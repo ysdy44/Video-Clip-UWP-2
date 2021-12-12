@@ -32,8 +32,8 @@ namespace Video_Clip2
                         }
                     }
                 }
-                this.SpeedSlider.Width = this.AppBarRightStackPanel.ActualWidth;
-                this.SpeedFlyout.ShowAt(this.AppBarRightStackPanel);
+                this.SpeedSlider.Width = this.AppBarRightScrollViewer.ActualWidth;
+                this.SpeedFlyout.ShowAt(this.AppBarRightScrollViewer);
             };
             this.SpeedSlider.ValueChangedStarted += (s, e) =>
             {
@@ -99,8 +99,8 @@ namespace Video_Clip2
                         }
                     }
                 }
-                this.VolumeSlider.Width = this.AppBarRightStackPanel.ActualWidth;
-                this.VolumeFlyout.ShowAt(this.AppBarRightStackPanel);
+                this.VolumeSlider.Width = this.AppBarRightScrollViewer.ActualWidth;
+                this.VolumeFlyout.ShowAt(this.AppBarRightScrollViewer);
             };
             this.VolumeSlider.ValueChangedStarted += (s, e) =>
             {
@@ -145,8 +145,8 @@ namespace Video_Clip2
                         break;
                     }
                 }
-                this.OpacitySlider.Width = this.AppBarRightStackPanel.ActualWidth;
-                this.OpacityFlyout.ShowAt(this.AppBarRightStackPanel);
+                this.OpacitySlider.Width = this.AppBarRightScrollViewer.ActualWidth;
+                this.OpacityFlyout.ShowAt(this.AppBarRightScrollViewer);
             };
             this.OpacitySlider.ValueChangedStarted += (s, e) =>
             {

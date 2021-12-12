@@ -11,6 +11,9 @@ namespace Video_Clip2.Controls
     public sealed class PinCanvas : Canvas
     {
 
+        //@Delegate
+        public event EventHandler<double> XChanged;
+
         // Position & Pin
         readonly IDictionary<TimeSpan, Button> Buttons = new Dictionary<TimeSpan, Button>();
         Button CurrentButton;
@@ -83,6 +86,7 @@ namespace Video_Clip2.Controls
             if (e.NewValue is TimeSpan value)
             {
                 control.UpdatePosition(value);
+                control.XChanged?.Invoke(control, value.ToDouble(control.TrackScale)); // Delegate
             }
         }));
 
@@ -101,6 +105,7 @@ namespace Video_Clip2.Controls
             if (e.NewValue is double value)
             {
                 control.UpdateWidth(value);
+                control.XChanged?.Invoke(control, control.Position.ToDouble(value)); // Delegate
             }
         }));
 

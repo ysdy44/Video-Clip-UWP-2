@@ -20,8 +20,18 @@ namespace Video_Clip2
                 if (e.NewSize == Size.Empty) return;
                 if (e.NewSize == e.PreviousSize) return;
 
-                double height = e.NewSize.Height;
-                this.PreviewGrid.SetWindowHeight(height - 48);
+                if (e.NewSize.Width != e.PreviousSize.Width)
+                {
+                    ScrollViewer element = this.AppBarRightScrollViewer;
+                    int half = element.HorizontalAlignment == HorizontalAlignment.Right ? 2 : 1;
+                    element.MaxWidth = e.NewSize.Width / half - this.PlayGrid.Width - element.Margin.Right;
+                }
+
+                if (e.NewSize.Height != e.PreviousSize.Height)
+                {
+                    double height = e.NewSize.Height;
+                    this.PreviewGrid.SetWindowHeight(height - this.PlayGrid.Width);
+                }
             };
             this.FullScreenButton.Click += (s, e) =>
             {

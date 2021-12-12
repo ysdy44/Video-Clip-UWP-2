@@ -111,15 +111,6 @@ namespace Video_Clip2
             this.ConstructMenu();
             this.ConstructEdit();
 
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                ScrollViewer element = this.AppBarRightStackPanel;
-                int half = element.HorizontalAlignment == HorizontalAlignment.Right ? 2 : 1;
-                element.MaxWidth = e.NewSize.Width / half - element.Margin.Left - element.Margin.Right;
-            };
 
             this.TrackComboBox.SelectionChanged += (s, e) =>
             {

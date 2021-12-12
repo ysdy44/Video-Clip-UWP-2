@@ -20,9 +20,18 @@
     <Page.Resources>
         <!--Double-->
         <x:Double x:Key="AppBarHeight">48</x:Double>
+        
         <x:Double x:Key="TrackLeftWidth">72</x:Double>
-        <x:Double x:Key="TimelineHeight">30</x:Double>
+        <Thickness x:Key="TrackLeftMargin">72,0,72,0</Thickness>
+        <x:Double x:Key="TrackLeftLeft">-72</x:Double>
 
+        <x:Double x:Key="TrackLeft2Width">180</x:Double>
+        <Thickness x:Key="TrackLeft2Margin">252,0,252,0</Thickness>
+
+        <x:Double x:Key="TimelineHeight">30</x:Double>
+        <x:Double x:Key="TimelineTop">-30</x:Double>
+        <Thickness x:Key="TimelineMargin">0,30,0,0</Thickness>
+        
         <!--StaticResource-->
         <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
         <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
@@ -109,27 +118,29 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="HelpButton2.Visibility" Value=" Visible"/>
-                        <Setter Target="FullScreenButton2.Visibility" Value=" Visible"/>
-                        <Setter Target="HelpButton.Visibility" Value="Collapsed"/>
-                        <Setter Target="FullScreenButton.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarLeftScrollViewer.Width" Value="150"/>
 
                         <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarBorder2.Visibility" Value="Visible"/>
 
-                        <Setter Target="BackButton.(Grid.Row)" Value="3"/>
-                        <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
-                        <Setter Target="TimeButton.Margin" Value="0"/>
-                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarLeftStackPanel.HorizontalAlignment" Value="Right"/>
-                        <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
-                        <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="72,0,72,0"/>
-                        <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
-                        <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
-                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
-                        <Setter Target="SpliterButton.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarLeftBorder.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightBorder.(Grid.Row)" Value="3"/>
+
+                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
+                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
+
+                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="0"/>
+                        <Setter Target="AppBarLeftScrollViewer.HorizontalAlignment" Value="Right"/>
+                        <Setter Target="AppBarLeftScrollViewer.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarRightScrollViewer.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
+                        <Setter Target="AppBarRightScrollViewer.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="AppBarRightScrollViewer.Background" Value="{x:Null}"/>
+
+                        <Setter Target="PlayGrid.VerticalAlignment" Value="Bottom"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -141,20 +152,25 @@
                     <VisualState.Setters>
                         <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
                         <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarBorder2.Visibility" Value="Visible"/>
 
-                        <Setter Target="BackButton.(Grid.Row)" Value="3"/>
-                        <Setter Target="ToolTypeComboBox.(Grid.Row)" Value="3"/>
-                        <Setter Target="TimeButton.Margin" Value="0"/>
-                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarLeftStackPanel.HorizontalAlignment" Value="Right"/>
-                        <Setter Target="AppBarLeftStackPanel.RequestedTheme" Value="Dark"/>
-                        <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarRightStackPanel.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="72,0,72,0"/>
-                        <Setter Target="AppBarRightStackPanel.HorizontalAlignment" Value="Center"/>
-                        <Setter Target="AppBarRightStackPanel.Background" Value="{x:Null}"/>
-                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
-                        <Setter Target="SpliterButton.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarLeftBorder.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightBorder.(Grid.Row)" Value="3"/>
+
+                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
+                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
+
+                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="0"/>
+                        <Setter Target="AppBarLeftScrollViewer.HorizontalAlignment" Value="Right"/>
+                        <Setter Target="AppBarLeftScrollViewer.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarRightScrollViewer.(Grid.Row)" Value="3"/>
+                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
+                        <Setter Target="AppBarRightScrollViewer.HorizontalAlignment" Value="Center"/>
+                        <Setter Target="AppBarRightScrollViewer.Background" Value="{x:Null}"/>
+
+                        <Setter Target="PlayGrid.VerticalAlignment" Value="Bottom"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -164,16 +180,17 @@
                         <AdaptiveTrigger MinWindowWidth="900" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TimeButton.(Grid.Row)" Value="0"/>
-                        <Setter Target="TimeButton.Margin" Value="0"/>
-                        <Setter Target="TimeButton.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="TimeButton.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarLeftStackPanel.Margin" Value="72,0,0,0"/>
-                        <Setter Target="AppBarRightStackPanel.Margin" Value="24,0,72,0"/>
-                        <Setter Target="ScaleSlider.(Grid.Row)" Value="0"/>
-                        <Setter Target="ScaleSlider.Margin" Value="0"/>
-                        <Setter Target="ScaleSlider.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="ScaleSlider.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarLeftBorder2.(Grid.Row)" Value="0"/>
+                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
+                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
+                        <Setter Target="AppBarRightBorder2.(Grid.Row)" Value="0"/>
+                        <Setter Target="AppBarRightBorder2.Margin" Value="0"/>
+                        <Setter Target="AppBarRightBorder2.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="AppBarRightBorder2.RequestedTheme" Value="Dark"/>
+
+                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
+                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
                     </VisualState.Setters>
                 </VisualState>
 
@@ -190,22 +207,15 @@
         </VisualStateManager.VisualStateGroups>
 
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="48" MinHeight="48" MaxHeight="48"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!--Extension-->
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="Black"/>
-
-
 
         <!--Preview-->
         <controls1:PreviewCanvas x:Name="PreviewGrid"
@@ -221,104 +231,47 @@
             </xaml:CanvasControl>
         </controls1:PreviewCanvas>
 
-        <Grid Padding="12" RequestedTheme="Dark" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <!--Home-->
-            <Button Background="{ThemeResource AppBackgroundLight}"
-                        IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}">
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="Home" Width="32"/>
-                    <TextBlock Margin="4,0">
-                        Home
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-            <!--Help-->
-            <Button x:Name="HelpButton2" IsEnabled="False" Grid.Column="1" Visibility="Collapsed" Width="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Help
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Help"/>
-            </Button>
-            <!--FullScreen-->
-            <Button x:Name="FullScreenButton2" Grid.Column="3" Visibility="Collapsed" Width="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Full Screen
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
-            </Button>
-            <!--Export-->
-            <Button x:Name="ExportButton" Grid.Column="4"
+        <!--Home-->
+        <Button Margin="12"
+                HorizontalAlignment="Left" VerticalAlignment="Top"
+                Background="{ThemeResource AppBackgroundLight}"
+                IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="Home" Width="32"/>
+                <TextBlock Margin="4,0">
+                    Home
+                </TextBlock>
+            </StackPanel>
+        </Button>
+        <!--Export-->
+        <Button x:Name="ExportButton" Margin="12"
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Background="{ThemeResource AppBlueLinearGradientBrush}" 
                     IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}"
-                    Background="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource AccentButtonStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <SymbolIcon Symbol="NewWindow" Width="32"/>
-                    <TextBlock Margin="4,0">
-                        Export
-                    </TextBlock>
-                </StackPanel>
-            </Button>
-        </Grid>
-
-
+                    Style="{StaticResource AccentButtonStyle}">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="NewWindow" Width="32"/>
+                <TextBlock Margin="4,0">
+                    Export
+                </TextBlock>
+            </StackPanel>
+        </Button>
 
         <!--Track-->
-        <ScrollViewer x:Name="TrackScrollViewer" Grid.Row="2" IsHitTestVisible="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}" Background="{ThemeResource AppBackground}">
+        <ScrollViewer x:Name="TrackScrollViewer" Grid.Row="2" Background="{ThemeResource AppBackground}">
             <Border x:Name="TrackCanvas" Background="Transparent"
                         ManipulationMode="{x:Bind ToolTypeComboBox.Tool.TrackManipulationMode, Mode=OneWay}"
                         ManipulationStarted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationStarted, Mode=OneWay}"
                         ManipulationDelta="{x:Bind ToolTypeComboBox.Tool.TrackManipulationDelta, Mode=OneWay}"
                         ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationCompleted, Mode=OneWay}"
                         >
-                <Canvas Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" HorizontalAlignment="Left">
+                <Canvas Margin="{StaticResource TimelineMargin}" HorizontalAlignment="Left"
+                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}">
 
 
-                    <!--Rectangle-->
-                    <controls1:RectangleCanvas x:Name="RectangleCanvas"
-                        MaximumRows="6" IsHitTestVisible="False"
-                        Canvas.Left="{StaticResource TrackLeftWidth}"
-                        Canvas.Top="{StaticResource TimelineHeight}"
-                        ItemWidth="{x:Bind PositionCanvas.Width, Mode=OneWay}"
-                        ItemHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}">
-                        <controls1:RectangleCanvas.LightStyle>
-                            <Style TargetType="Rectangle">
-                                <Setter Property="StrokeThickness" Value="1"/>
-                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
-                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumLight}"/>
-                            </Style>
-                        </controls1:RectangleCanvas.LightStyle>
-                        <controls1:RectangleCanvas.DarkStyle>
-                            <Style TargetType="Rectangle">
-                                <Setter Property="StrokeThickness" Value="1"/>
-                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
-                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumDark}"/>
-                            </Style>
-                        </controls1:RectangleCanvas.DarkStyle>
-                    </controls1:RectangleCanvas>
-                    <!--Items-->
-                    <controls1:ItemCanvas x:Name="ItemCanvas"
-                        Canvas.Left="{StaticResource TrackLeftWidth}"
-                        Canvas.Top="{StaticResource TimelineHeight}"
-                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}"
-                        ItemSource="{x:Bind ViewModel.ObservableCollection, Mode=OneWay}"
-                        ItemClick="{x:Bind ToolTypeComboBox.Tool.ItemClick, Mode=OneWay}"
-                        ItemManipulationStarted="{x:Bind ToolTypeComboBox.Tool.ItemManipulationStarted, Mode=OneWay}"
-                        ItemManipulationDelta="{x:Bind ToolTypeComboBox.Tool.ItemManipulationDelta, Mode=OneWay}"
-                        ItemManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.ItemManipulationCompleted, Mode=OneWay}"
-                         />
-
-
-                    <StackPanel Width="{StaticResource TrackLeftWidth}">
+                    <StackPanel 
+                        Canvas.Left="{StaticResource TrackLeftLeft}" Canvas.Top="{StaticResource TimelineTop}"
+                        Width="{StaticResource TrackLeftWidth}" >
                         <!--Track-->
                         <ComboBox x:Name="TrackComboBox"
                              SelectedIndex="2" 
@@ -373,7 +326,7 @@
 
                     <!--Position-->
                     <controls1:PositionCanvas x:Name="PositionCanvas"
-                        Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
+                        Canvas.Left="0" Canvas.Top="{StaticResource TimelineTop}"
                         IsHitTestVisible="{x:Bind IsDirectFreedom, Mode=OneWay}"
                         Duration="{x:Bind ViewModel.Duration, Mode=OneWay}"
                         TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
@@ -385,7 +338,7 @@
                         </UIElement.ManipulationMode>
                     </controls1:PositionCanvas>
                     <controls1:PinCanvas x:Name="PinCanvas"
-                        Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="0"
+                        Canvas.Left="0" Canvas.Top="{StaticResource TimelineTop}"
                         ItemSource="{x:Bind ViewModel.PinCollection, Mode=OneWay}"
                         Position="{x:Bind ViewModel.Position, Mode=TwoWay}"
                         TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
@@ -451,24 +404,47 @@
                             </Style>
                         </controls1:PinCanvas.ItemStyle>
                     </controls1:PinCanvas>
-                    <controls1:PinHeader x:Name="PinHeader"
+                    <Border x:Name="PinHeader" CornerRadius="0,0,4,4"
                        IsHitTestVisible="False" 
+                       Canvas.Left="-6" Canvas.Top="{StaticResource TimelineTop}"
                        Width="12" Height="{StaticResource TimelineHeight}"
-                       Position="{x:Bind ViewModel.Position, Mode=OneWay}"
-                       TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}">
-                        <Border IsHitTestVisible="False" 
-                          Width="12" Height="{StaticResource TimelineHeight}"
-                          Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
-                          CornerRadius="0,0,4,4" BorderThickness="2" BorderBrush="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
-                    </controls1:PinHeader>
+                       Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
+                       BorderThickness="2" BorderBrush="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
 
 
-                    <Canvas 
-                        Canvas.Left="{StaticResource TrackLeftWidth}" Canvas.Top="{StaticResource TimelineHeight}"
-                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}">
+                    <!--Rectangle-->
+                    <controls1:RectangleCanvas x:Name="RectangleCanvas"
+                        MaximumRows="6" IsHitTestVisible="False"
+                        ItemWidth="{x:Bind PositionCanvas.Width, Mode=OneWay}"
+                        ItemHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}">
+                        <controls1:RectangleCanvas.LightStyle>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="StrokeThickness" Value="1"/>
+                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
+                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumLight}"/>
+                            </Style>
+                        </controls1:RectangleCanvas.LightStyle>
+                        <controls1:RectangleCanvas.DarkStyle>
+                            <Style TargetType="Rectangle">
+                                <Setter Property="StrokeThickness" Value="1"/>
+                                <Setter Property="Stroke" Value="{ThemeResource AppStroke}"/>
+                                <Setter Property="Fill" Value="{ThemeResource AppBackgroundMediumDark}"/>
+                            </Style>
+                        </controls1:RectangleCanvas.DarkStyle>
+                    </controls1:RectangleCanvas>
+                    <!--Items-->
+                    <controls1:ItemCanvas x:Name="ItemCanvas"
+                        Width="{x:Bind PositionCanvas.Width, Mode=OneWay}"
+                        ItemSource="{x:Bind ViewModel.ObservableCollection, Mode=OneWay}"
+                        ItemClick="{x:Bind ToolTypeComboBox.Tool.ItemClick, Mode=OneWay}"
+                        ItemManipulationStarted="{x:Bind ToolTypeComboBox.Tool.ItemManipulationStarted, Mode=OneWay}"
+                        ItemManipulationDelta="{x:Bind ToolTypeComboBox.Tool.ItemManipulationDelta, Mode=OneWay}"
+                        ItemManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.ItemManipulationCompleted, Mode=OneWay}"
+                         />
 
-                        <!--Dragger-->
-                        <draggers:ThumbDragger x:Name="ThumbDragger" Visibility="Collapsed" 
+
+                    <!--Dragger-->
+                    <draggers:ThumbDragger x:Name="ThumbDragger" Visibility="Collapsed" 
                                            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                            Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                            TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
@@ -476,13 +452,13 @@
                                            ManipulationDelta="{x:Bind ToolTypeComboBox.Tool.ThumbDraggerManipulationDelta, Mode=OneWay}"
                                            ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.ThumbDraggerManipulationCompleted, Mode=OneWay}"
                                            >
-                            <UIElement.ManipulationMode>
-                                System,
-                                TranslateX,
-                                TranslateY
-                            </UIElement.ManipulationMode>
-                        </draggers:ThumbDragger>
-                        <draggers:LeftDragger x:Name="LeftDragger" Visibility="Collapsed" 
+                        <UIElement.ManipulationMode>
+                            System,
+                            TranslateX,
+                            TranslateY
+                        </UIElement.ManipulationMode>
+                    </draggers:ThumbDragger>
+                    <draggers:LeftDragger x:Name="LeftDragger" Visibility="Collapsed" 
                                           SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                           Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                           TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
@@ -491,12 +467,12 @@
                                           ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.LeftDraggerManipulationCompleted, Mode=OneWay}"
                                           Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
                                           >
-                            <UIElement.ManipulationMode>
-                                System,
-                                TranslateX
-                            </UIElement.ManipulationMode>
-                        </draggers:LeftDragger>
-                        <draggers:RightDragger x:Name="RightDragger" Visibility="Collapsed" 
+                        <UIElement.ManipulationMode>
+                            System,
+                            TranslateX
+                        </UIElement.ManipulationMode>
+                    </draggers:LeftDragger>
+                    <draggers:RightDragger x:Name="RightDragger" Visibility="Collapsed" 
                                            SelectionMode="{x:Bind ViewModel.SelectionMode, Mode=OneWay}" 
                                            Trimmer="{x:Bind ViewModel.Trimmer, Mode=OneWay}" 
                                            TrackHeight="{x:Bind ViewModel.TrackHeight, Mode=OneWay}" 
@@ -505,29 +481,34 @@
                                            ManipulationCompleted="{x:Bind ToolTypeComboBox.Tool.RightDraggerManipulationCompleted, Mode=OneWay}"
                                            Height="{x:Bind ViewModel.TrackHeight, Mode=OneWay}"
                                            >
-                            <UIElement.ManipulationMode>
-                                System,
-                                TranslateX
-                            </UIElement.ManipulationMode>
-                        </draggers:RightDragger>
+                        <UIElement.ManipulationMode>
+                            System,
+                            TranslateX
+                        </UIElement.ManipulationMode>
+                    </draggers:RightDragger>
 
-                        <!--Timeline-->
-                        <Line IsHitTestVisible="False" 
+
+                    <!--Timeline-->
+                    <Line x:Name="Timeline" IsHitTestVisible="False" 
                               Visibility="{x:Bind BooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
-                              X1="{x:Bind PinHeader.X, Mode=OneWay}" Y1="0" 
-                              X2="{x:Bind PinHeader.X, Mode=OneWay}" Y2="512" 
+                              X1="0" Y1="0" 
+                              X2="0" Y2="512" 
                               StrokeThickness="2" Stroke="{ThemeResource AppRedAbsoluteLinearGradientBrush}"/>
-
-                    </Canvas>
 
                 </Canvas>
             </Border>
         </ScrollViewer>
 
-
+        <!--Timeline-->
+        <Line Grid.Row="2" IsHitTestVisible="False" 
+                HorizontalAlignment="Center" VerticalAlignment="Top"
+                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
+                X1="0" Y1="{StaticResource TimelineHeight}" 
+                X2="0" Y2="512" 
+                StrokeThickness="2" Stroke="{ThemeResource AppBlueAbsoluteLinearGradientBrush}" />
 
         <!--Button-->
-        <ListView Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" Style="{x:Null}">
+        <ListView x:Name="ButtonListView" Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" >
             <ListView.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                     <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
@@ -707,25 +688,6 @@
             </Button>
         </ListView>
 
-
-
-        <!--Timeline-->
-        <Line Grid.Row="2" IsHitTestVisible="False" 
-                HorizontalAlignment="Center" VerticalAlignment="Top"
-                Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
-                X1="0" Y1="0" 
-                X2="0" Y2="{x:Bind RectangleCanvas.Height, Mode=OneWay}" 
-                StrokeThickness="2" Stroke="{ThemeResource AppBlueAbsoluteLinearGradientBrush}">
-            <UIElement.RenderTransformOrigin>
-                0, 0
-            </UIElement.RenderTransformOrigin>
-            <UIElement.RenderTransform>
-                <TranslateTransform X="0" Y="{StaticResource TimelineHeight}"/>
-            </UIElement.RenderTransform>
-        </Line>
-
-
-
         <!--Menu-->
         <Grid Grid.Row="2">
             <!--Export-->
@@ -755,100 +717,124 @@
             </elementsTransitions:IndexTransitionPanel>
         </Grid>
 
-
-
         <!--AppBar-->
-        <Border x:Name="AppBarBorder"  Grid.Row="1" BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}"/>
-        <Border Grid.Row="3" BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundColorDark}"/>
-        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center"
-                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
-            <elements:PlayRing x:Name="PlayRing"/>
-            <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Play
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Play"/>
-            </Button>
-            <Button x:Name="PauseButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Pause
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Pause"/>
-            </Button>
-        </Grid>
+        <Border x:Name="AppBarBorder" Grid.Row="1" Visibility="Visible" 
+                Height="{StaticResource AppBarHeight}" 
+                BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" />
+        <Border x:Name="AppBarBorder2" Grid.Row="3" Visibility="Collapsed" 
+                Height="{StaticResource AppBarHeight}" 
+                BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" />
 
-        <toolsElements:ToolTypeComboBox x:Name="ToolTypeComboBox" Grid.Row="1" HorizontalAlignment="Left"
-                        Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                        Background="{ThemeResource AppBackgroundMediumDark}" 
+        <Grid x:Name="AppBarLeftBorder" Grid.Row="1" 
+                HorizontalAlignment="Left"
+                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                Background="{ThemeResource AppBackgroundMediumDark}" >
+            <toolsElements:ToolTypeComboBox x:Name="ToolTypeComboBox" 
                         Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
                         ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
-        <times:TimeButton x:Name="TimeButton" Grid.Row="1" Width="180" Margin="72,0,0,0" Padding="2,0" 
+            <Button x:Name="BackButton" HorizontalAlignment="Stretch"
+                Visibility="{x:Bind ReverseIntToVisibilityConverter(GroupIndex), Mode=OneWay}"
+                Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                        Back
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Back"/>
+            </Button>
+        </Grid>
+        <Border x:Name="AppBarRightBorder" Grid.Row="1" 
+                HorizontalAlignment="Right"
+                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
+                Background="{ThemeResource AppBackgroundMediumDark}" >
+            <Button x:Name="SpliterButton" HorizontalAlignment="Stretch"
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
+                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
+                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
+                    Style="{StaticResource TextBlockButtonStyle}">
+                <UIElement.ManipulationMode>
+                    TranslateY
+                </UIElement.ManipulationMode>
+                <SymbolIcon Symbol="GlobalNavigationButton"/>
+            </Button>
+        </Border>
+
+        <Border x:Name="AppBarLeftBorder2" Grid.Row="1" 
+                Margin="{StaticResource TrackLeftMargin}" HorizontalAlignment="Left" 
+                Width="{StaticResource TrackLeft2Width}" Height="{StaticResource AppBarHeight}" >
+            <times:TimeButton x:Name="TimeButton" Padding="2,0" 
                         Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
                         Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" 
                         Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-            <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
+                <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
                 <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
-            </TextBlock>
-        </times:TimeButton>
-        <StackPanel x:Name="AppBarLeftStackPanel" Grid.Row="1" Margin="252,0,0,0" HorizontalAlignment="Left"
-                    Orientation="Horizontal" 
-                    Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
-            <!--Undo-->
-            <Button x:Name="UndoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Undo
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Undo"/>
-            </Button>
-            <!--Redo-->
-            <Button x:Name="RedoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Redo
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Redo"/>
-            </Button>
-            <!--FullScreen-->
-            <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Full Screen
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
-            </Button>
-            <!--Help-->
-            <Button x:Name="HelpButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Help
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Help"/>
-            </Button>
-            <!--Pin-->
-            <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Pin
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
-            </Button>
-        </StackPanel>
+                </TextBlock>
+            </times:TimeButton>
+        </Border>
+        <Border x:Name="AppBarRightBorder2" Grid.Row="1"
+                Margin="{StaticResource TrackLeftMargin}" HorizontalAlignment="Right" 
+                Width="{StaticResource TrackLeft2Width}" Height="{StaticResource AppBarHeight}" >
+            <elements:TimeSlider x:Name="ScaleSlider" Padding="12,0" VerticalAlignment="Center" 
+                       Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
+                       Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+        </Border>
 
-        <ScrollViewer x:Name="AppBarRightStackPanel" Grid.Row="1" Margin="24,0,252,0" HorizontalAlignment="Right"
-                      HorizontalScrollBarVisibility="Hidden"
-                      BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}">
+        <ScrollViewer x:Name="AppBarLeftScrollViewer" Grid.Row="1" 
+                      Margin="{StaticResource TrackLeft2Margin}" HorizontalAlignment="Left"
+                      HorizontalScrollBarVisibility="Hidden" >
+            <StackPanel Orientation="Horizontal" Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
+                <!--Undo-->
+                <Button x:Name="UndoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Undo
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Undo"/>
+                </Button>
+                <!--Redo-->
+                <Button x:Name="RedoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Redo
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Redo"/>
+                </Button>
+                <!--FullScreen-->
+                <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Full Screen
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
+                </Button>
+                <!--Help-->
+                <Button x:Name="HelpButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Help
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="Help"/>
+                </Button>
+                <!--Pin-->
+                <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Pin
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+        <ScrollViewer x:Name="AppBarRightScrollViewer" Grid.Row="1" 
+                      Margin="{StaticResource TrackLeft2Margin}" HorizontalAlignment="Right"
+                      HorizontalScrollBarVisibility="Hidden" 
+                      BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}" >
             <StackPanel Orientation="Horizontal" >
                 <!--Trim-->
                 <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
@@ -955,37 +941,31 @@
                 </Button>
             </StackPanel>
         </ScrollViewer>
-        <elements:TimeSlider x:Name="ScaleSlider" Grid.Row="1" Width="180" Margin="0,0,72,0" Padding="12,0" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                       Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
-                       Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-        <Button x:Name="SpliterButton" Grid.Row="1" HorizontalAlignment="Right" 
-                    Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                    Padding="0" Background="{ThemeResource AppBackgroundMediumDark}" 
-                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
-                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
-                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
-                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
-                    Style="{StaticResource TextBlockButtonStyle}">
-            <UIElement.ManipulationMode>
-                TranslateY
-            </UIElement.ManipulationMode>
-            <SymbolIcon Symbol="GlobalNavigationButton"/>
-        </Button>
 
-        <Button x:Name="BackButton" Grid.Row="1" HorizontalAlignment="Left"
-                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                Padding="0" Background="{ThemeResource AppBackgroundMediumDark}" 
-                Visibility="{x:Bind ReverseIntToVisibilityConverter(GroupIndex), Mode=OneWay}"
-                Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-            <ToolTipService.ToolTip>
-                <ToolTip Style="{StaticResource AppToolTipStyle}">
-                    Back
-                </ToolTip>
-            </ToolTipService.ToolTip>
-            <SymbolIcon Symbol="Back"/>
-        </Button>
-
-
+        <!--Play-->
+        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center"
+                Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}"
+                Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
+            <elements:PlayRing x:Name="PlayRing"/>
+            <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
+                        Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                        Play
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Play"/>
+            </Button>
+            <Button x:Name="PauseButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
+                        Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                        Pause
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="Pause"/>
+            </Button>
+        </Grid>
 
         <!--Loading-->
         <ContentDialog x:Name="LoadingDialog" Grid.RowSpan="4">
