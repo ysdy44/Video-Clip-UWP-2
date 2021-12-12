@@ -134,7 +134,6 @@
     </Compile>
     <Compile Include="Controls\ItemCanvas.cs" />
     <Compile Include="Controls\PinCanvas.cs" />
-    <Compile Include="Controls\PinHeader.cs" />
     <Compile Include="Controls\PositionCanvas.cs" />
     <Compile Include="Controls\PreviewCanvas.cs" />
     <Compile Include="Controls\RectangleCanvas.cs" />
