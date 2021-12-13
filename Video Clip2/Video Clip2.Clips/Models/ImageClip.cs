@@ -6,35 +6,34 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
+using Video_Clip2.Transforms;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Clips.Models
 {
-    public class ImageClip : FrameClip, IClip, IStretchClip
+    public class ImageClip : FrameClip, IClip, ITransform
     {
 
+        readonly RenderTransform TransformCore;
+        readonly CanvasBitmap Bitmap;
         readonly CanvasBitmap Thumbnail;
-
-        public Stretch Stretch { get; set; } = Stretch.Uniform;
-        public CanvasBitmap Bitmap { get; private set; }
-        public uint Width { get; private set; }
-        public uint Height { get; private set; }
 
         public override ClipType Type => ClipType.Image;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
+        public RenderTransform Transform => this.TransformCore;
 
         public ImageClip(CanvasBitmap bitmap, CanvasBitmap thumbnail, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, duration, index, trackHeight, trackScale)
         {
-            this.Thumbnail = thumbnail;
+            uint width = bitmap.SizeInPixels.Width;
+            uint height = bitmap.SizeInPixels.Height;
+            this.TransformCore = new RenderTransform(width, height);
             this.Bitmap = bitmap;
-            this.Width = bitmap.SizeInPixels.Width;
-            this.Height = bitmap.SizeInPixels.Height;
+            this.Thumbnail = thumbnail;
             base.ChangeView(position, delay, duration);
         }
         public ImageClip(CanvasBitmap bitmap, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -52,11 +51,16 @@ namespace Video_Clip2.Clips.Models
             });
         }
 
-        public ICanvasImage Render(Size previewSize) => ClipBase.Render(this.Stretch, this.Bitmap, this.Width, this.Height, previewSize);
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
-            else return this.Render(previewSize);
+
+            this.Transform.ReloadMatrix(previewSize);
+            return new Transform2DEffect
+            {
+                TransformMatrix = this.Transform.Matrix,
+                Source = this.Bitmap
+            };
         }
 
         protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)

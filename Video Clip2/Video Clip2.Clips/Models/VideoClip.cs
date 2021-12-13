@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Elements;
+using Video_Clip2.Transforms;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -19,30 +20,27 @@ using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Clips.Models
 {
-    public partial class VideoClip : MediaClip, IClip, IStretchClip
+    public partial class VideoClip : MediaClip, IClip, ITransform
     {
 
+        readonly RenderTransform TransformCore;
+        readonly CanvasBitmap Bitmap;
         readonly IList<CanvasBitmap> Thumbnails;
         readonly DispatcherTimer Timer = new DispatcherTimer
         {
             Interval = TimeSpan.FromMilliseconds(10)
         };
 
-        public Stretch Stretch { get; set; } = Stretch.Uniform;
-        public CanvasBitmap Bitmap { get; private set; }
-        public uint Width { get; private set; }
-        public uint Height { get; private set; }
-
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
+        public RenderTransform Transform => this.TransformCore;
 
         private VideoClip(IStorageFile file, uint width, uint height, IList<CanvasBitmap> thumbnails, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(file, playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
-            this.Width = width;
-            this.Height = height;
-            this.Thumbnails = thumbnails;
+            this.TransformCore = new RenderTransform(width, height);
             this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, width, height, 96);
+            this.Thumbnails = thumbnails;
             base.Player.VideoFrameAvailable += (s, e) =>
             {
                 base.Player.CopyFrameToVideoSurface(this.Bitmap);
@@ -52,6 +50,7 @@ namespace Video_Clip2.Clips.Models
                 this.Timer.Stop();
                 if (base.IsPlaying == false)
                 {
+                    // FrameServer
                     base.Player.IsVideoFrameServerEnabled = false;
                 }
             };
@@ -78,13 +77,19 @@ namespace Video_Clip2.Clips.Models
                 base.Player.Pause();
             }
 
+            // FrameServer
             this.Timer.Stop();
             this.Timer.Start();
             base.Player.IsVideoFrameServerEnabled = true;
 
-            return VideoClip.Render(this.Width, this.Height, this.Bitmap, previewSize);
+            // Transform
+            this.Transform.ReloadMatrix(previewSize);
+            return new Transform2DEffect
+            {
+                TransformMatrix = this.Transform.Matrix,
+                Source = this.Bitmap
+            };
         }
-        public ICanvasImage Render(Size previewSize) => ClipBase.Render(this.Stretch, this.Bitmap, this.Width, this.Height, previewSize);
         public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
         {
             if (base.InRange(position) == false)
@@ -114,18 +119,25 @@ namespace Video_Clip2.Clips.Models
                 }
                 else
                 {
+                    // FrameServer
                     this.Timer.Stop();
                     this.Timer.Start();
                     base.Player.IsVideoFrameServerEnabled = true;
                 }
             }
 
-            return this.Render(previewSize);
+            // Transform
+            this.Transform.ReloadMatrix(previewSize);
+            return new Transform2DEffect
+            {
+                TransformMatrix = this.Transform.Matrix,
+                Source = this.Bitmap
+            };
         }
 
         protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new VideoClip(base.File, this.Width, this.Height, this.Thumbnails, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            return new VideoClip(base.File, this.Transform.Width, this.Transform.Height, this.Thumbnails, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
@@ -177,24 +189,6 @@ namespace Video_Clip2.Clips.Models
                 thumbnails2.Add(bitmap);
             }
             return thumbnails2;
-        }
-
-        private static ICanvasImage Render(uint width, uint height, CanvasBitmap bitmap, Size previewSize)
-        {
-            double scaleX = previewSize.Width / width;
-            double scaleY = previewSize.Height / height;
-
-            double scale =
-                Math.Min(scaleX, scaleY);
-
-            return new Transform2DEffect
-            {
-                TransformMatrix =
-                   Matrix3x2.CreateTranslation(-width / 2, -height / 2) *
-                   Matrix3x2.CreateScale(new Vector2((float)scale)) *
-                   Matrix3x2.CreateTranslation((float)previewSize.Width / 2, (float)previewSize.Height / 2),
-                Source = bitmap
-            };
         }
 
     }

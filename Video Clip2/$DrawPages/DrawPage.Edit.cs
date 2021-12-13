@@ -1,6 +1,6 @@
-﻿using System;
-using Video_Clip2.Clips;
+﻿using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
+using Video_Clip2.Transforms;
 using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2
@@ -90,9 +90,9 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is IStretchClip stretchClip)
+                                if (item is ITransform transformClip)
                                 {
-                                    this.StretchListView.Stretch = stretchClip.Stretch;
+                                    this.StretchListView.Stretch = transformClip.Transform.Stretch;
                                     break;
                                 }
                                 break;
@@ -112,9 +112,10 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is IStretchClip stretchClip)
+                                if (item is ITransform transformClip)
                                 {
-                                    stretchClip.Stretch = stretch;
+                                    transformClip.Transform.Stretch = stretch;
+                                    transformClip.Transform.ReloadMatrix();
                                 }
                                 break;
                         }
