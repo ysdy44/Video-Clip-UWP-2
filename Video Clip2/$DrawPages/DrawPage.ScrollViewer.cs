@@ -17,6 +17,12 @@ namespace Video_Clip2
 
         private void ConstructScrollViewer()
         {
+            this.PinCanvas.PositionChanged += (s, value) =>
+            {
+                this.ViewModel.IsPlaying = false;
+                this.ViewModel.Position = value;
+            };
+
             // Wheel Move
             // Wheel Scale
             // Touch Move

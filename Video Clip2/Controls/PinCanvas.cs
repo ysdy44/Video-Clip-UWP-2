@@ -12,6 +12,7 @@ namespace Video_Clip2.Controls
     {
 
         //@Delegate
+        public event EventHandler<TimeSpan> PositionChanged;
         public event EventHandler<double> XChanged;
 
         // Position & Pin
@@ -212,7 +213,7 @@ namespace Video_Clip2.Controls
         private void ItemClick(object sender, RoutedEventArgs e)
         {
             Button item = sender as Button;
-            this.Position = (TimeSpan)item.Tag;
+            this.PositionChanged?.Invoke(this, (TimeSpan)item.Tag); // Delegate
         }
 
         private void UpdateWidth(double trackScale)

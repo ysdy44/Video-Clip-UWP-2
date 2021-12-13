@@ -380,7 +380,7 @@
                     <controls1:PinCanvas x:Name="PinCanvas"
                         Canvas.Left="0" Canvas.Top="{StaticResource TimelineTop}"
                         ItemSource="{x:Bind ViewModel.PinCollection, Mode=OneWay}"
-                        Position="{x:Bind ViewModel.Position, Mode=TwoWay}"
+                        Position="{x:Bind ViewModel.Position, Mode=OneWay}"
                         TrackScale="{x:Bind ViewModel.TrackScale, Mode=OneWay}"
                         Width="{x:Bind PositionCanvas.Width, Mode=OneWay}" Height="{StaticResource TimelineHeight}">
                         <controls1:PinCanvas.ItemStyle>
