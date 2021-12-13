@@ -20,13 +20,6 @@ namespace Video_Clip2.Clips
             this.Track.SetWidth(trackScale, duration);
         }
 
-        public override bool InRange(TimeSpan position)
-        {
-            if (position < this.Delay) return false;
-            if (position > this.Delay + this.Duration) return false;
-            return true;
-        }
-
         public void ChangeView(TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
         }

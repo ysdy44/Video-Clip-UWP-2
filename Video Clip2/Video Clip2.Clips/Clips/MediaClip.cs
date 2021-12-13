@@ -75,12 +75,6 @@ namespace Video_Clip2.Clips
             this.Player.IsMuted = isMuted || isMutedCore;
         }
 
-        public override bool InRange(TimeSpan position)
-        {
-            if (position < this.Delay) return false;
-            if (position > this.Delay + this.TrimmedDuration) return false;
-            return true;
-        }
         protected TimeSpan GetSpeedPlayerPosition(TimeSpan position)
         {
             TimeSpan playerPosition = position - (base.Delay - this.TrimTimeFromStart);

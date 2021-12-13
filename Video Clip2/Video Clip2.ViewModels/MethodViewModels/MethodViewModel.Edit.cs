@@ -20,7 +20,7 @@ namespace Video_Clip2.ViewModels
             foreach (string item in array)
             {
                 IClip lastClip = this.ObservableCollection.First(c => c.Id == item);
-                if (lastClip.InRange(this.Position) == false) continue;
+                if (lastClip.InRange(this.Position, TimeSpan.FromSeconds(2)) == false) continue;
 
                 IClip nextClip = lastClip.TrimClone(this.IsMuted, this.Position, this.TrackHeight, this.TrackScale);
                 if (nextClip == null) continue;

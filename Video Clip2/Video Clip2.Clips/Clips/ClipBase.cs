@@ -31,7 +31,6 @@ namespace Video_Clip2.Clips
         public float Opacity { get; set; } = 1;
 
         public Visibility Visibility { get; set; }
-        public abstract bool InRange(TimeSpan position);
 
         public bool IsMuted { get; private set; }
         public virtual void SetIsMuted(bool isMuted, bool isMutedCore)
@@ -57,6 +56,18 @@ namespace Video_Clip2.Clips
 
         #region Render
 
+        public bool InRange(TimeSpan position)
+        {
+            if (position < this.Delay) return false;
+            if (position > this.Delay + this.Duration) return false;
+            return true;
+        }
+        public bool InRange(TimeSpan position, TimeSpan minDuration)
+        {
+            if (position < this.Delay + minDuration) return false;
+            if (position > this.Delay + this.Duration - minDuration) return false;
+            return true;
+        }
         public abstract void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
         public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize);
 

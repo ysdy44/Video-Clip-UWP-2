@@ -40,6 +40,7 @@ namespace Video_Clip2.Clips
         #region Render
 
         bool InRange(TimeSpan position);
+        bool InRange(TimeSpan position, TimeSpan minDuration);
         void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
         ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize);
 
