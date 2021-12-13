@@ -143,7 +143,6 @@
     <Compile Include="Video Clip2.Clips\Clips\ClipBase.cs" />
     <Compile Include="Video Clip2.Clips\Clips\FrameClip.cs" />
     <Compile Include="Video Clip2.Clips\Clips\IClip.cs" />
-    <Compile Include="Video Clip2.Clips\Clips\IStretchClip.cs" />
     <Compile Include="Video Clip2.Clips\Clips\MediaClip.cs" />
     <Compile Include="Video Clip2.Clips\ClipTracks\ClipTrack.cs" />
     <Compile Include="Video Clip2.Clips\ClipTracks\ClipTrackBase.xaml.cs">
