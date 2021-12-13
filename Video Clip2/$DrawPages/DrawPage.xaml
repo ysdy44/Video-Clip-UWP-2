@@ -104,6 +104,38 @@
                 </Slider.Header>
             </elements:TimeSlider>
         </Flyout>
+        <Flyout x:Name="TransformFlyout" Placement="top">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="FlipHorizontalButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M18.477,20L7.843,29.724L7.843,10.276L18.477,20ZM21.523,20L32.157,29.724L32.157,10.276L21.523,20ZM23.207,20.063L31.057,27.241L31.057,12.885L23.207,20.063Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                </Button>
+                <Button x:Name="FlipVerticalButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M20,21.523L10.276,32.157L29.724,32.157L20,21.523ZM20,18.477L10.276,7.843L29.724,7.843L20,18.477ZM19.937,16.793L12.759,8.943L27.115,8.943L19.937,16.793Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                </Button>
+                <Button x:Name="RotateLeftButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M13.949,12.731C13.968,12.561 14.047,12.402 14.172,12.283L18.038,8.6C18.332,8.321 18.796,8.332 19.075,8.625C19.354,8.918 19.343,9.383 19.05,9.662L16.536,12.057C17.694,12.043 19.123,12.029 20,12.029C25.558,12.029 30.07,16.541 30.07,22.099C30.07,27.656 25.558,32.168 20,32.168C14.442,32.168 9.93,27.656 9.93,22.099C9.93,22.08 9.931,22.061 9.933,22.042L9.936,20.729C9.935,20.324 10.264,19.996 10.668,19.995C11.073,19.995 11.402,20.323 11.402,20.728C11.402,20.728 11.404,21.846 11.399,22.074C11.398,22.092 11.398,22.109 11.397,22.124C11.411,26.86 15.26,30.701 20,30.701C24.748,30.701 28.603,26.847 28.603,22.099C28.603,17.35 24.748,13.496 20,13.496C19.11,13.496 17.651,13.51 16.486,13.524L19.05,15.966C19.343,16.245 19.354,16.71 19.075,17.003C18.796,17.296 18.332,17.307 18.038,17.028L14.172,13.345C14.123,13.299 14.081,13.246 14.047,13.189L14.044,13.184C13.981,13.075 13.944,12.949 13.944,12.814C13.944,12.786 13.946,12.758 13.949,12.731Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                </Button>
+                <Button x:Name="RotateRightButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M26.051,12.731C26.032,12.561 25.953,12.402 25.828,12.283L21.962,8.6C21.668,8.321 21.204,8.332 20.925,8.625C20.646,8.918 20.657,9.383 20.95,9.662L23.464,12.057C22.306,12.043 20.877,12.029 20,12.029C14.442,12.029 9.93,16.541 9.93,22.099C9.93,27.656 14.442,32.168 20,32.168C25.558,32.168 30.07,27.656 30.07,22.099C30.07,22.08 30.069,22.061 30.067,22.042L30.064,20.729C30.065,20.324 29.736,19.996 29.332,19.995C28.927,19.995 28.598,20.323 28.598,20.728C28.598,20.728 28.596,21.846 28.601,22.074C28.602,22.092 28.602,22.109 28.603,22.124C28.589,26.86 24.74,30.701 20,30.701C15.252,30.701 11.397,26.847 11.397,22.099C11.397,17.35 15.252,13.496 20,13.496C20.89,13.496 22.349,13.51 23.514,13.524L20.95,15.966C20.657,16.245 20.646,16.71 20.925,17.003C21.204,17.296 21.668,17.307 21.962,17.028L25.828,13.345C25.877,13.299 25.919,13.246 25.953,13.189L25.956,13.184C26.019,13.075 26.056,12.949 26.056,12.814C26.056,12.786 26.054,12.758 26.051,12.731Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                </Button>
+            </StackPanel>
+        </Flyout>
         <Flyout x:Name="OpacityFlyout" Placement="top">
             <elements:TimeSlider x:Name="OpacitySlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
                 <Slider.Header>
@@ -920,14 +952,18 @@
                     </ToolTipService.ToolTip>
                     <SymbolIcon Symbol="Volume"/>
                 </Button>
-                <!--Flip-->
-                <Button x:Name="FlipButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <!--Transform-->
+                <Button x:Name="TransformButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                     <ToolTipService.ToolTip>
                         <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Flip
+                            Transform
                         </ToolTip>
                     </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="TwoPage"/>
+                    <PathIcon>
+                        <PathIcon.Data>
+                            M6.965,18.263L10.648,22.13C10.786,22.275 10.978,22.357 11.179,22.357C11.379,22.357 11.571,22.275 11.71,22.13L15.393,18.263C15.672,17.97 15.661,17.505 15.368,17.226C15.074,16.947 14.61,16.958 14.331,17.252L11.179,20.561C11.179,20.561 8.027,17.252 8.027,17.252C7.747,16.958 7.283,16.947 6.99,17.226C6.697,17.505 6.685,17.97 6.965,18.263ZM18.263,15.393L22.13,11.71C22.275,11.571 22.357,11.379 22.357,11.179C22.357,10.978 22.275,10.786 22.13,10.648L18.263,6.965C17.97,6.685 17.505,6.697 17.226,6.99C16.947,7.283 16.958,7.747 17.252,8.027L20.561,11.179C20.561,11.179 17.252,14.331 17.252,14.331C16.958,14.61 16.947,15.074 17.226,15.368C17.505,15.661 17.97,15.672 18.263,15.393ZM5.106,14.331L1.797,11.179C1.797,11.179 5.106,8.027 5.106,8.027C5.399,7.747 5.41,7.283 5.131,6.99C4.852,6.697 4.387,6.685 4.094,6.965L0.228,10.648C0.082,10.786 -0,10.978 0,11.179C0,11.379 0.082,11.571 0.228,11.71L4.094,15.393C4.387,15.672 4.852,15.661 5.131,15.368C5.41,15.074 5.399,14.61 5.106,14.331ZM8.027,5.106L11.179,1.797C11.179,1.797 14.331,5.106 14.331,5.106C14.61,5.399 15.074,5.41 15.368,5.131C15.661,4.852 15.672,4.387 15.393,4.094L11.71,0.228C11.571,0.082 11.379,0 11.179,0C10.978,-0 10.786,0.082 10.648,0.228L6.965,4.094C6.685,4.387 6.697,4.852 6.99,5.131C7.283,5.41 7.747,5.399 8.027,5.106Z
+                        </PathIcon.Data>
+                    </PathIcon>
                 </Button>
                 <!--Opacity-->
                 <Button x:Name="OpacityButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">

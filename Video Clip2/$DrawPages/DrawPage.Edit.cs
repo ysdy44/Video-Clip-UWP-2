@@ -182,6 +182,133 @@ namespace Video_Clip2
             };
 
 
+            this.TransformButton.Click += (s, e) =>
+            {
+                this.TransformFlyout.ShowAt(this.AppBarRightScrollViewer);
+            };
+            this.FlipHorizontalButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is ITransform transformClip)
+                                {
+                                    transformClip.Transform.IsXFlip = !transformClip.Transform.IsXFlip;
+                                    transformClip.Transform.ReloadMatrix();
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+
+                this.TransformFlyout.Hide();
+            };
+            this.FlipVerticalButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is ITransform transformClip)
+                                {
+                                    transformClip.Transform.IsYFlip = !transformClip.Transform.IsYFlip;
+                                    transformClip.Transform.ReloadMatrix();
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+
+                this.TransformFlyout.Hide();
+            };
+            this.RotateLeftButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is ITransform transformClip)
+                                {
+                                    switch (transformClip.Transform.Rotate)
+                                    {
+                                        case Rotate.None:
+                                            transformClip.Transform.Rotate = Rotate.RotateLeft90;
+                                            break;
+                                        case Rotate.RotateLeft90:
+                                            transformClip.Transform.Rotate = Rotate.Rotate180;
+                                            break;
+                                        case Rotate.RotateRight90:
+                                            transformClip.Transform.Rotate = Rotate.None;
+                                            break;
+                                        case Rotate.Rotate180:
+                                            transformClip.Transform.Rotate = Rotate.RotateRight90;
+                                            break;
+                                    }
+                                    transformClip.Transform.ReloadMatrix();
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+
+                this.TransformFlyout.Hide();
+            };
+            this.RotateRightButton.Click += (s, e) =>
+            {
+                foreach (IClip item in this.ViewModel.ObservableCollection)
+                {
+                    if (item.IsSelected)
+                    {
+                        switch (item.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (item is ITransform transformClip)
+                                {
+                                    switch (transformClip.Transform.Rotate)
+                                    {
+                                        case Rotate.None:
+                                            transformClip.Transform.Rotate = Rotate.RotateRight90;
+                                            break;
+                                        case Rotate.RotateLeft90:
+                                            transformClip.Transform.Rotate = Rotate.None;
+                                            break;
+                                        case Rotate.RotateRight90:
+                                            transformClip.Transform.Rotate = Rotate.Rotate180;
+                                            break;
+                                        case Rotate.Rotate180:
+                                            transformClip.Transform.Rotate = Rotate.RotateLeft90;
+                                            break;
+                                    }
+                                    transformClip.Transform.ReloadMatrix();
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
+
+                this.TransformFlyout.Hide();
+            };
+
+
+
             this.OpacityButton.Click += (s, e) =>
             {
                 foreach (IClip item in this.ViewModel.ObservableCollection)
