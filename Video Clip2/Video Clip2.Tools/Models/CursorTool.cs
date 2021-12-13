@@ -136,6 +136,7 @@ namespace Video_Clip2.Tools.Models
 
             this.SelectionViewModel.SetMode(); // Selection
             this.SelectionViewModel.CacheTrimmer(); // Selection
+            this.ViewModel.Invalidate(); // Invalidate
             e.Handled = true;
         }
         public void ThumbDraggerManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
@@ -161,6 +162,7 @@ namespace Video_Clip2.Tools.Models
             }
 
             this.SelectionViewModel.SetMode(); // Selection
+            this.ViewModel.Invalidate(); // Invalidate
             e.Handled = true;
         }
         public void ThumbDraggerManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
@@ -175,6 +177,7 @@ namespace Video_Clip2.Tools.Models
             }
 
             this.SelectionViewModel.SetMode(); // Selection
+            this.ViewModel.Invalidate(); // Invalidate
             e.Handled = true;
         }
 
@@ -190,6 +193,7 @@ namespace Video_Clip2.Tools.Models
                     item.CacheDuration(this.ViewModel.TrackScale);
 
                     this.SelectionViewModel.SetModeSingle(item); // Selection
+                    this.ViewModel.Invalidate(); // Invalidate
 
                     if (sender is TrimDragger dragger)
                     {
@@ -210,6 +214,7 @@ namespace Video_Clip2.Tools.Models
                     item.TrimStart(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
 
                     this.SelectionViewModel.SetModeSingle(item); // Selection
+                    this.ViewModel.Invalidate(); // Invalidate
                     e.Handled = true;
                     return;
                 }
@@ -220,6 +225,7 @@ namespace Video_Clip2.Tools.Models
             this.ViewModel.IsPlayingCore = this.ViewModel.IsPlaying;
 
             this.SelectionViewModel.SetMode(); // Selection
+            this.ViewModel.Invalidate(); // Invalidate
 
             if (sender is TrimDragger dragger)
             {
@@ -241,6 +247,7 @@ namespace Video_Clip2.Tools.Models
                     item.CacheDuration(this.ViewModel.TrackScale);
 
                     this.SelectionViewModel.SetModeSingle(item); // Selection
+                    this.ViewModel.Invalidate(); // Invalidate
 
                     if (sender is TrimDragger dragger)
                     {
@@ -261,6 +268,7 @@ namespace Video_Clip2.Tools.Models
                     item.TrimEnd(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
 
                     this.SelectionViewModel.SetModeSingle(item); // Selection
+                    this.ViewModel.Invalidate(); // Invalidate
                     e.Handled = true;
                     return;
                 }
@@ -271,6 +279,7 @@ namespace Video_Clip2.Tools.Models
             this.ViewModel.IsPlayingCore = this.ViewModel.IsPlaying;
 
             this.SelectionViewModel.SetMode(); // Selection
+            this.ViewModel.Invalidate(); // Invalidate
 
             if (sender is TrimDragger dragger)
             {

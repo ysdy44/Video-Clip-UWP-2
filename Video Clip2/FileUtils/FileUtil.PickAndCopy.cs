@@ -32,8 +32,8 @@ namespace Video_Clip2.FileUtils
                     case ClipType.Video:
                         openPicker = new FileOpenPicker
                         {
-                            SuggestedStartLocation = PickerLocationId.Desktop,
-                            ViewMode = PickerViewMode.List,
+                            ViewMode = PickerViewMode.Thumbnail,
+                            SuggestedStartLocation = location,
                             FileTypeFilter =
                             {
                                 ".mp4",
@@ -54,8 +54,8 @@ namespace Video_Clip2.FileUtils
                     case ClipType.Audio:
                         openPicker = new FileOpenPicker
                         {
-                            SuggestedStartLocation = PickerLocationId.Desktop,
-                            ViewMode = PickerViewMode.List,
+                            ViewMode = PickerViewMode.Thumbnail,
+                            SuggestedStartLocation = location,
                             FileTypeFilter =
                             {
                                 ".mp3",
