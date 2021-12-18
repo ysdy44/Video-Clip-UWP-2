@@ -199,6 +199,12 @@
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Medias\Audio.cs" />
+    <Compile Include="Video Clip2.Medias\Audio.Instance.cs" />
+    <Compile Include="Video Clip2.Medias\Audiotape.cs" />
+    <Compile Include="Video Clip2.Medias\Video.cs" />
+    <Compile Include="Video Clip2.Medias\Video.Instance.cs" />
+    <Compile Include="Video Clip2.Medias\Videotape.cs" />
     <Compile Include="Video Clip2.Menus\DurationMenu.xaml.cs">
       <DependentUpon>DurationMenu.xaml</DependentUpon>
     </Compile>
