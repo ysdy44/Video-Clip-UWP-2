@@ -2,7 +2,6 @@
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Effects;
 using Windows.Foundation;
 using Windows.UI.Xaml;

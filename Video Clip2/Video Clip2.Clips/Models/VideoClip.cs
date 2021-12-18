@@ -2,9 +2,9 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
-using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Elements;
+using Video_Clip2.Medias;
 using Video_Clip2.Transforms;
 using Windows.Foundation;
 using Windows.UI;
@@ -15,7 +15,7 @@ namespace Video_Clip2.Clips.Models
     public partial class VideoClip : MediaClip, IClip, ITransform
     {
 
-        readonly VideoClipManager Video;
+        readonly Video Video;
         readonly CanvasRenderTarget Bitmap;
         readonly RenderTransform TransformCore;
 
@@ -23,7 +23,7 @@ namespace Video_Clip2.Clips.Models
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
         public RenderTransform Transform => this.TransformCore;
 
-        private VideoClip(VideoClipManager video, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+        private VideoClip(Video video, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(video.CreateSource(), playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
             this.Video = video;
@@ -36,7 +36,7 @@ namespace Video_Clip2.Clips.Models
                 base.Player.CopyFrameToVideoSurface(this.Bitmap);
             };
         }
-        public VideoClip(VideoClipManager video, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
+        public VideoClip(Video video, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
             : this(video, 1, isMuted, position, delay, video.Duration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
         {
         }

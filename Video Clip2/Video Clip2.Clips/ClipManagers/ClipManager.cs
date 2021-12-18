@@ -1,6 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 
-namespace Video_Clip2.Clips.ClipManagers
+namespace Video_Clip2.Clips
 {
     public static partial class ClipManager
     {

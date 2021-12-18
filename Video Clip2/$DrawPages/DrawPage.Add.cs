@@ -3,14 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips;
-using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.Models;
-using Video_Clip2.FileUtils;
+using Video_Clip2.Medias;
 using Windows.Storage;
-using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -39,7 +35,7 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    VideoClipManager video = await VideoClipManager.Add(item);
+                    Video video = await Video.CreateVideoAsync(ClipManager.CanvasDevice, item);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
@@ -77,7 +73,7 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    AudioClipManager audio = await AudioClipManager.Add(item);
+                    Audio audio = await Audio.CreateAudioAsync(item);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();

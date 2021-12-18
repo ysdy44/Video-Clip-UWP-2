@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Video_Clip2.Clips;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Video_Clip2.Clips;
 
-namespace Video_Clip2.FileUtils
+namespace Video_Clip2
 {
     public static partial class FileUtil
     {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
-using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Elements;
 using Windows.Foundation;
 using Windows.UI;
