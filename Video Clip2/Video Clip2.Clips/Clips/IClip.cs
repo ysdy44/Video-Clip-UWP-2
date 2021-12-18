@@ -15,7 +15,7 @@ namespace Video_Clip2.Clips
 
         #region Instance
 
-        string Id { get; }
+        string Id { get; set; }
 
         #endregion
 

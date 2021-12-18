@@ -14,14 +14,8 @@ namespace Video_Clip2.Clips
 {
     public abstract partial class ClipBase
     {
-
+        
         public abstract IClipTrack Track { get; }
-
-        #region Instance
-
-        public string Id { get; private set; }
-
-        #endregion
 
         #region Property
 
