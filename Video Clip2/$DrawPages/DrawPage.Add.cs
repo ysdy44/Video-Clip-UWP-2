@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.Models;
 using Video_Clip2.FileUtils;
 using Windows.Storage;
@@ -36,12 +37,8 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    VideoProperties poperties = await item.Properties.GetVideoPropertiesAsync();
-                    uint width = poperties.Width;
-                    uint height = poperties.Height;
-                    TimeSpan duration = poperties.Duration;
-                    IList<CanvasBitmap> thumbnails = await VideoClip.LoadThumbnailsAsync(item, duration, poperties.Width, poperties.Height);
-                    this.ViewModel.ObservableCollection.Add(new VideoClip(item, width, height, thumbnails, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    VideoClipManager video = await VideoClipManager.Add(item);
+                    this.ViewModel.ObservableCollection.Add(new VideoClip(video, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
                         IsSelected = true
                     });
@@ -69,9 +66,8 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    MusicProperties poperties = await item.Properties.GetMusicPropertiesAsync();
-                    TimeSpan duration = poperties.Duration;
-                    this.ViewModel.ObservableCollection.Add(new AudioClip(item, this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    AudioClipManager audio = await AudioClipManager.Add(item);
+                    this.ViewModel.ObservableCollection.Add(new AudioClip(audio, this.ViewModel.IsMuted, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
                         IsSelected = true
                     });

@@ -26,19 +26,17 @@ namespace Video_Clip2.Clips
         protected double StartingTrimTimeFromStart;
         protected double StartingTrimTimeFromEnd;
 
-        protected readonly IStorageFile File;
         protected readonly MediaPlayer Player;
         protected bool IsPlaying => this.Player.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
         public double PlaybackRate => this.Player.PlaybackSession.PlaybackRate;
         public double Volume => this.Player.Volume;
 
-        protected MediaClip(IStorageFile file, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+        protected MediaClip(IMediaPlaybackSource source, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
             : base(isMuted, delay, index, trackHeight, trackScale)
         {
-            this.File = file;
             this.Player = new MediaPlayer
             {
-                Source = MediaSource.CreateFromStorageFile(file),
+                Source = source,
                 IsMuted = isMuted
             };
             this.Player.PlaybackSession.PlaybackRate = playbackRate;

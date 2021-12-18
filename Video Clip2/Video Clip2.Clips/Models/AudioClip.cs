@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips;
+using Video_Clip2.Clips.ClipManagers;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Elements;
 using Windows.Foundation;
@@ -16,15 +17,18 @@ namespace Video_Clip2.Clips.Models
     public class AudioClip : MediaClip, IClip
     {
 
+        readonly AudioClipManager Audio;
+
         public override ClipType Type => ClipType.Audio;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
-        private AudioClip(IStorageFile file, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(file, playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        private AudioClip(AudioClipManager audio, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
+            : base(audio.CreateSource(), playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
         {
+            this.Audio = audio;
         }
-        public AudioClip(IStorageFile file, bool isMuted, TimeSpan delay, TimeSpan originalDuration, int index, double trackHeight, double trackScale)
-            : this(file, 1, isMuted, delay, delay, originalDuration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
+        public AudioClip(AudioClipManager audio, bool isMuted, TimeSpan delay, int index, double trackHeight, double trackScale)
+            : this(audio, 1, isMuted, delay, delay, audio.Duration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
         {
         }
 
@@ -63,7 +67,7 @@ namespace Video_Clip2.Clips.Models
 
         protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new AudioClip(base.File, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            return new AudioClip(this.Audio, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
