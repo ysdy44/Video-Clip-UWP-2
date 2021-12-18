@@ -62,10 +62,12 @@ namespace Video_Clip2.ViewModels
                 this.trackScale = value;
                 this.OnPropertyChanged(nameof(TrackScale)); // Notify 
 
-                foreach (IClip item in this.ObservableCollection)
+                foreach (Clipping item in this.ObservableCollection)
                 {
-                    item.Track.SetLeft(value, item.Delay);
-                    item.Track.SetWidth(value, item.Duration);
+                    IClip clip = item.Self;
+
+                    clip.Track.SetLeft(value, clip.Delay);
+                    clip.Track.SetWidth(value, clip.Duration);
                 }
 
                 this.SetMode(); // Selection
@@ -82,10 +84,12 @@ namespace Video_Clip2.ViewModels
                 this.trackHeight = value;
                 this.OnPropertyChanged(nameof(TrackHeight)); // Notify
 
-                foreach (IClip item in this.ObservableCollection)
+                foreach (Clipping item in this.ObservableCollection)
                 {
-                    item.Track.SetTop(item.Index, value);
-                    item.Track.SetHeight(value);
+                    IClip clip = item.Self;
+
+                    clip.Track.SetTop(clip.Index, value);
+                    clip.Track.SetHeight(value);
                 }
             }
         }
@@ -112,10 +116,12 @@ namespace Video_Clip2.ViewModels
                 }
             }
 
-            foreach (IClip item in this.ObservableCollection)
+            foreach (Clipping item in this.ObservableCollection)
             {
+                IClip clip = item.Self;
+
                 {
-                    TimeSpan time = item.Delay;
+                    TimeSpan time = clip.Delay;
                     {
                         double distance = (time - position).ToDouble(this.TrackScale);
                         if (distance > -20 && distance < 20)
@@ -125,7 +131,7 @@ namespace Video_Clip2.ViewModels
                     }
                 }
                 {
-                    TimeSpan time = item.Delay + item.Duration;
+                    TimeSpan time = clip.Delay + clip.Duration;
                     {
                         double distance = (time - position).ToDouble(this.TrackScale);
                         if (distance > -20 && distance < 20)
@@ -143,7 +149,7 @@ namespace Video_Clip2.ViewModels
         public readonly ObservableCollection<TimeSpan> PinCollection = new ObservableCollection<TimeSpan>
         {
         };
-        public readonly ObservableCollection<IClip> ObservableCollection = new ObservableCollection<IClip>
+        public readonly ObservableCollection<Clipping> ObservableCollection = new ObservableCollection<Clipping>
         {
         };
 
@@ -202,9 +208,11 @@ namespace Video_Clip2.ViewModels
                 this.isMuted = value;
                 this.OnPropertyChanged(nameof(IsMuted)); // Notify 
 
-                foreach (IClip item in this.ObservableCollection)
+                foreach (Clipping item in this.ObservableCollection)
                 {
-                    item.SetIsMuted(value, item.IsMuted);
+                    IClip clip = item.Self;
+
+                    clip.SetIsMuted(value, clip.IsMuted);
                 }
             }
         }
@@ -218,7 +226,7 @@ namespace Video_Clip2.ViewModels
             {
                 if (this.Duration == TimeSpan.Zero || this.Position >= this.Duration)
                     this.IsPlaying = false;
-                 
+
                 this.Position = this.Delay + this.Stopwatch.Elapsed;
             };
         }

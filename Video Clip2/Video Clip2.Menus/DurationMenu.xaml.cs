@@ -30,14 +30,16 @@ namespace Video_Clip2.Menus
 
         public void Draw(CanvasDrawingSession drawingSession, Size previewSize)
         {
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
+                IClip clip = item.Self;
+
+                if (clip.IsSelected)
                 {
-                    switch (item.Type)
+                    switch (clip.Type)
                     {
                         case ClipType.Video:
-                            if (item is VideoClip videoClip)
+                            if (clip is VideoClip videoClip)
                             {
                                 ICanvasImage image = videoClip.GetPlayerRender(this.Position, previewSize);
 
@@ -52,14 +54,16 @@ namespace Video_Clip2.Menus
 
         public void OnNavigatedFrom()
         {
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
+                IClip clip = item.Self;
+
+                if (clip.IsSelected)
                 {
-                    switch (item.Type)
+                    switch (clip.Type)
                     {
                         case ClipType.Video:
-                            if (item is VideoClip videoClip)
+                            if (clip is VideoClip videoClip)
                             {
                                 this.DurationRanger.GetDuration(out TimeSpan trimTimeFromStart, out TimeSpan trimTimeFromEnd);
                                 videoClip.SetDuration(this.ViewModel.TrackScale, trimTimeFromStart, trimTimeFromEnd);
@@ -76,14 +80,16 @@ namespace Video_Clip2.Menus
 
         public void OnNavigatedTo()
         {
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
+                IClip clip = item.Self;
+
+                if (clip.IsSelected)
                 {
-                    switch (item.Type)
+                    switch (clip.Type)
                     {
                         case ClipType.Video:
-                            if (item is VideoClip videoClip)
+                            if (clip is VideoClip videoClip)
                             {
                                 this.DurationRanger.SetDuration(videoClip.PlaybackRate, videoClip.OriginalDuration, videoClip.TrimTimeFromStart, videoClip.TrimTimeFromEnd, TimeSpan.FromSeconds(2));
 

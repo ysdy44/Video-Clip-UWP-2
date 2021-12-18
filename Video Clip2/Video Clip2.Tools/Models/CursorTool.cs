@@ -30,8 +30,10 @@ namespace Video_Clip2.Tools.Models
         {
             if (sender is FrameworkElement element)
             {
-                if (element.DataContext is IClip clip)
+                if (element.DataContext is Clipping item)
                 {
+                    IClip clip = item.Self;
+
                     if (this.IsExtended)
                     {
                         clip.IsSelected = !clip.IsSelected;
@@ -39,9 +41,11 @@ namespace Video_Clip2.Tools.Models
                     }
                     else
                     {
-                        foreach (IClip item in this.ViewModel.ObservableCollection)
+                        foreach (Clipping item2 in this.ViewModel.ObservableCollection)
                         {
-                            if (item.IsSelected) item.IsSelected = false;
+                            IClip clip2 = item2.Self;
+
+                            if (clip2.IsSelected) clip2.IsSelected = false;
                         }
                         clip.IsSelected = true;
 
@@ -55,11 +59,15 @@ namespace Video_Clip2.Tools.Models
         {
             if (sender is FrameworkElement element)
             {
-                if (element.DataContext is IClip clip)
+                if (element.DataContext is Clipping item)
                 {
-                    foreach (IClip item in this.ViewModel.ObservableCollection)
+                    IClip clip = item.Self;
+
+                    foreach (Clipping item2 in this.ViewModel.ObservableCollection)
                     {
-                        if (item.IsSelected) item.IsSelected = false;
+                        IClip clip2 = item2.Self;
+
+                        if (clip2.IsSelected) clip2.IsSelected = false;
                     }
 
                     clip.CacheIndex();
@@ -75,8 +83,10 @@ namespace Video_Clip2.Tools.Models
         {
             if (sender is FrameworkElement element)
             {
-                if (element.DataContext is IClip clip)
+                if (element.DataContext is Clipping item)
                 {
+                    IClip clip = item.Self;
+
                     int moveY = this.ViewModel.StartingTrimmer.Move(this.ViewModel.TrackHeight, e.Cumulative.Translation.Y);
                     double moveX = this.ViewModel.StartingTrimmer.Move(e.Cumulative.Translation.X);
 
@@ -92,8 +102,10 @@ namespace Video_Clip2.Tools.Models
         {
             if (sender is FrameworkElement element)
             {
-                if (element.DataContext is IClip clip)
+                if (element.DataContext is Clipping item)
                 {
+                    IClip clip = item.Self;
+
                     clip.IsSelected = true;
 
                     this.SelectionViewModel.SetModeSingle(clip); // Selection
@@ -113,9 +125,11 @@ namespace Video_Clip2.Tools.Models
                 {
                     if (clip.IsSelected == false)
                     {
-                        foreach (IClip item in this.ViewModel.ObservableCollection)
+                        foreach (Clipping item in this.ViewModel.ObservableCollection)
                         {
-                            if (item.IsSelected) item.IsSelected = false;
+                            IClip clip2 = item.Self;
+
+                            if (clip2.IsSelected) clip2.IsSelected = false;
                         }
                         clip.IsSelected = true;
                         clip.CacheIndex();
@@ -125,12 +139,14 @@ namespace Video_Clip2.Tools.Models
                 }
             }
 
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
+                IClip clip = item.Self;
+
+                if (clip.IsSelected)
                 {
-                    item.CacheIndex();
-                    item.CacheDelay(this.ViewModel.TrackScale);
+                    clip.CacheIndex();
+                    clip.CacheDelay(this.ViewModel.TrackScale);
                 }
             }
 
@@ -152,12 +168,14 @@ namespace Video_Clip2.Tools.Models
                 }
             }
 
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
+                IClip clip = item.Self;
+
+                if (clip.IsSelected)
                 {
-                    item.AddIndex(this.ViewModel.TrackHeight, moveY);
-                    item.AddDelay(this.ViewModel.TrackScale, moveX, this.ViewModel.Position);
+                    clip.AddIndex(this.ViewModel.TrackHeight, moveY);
+                    clip.AddDelay(this.ViewModel.TrackScale, moveX, this.ViewModel.Position);
                 }
             }
 
@@ -185,14 +203,16 @@ namespace Video_Clip2.Tools.Models
         {
             this.ViewModel.IsPlayingCore = false;
 
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
-                {
-                    item.CacheDelay(this.ViewModel.TrackScale);
-                    item.CacheDuration(this.ViewModel.TrackScale);
+                IClip clip = item.Self;
 
-                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                if (clip.IsSelected)
+                {
+                    clip.CacheDelay(this.ViewModel.TrackScale);
+                    clip.CacheDuration(this.ViewModel.TrackScale);
+
+                    this.SelectionViewModel.SetModeSingle(clip); // Selection
                     this.ViewModel.Invalidate(); // Invalidate
 
                     if (sender is TrimDragger dragger)
@@ -207,13 +227,15 @@ namespace Video_Clip2.Tools.Models
         }
         public void LeftDraggerManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
-                {
-                    item.TrimStart(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+                IClip clip = item.Self;
 
-                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                if (clip.IsSelected)
+                {
+                    clip.TrimStart(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+
+                    this.SelectionViewModel.SetModeSingle(clip); // Selection
                     this.ViewModel.Invalidate(); // Invalidate
                     e.Handled = true;
                     return;
@@ -239,14 +261,16 @@ namespace Video_Clip2.Tools.Models
         {
             this.ViewModel.IsPlayingCore = false;
 
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
-                {
-                    item.CacheDelay(this.ViewModel.TrackScale);
-                    item.CacheDuration(this.ViewModel.TrackScale);
+                IClip clip = item.Self;
 
-                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                if (clip.IsSelected)
+                {
+                    clip.CacheDelay(this.ViewModel.TrackScale);
+                    clip.CacheDuration(this.ViewModel.TrackScale);
+
+                    this.SelectionViewModel.SetModeSingle(clip); // Selection
                     this.ViewModel.Invalidate(); // Invalidate
 
                     if (sender is TrimDragger dragger)
@@ -261,13 +285,15 @@ namespace Video_Clip2.Tools.Models
         }
         public void RightDraggerManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
         {
-            foreach (IClip item in this.ViewModel.ObservableCollection)
+            foreach (Clipping item in this.ViewModel.ObservableCollection)
             {
-                if (item.IsSelected)
-                {
-                    item.TrimEnd(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+                IClip clip = item.Self;
 
-                    this.SelectionViewModel.SetModeSingle(item); // Selection
+                if (clip.IsSelected)
+                {
+                    clip.TrimEnd(this.ViewModel.TrackScale, e.Cumulative.Translation.X, this.ViewModel.Position);
+
+                    this.SelectionViewModel.SetModeSingle(clip); // Selection
                     this.ViewModel.Invalidate(); // Invalidate
                     e.Handled = true;
                     return;

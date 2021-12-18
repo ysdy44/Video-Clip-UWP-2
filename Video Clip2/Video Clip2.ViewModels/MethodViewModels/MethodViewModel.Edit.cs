@@ -13,19 +13,25 @@ namespace Video_Clip2.ViewModels
         {
             this.IsPlaying = false;
 
-            IEnumerable<string> ids = from c in this.ObservableCollection where c.IsSelected select c.Id;
-            string[] array = ids.ToArray();
+            IEnumerable<Clipping> clippings = from c in this.ObservableCollection where c.Self.IsSelected select c;
+            Clipping[] array = clippings.ToArray();
             if (array.Length <= 0) return;
 
-            foreach (string item in array)
+            foreach (Clipping item in array)
             {
-                IClip lastClip = this.ObservableCollection.First(c => c.Id == item);
+                IClip lastClip = item.Self;
                 if (lastClip.InRange(this.Position, TimeSpan.FromSeconds(2)) == false) continue;
 
+                //
                 IClip nextClip = lastClip.TrimClone(this.IsMuted, this.Position, this.TrackHeight, this.TrackScale);
                 if (nextClip == null) continue;
 
-                this.ObservableCollection.Add(nextClip);
+                Clipping clipping = Clipping.CreateByGuid();
+                clipping.Id = nextClip.Id;
+                ClipBase.Instances.Add(clipping.Id, nextClip);
+                //
+
+                this.ObservableCollection.Add(clipping);
                 lastClip.IsSelected = false;
                 nextClip.IsSelected = true;
             }
@@ -37,15 +43,14 @@ namespace Video_Clip2.ViewModels
         {
             this.IsPlaying = false;
 
-            IEnumerable<string> ids = from c in this.ObservableCollection where c.IsSelected select c.Id;
-            string[] array = ids.ToArray();
+            IEnumerable<Clipping> clippings = from c in this.ObservableCollection where c.Self.IsSelected select c;
+            Clipping[] array = clippings.ToArray();
             if (array.Length <= 0) return;
 
-            foreach (string item in array)
+            foreach (Clipping item in array)
             {
-                IClip remove = this.ObservableCollection.First(c => c.Id == item);
+                Clipping remove = item;
                 this.ObservableCollection.Remove(remove);
-                remove.Dispose();
             }
 
             this.SetModeNone(); // Selection

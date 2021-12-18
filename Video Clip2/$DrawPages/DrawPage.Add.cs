@@ -25,9 +25,11 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 IReadOnlyList<StorageFile> files = await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop, ClipType.Video);
@@ -38,10 +40,17 @@ namespace Video_Clip2
                 foreach (StorageFile item in files)
                 {
                     VideoClipManager video = await VideoClipManager.Add(item);
-                    this.ViewModel.ObservableCollection.Add(new VideoClip(video, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                    // Clip
+                    Clipping clipping = Clipping.CreateByGuid();
+                    IClip clip = new VideoClip(video, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
+                        Id = clipping.Id,
                         IsSelected = true
-                    });
+                    };
+                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    this.ViewModel.ObservableCollection.Add(clipping);
                 }
                 this.IsLoading = false;
 
@@ -54,9 +63,11 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 IReadOnlyList<StorageFile> files = await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop, ClipType.Audio);
@@ -67,10 +78,17 @@ namespace Video_Clip2
                 foreach (StorageFile item in files)
                 {
                     AudioClipManager audio = await AudioClipManager.Add(item);
-                    this.ViewModel.ObservableCollection.Add(new AudioClip(audio, this.ViewModel.IsMuted, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                    // Clip
+                    Clipping clipping = Clipping.CreateByGuid();
+                    IClip clip = new AudioClip(audio, this.ViewModel.IsMuted, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
+                        Id = clipping.Id,
                         IsSelected = true
-                    });
+                    };
+                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    this.ViewModel.ObservableCollection.Add(clipping);
                 }
                 this.IsLoading = false;
 
@@ -83,9 +101,11 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 IReadOnlyList<StorageFile> files = await FileUtil.PickMultipleImageFilesAsync(PickerLocationId.Desktop, ClipType.Image);
@@ -97,10 +117,17 @@ namespace Video_Clip2
                 {
                     CanvasBitmap bitmap = await ImageClip.LoadBitmapAsync(item);
                     TimeSpan duration = TimeSpan.FromSeconds(10);
-                    this.ViewModel.ObservableCollection.Add(new ImageClip(bitmap, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                    // Clip
+                    Clipping clipping = Clipping.CreateByGuid();
+                    IClip clip = new ImageClip(bitmap, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
+                        Id = clipping.Id,
                         IsSelected = true
-                    });
+                    };
+                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    this.ViewModel.ObservableCollection.Add(clipping);
                 }
                 this.IsLoading = false;
 
@@ -113,18 +140,26 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 Color color = this.ColorPicker.Color;
                 TimeSpan duration = TimeSpan.FromSeconds(10);
-                ColorClip clip = new ColorClip(color, this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                // Clip
+                Clipping clipping = Clipping.CreateByGuid();
+                IClip clip = new ColorClip(color, this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                 {
+                    Id = clipping.Id,
                     IsSelected = true
                 };
-                this.ViewModel.ObservableCollection.Add(clip);
+                ClipBase.Instances.Add(clipping.Id, clip);
+
+                this.ViewModel.ObservableCollection.Add(clipping);
 
                 this.SelectionViewModel.SetModeSingle(clip); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
@@ -135,18 +170,26 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 string text = "Click to change text";
                 TimeSpan duration = TimeSpan.FromSeconds(10);
-                TextClip clip = new TextClip(text, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                // Clip
+                Clipping clipping = Clipping.CreateByGuid();
+                IClip clip = new TextClip(text, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                 {
+                    Id = clipping.Id,
                     IsSelected = true
                 };
-                this.ViewModel.ObservableCollection.Add(clip);
+                ClipBase.Instances.Add(clipping.Id, clip);
+
+                this.ViewModel.ObservableCollection.Add(clipping);
 
                 this.SelectionViewModel.SetModeSingle(clip); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
@@ -157,9 +200,11 @@ namespace Video_Clip2
             {
                 this.ViewModel.IsPlaying = false;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip2 = item.Self;
+
+                    if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
                 string text = "Click to change text";
@@ -173,11 +218,17 @@ namespace Video_Clip2
                         Duration = duration
                     }
                 };
-                SubtitleClip clip = new SubtitleClip(subtitles, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+
+                // Clip
+                Clipping clipping = Clipping.CreateByGuid();
+                IClip clip = new SubtitleClip(subtitles, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                 {
+                    Id = clipping.Id,
                     IsSelected = true
                 };
-                this.ViewModel.ObservableCollection.Add(clip);
+                ClipBase.Instances.Add(clipping.Id, clip);
+
+                this.ViewModel.ObservableCollection.Add(clipping);
 
                 this.SelectionViewModel.SetModeSingle(clip); // Selection
                 this.ViewModel.Invalidate(); // Invalidate

@@ -16,7 +16,7 @@ namespace Video_Clip2.ViewModels
         public void SetMode()
         {
             // Clips
-            int count = this.ObservableCollection.Count(c => c.IsSelected);
+            int count = this.ObservableCollection.Count(c => c.Self.IsSelected);
 
             switch (count)
             {
@@ -24,11 +24,11 @@ namespace Video_Clip2.ViewModels
                     this.SetModeNone(); // None
                     break;
                 case 1:
-                    IClip clip = this.ObservableCollection.First(c => c.IsSelected);
+                    IClip clip = this.ObservableCollection.First(c => c.Self.IsSelected).Self;
                     this.SetModeSingle(clip); // Single
                     break;
                 default:
-                    IEnumerable<IClip> clips = this.ObservableCollection.Where(c => c.IsSelected);
+                    IEnumerable<IClip> clips = this.ObservableCollection.Where(c => c.Self.IsSelected).Select(c => c.Self);
                     this.SetModeMultiple(clips); // Multiple
                     break;
             }

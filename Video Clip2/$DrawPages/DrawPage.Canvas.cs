@@ -15,9 +15,11 @@ namespace Video_Clip2
             {
                 if (this.IsWheelForTrackScale) return;
 
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected) item.IsSelected = false;
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected) clip.IsSelected = false;
                 }
 
                 this.SelectionViewModel.SetModeNone(); // Selection
@@ -59,9 +61,11 @@ namespace Video_Clip2
             {
                 if (placementTarget.DataContext is IClip clip)
                 {
-                    foreach (IClip item in this.ViewModel.ObservableCollection)
+                    foreach (Clipping item in this.ViewModel.ObservableCollection)
                     {
-                        if (item.IsSelected) item.IsSelected = false;
+                        IClip clip2 = item.Self;
+
+                        if (clip2.IsSelected) clip2.IsSelected = false;
                     }
 
                     clip.IsSelected = false;

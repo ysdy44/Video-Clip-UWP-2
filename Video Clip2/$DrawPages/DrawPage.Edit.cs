@@ -15,15 +15,17 @@ namespace Video_Clip2
 
             this.SpeedButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Video:
                             case ClipType.Audio:
-                                if (item is MediaClip mediaClip)
+                                if (clip is MediaClip mediaClip)
                                 {
                                     this.SpeedSlider.Value = mediaClip.PlaybackRate;
                                     break;
@@ -38,15 +40,17 @@ namespace Video_Clip2
             this.SpeedSlider.ValueChangedStarted += (s, e) =>
             {
                 this.ViewModel.IsPlayingCore = false;
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Video:
                             case ClipType.Audio:
-                                item.CacheDuration(this.ViewModel.TrackScale);
+                                clip.CacheDuration(this.ViewModel.TrackScale);
                                 break;
                         }
                     }
@@ -55,15 +59,17 @@ namespace Video_Clip2
             this.SpeedSlider.ValueChangedDelta += (s, e) =>
             {
                 double speed = e.NewValue;
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Video:
                             case ClipType.Audio:
-                                if (item is MediaClip mediaClip)
+                                if (clip is MediaClip mediaClip)
                                 {
                                     mediaClip.SetPlaybackRate(speed, this.ViewModel.TrackScale);
                                 }
@@ -82,15 +88,17 @@ namespace Video_Clip2
 
             this.StretchButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     this.StretchListView.Stretch = transformClip.Transform.Stretch;
                                     break;
@@ -104,15 +112,17 @@ namespace Video_Clip2
             };
             this.StretchListView.StretchChanged += (s, stretch) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     transformClip.Transform.Stretch = stretch;
                                     transformClip.Transform.ReloadMatrix();
@@ -129,15 +139,17 @@ namespace Video_Clip2
 
             this.VolumeButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Video:
                             case ClipType.Audio:
-                                if (item is MediaClip mediaClip)
+                                if (clip is MediaClip mediaClip)
                                 {
                                     this.VolumeSlider.Value = mediaClip.Volume * 100;
                                     break;
@@ -157,15 +169,17 @@ namespace Video_Clip2
             {
                 double volume = e.NewValue / 100;
                 bool isMuted = e.NewValue == 0;
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Video:
                             case ClipType.Audio:
-                                if (item is MediaClip mediaClip)
+                                if (clip is MediaClip mediaClip)
                                 {
                                     mediaClip.SetVolume(volume);
                                     mediaClip.SetIsMuted(this.ViewModel.IsMuted, isMuted);
@@ -188,15 +202,17 @@ namespace Video_Clip2
             };
             this.FlipHorizontalButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     transformClip.Transform.IsXFlip = !transformClip.Transform.IsXFlip;
                                     transformClip.Transform.ReloadMatrix();
@@ -211,15 +227,17 @@ namespace Video_Clip2
             };
             this.FlipVerticalButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     transformClip.Transform.IsYFlip = !transformClip.Transform.IsYFlip;
                                     transformClip.Transform.ReloadMatrix();
@@ -234,15 +252,17 @@ namespace Video_Clip2
             };
             this.RotateLeftButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     switch (transformClip.Transform.Rotate)
                                     {
@@ -271,15 +291,17 @@ namespace Video_Clip2
             };
             this.RotateRightButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        switch (item.Type)
+                        switch (clip.Type)
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (item is ITransform transformClip)
+                                if (clip is ITransform transformClip)
                                 {
                                     switch (transformClip.Transform.Rotate)
                                     {
@@ -311,11 +333,13 @@ namespace Video_Clip2
 
             this.OpacityButton.Click += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        this.OpacitySlider.Value = item.Opacity * 100;
+                        this.OpacitySlider.Value = clip.Opacity * 100;
                         break;
                     }
                 }
@@ -329,11 +353,13 @@ namespace Video_Clip2
             this.OpacitySlider.ValueChangedDelta += (s, e) =>
             {
                 float opacity = (float)(e.NewValue / 100);
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        item.Opacity = opacity;
+                        clip.Opacity = opacity;
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
@@ -346,11 +372,13 @@ namespace Video_Clip2
 
             this.ColorPicker.ColorChanged += (s, e) =>
             {
-                foreach (IClip item in this.ViewModel.ObservableCollection)
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
                 {
-                    if (item.IsSelected)
+                    IClip clip = item.Self;
+
+                    if (clip.IsSelected)
                     {
-                        if (item is ColorClip colorClip)
+                        if (clip is ColorClip colorClip)
                         {
                             colorClip.SetColor(e.NewColor);
                         }

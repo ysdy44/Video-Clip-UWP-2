@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using Video_Clip2.Clips;
-using Video_Clip2.Clips;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -45,11 +44,11 @@ namespace Video_Clip2.Controls
                 if (control.ItemSourceNotify != null)
                 {
                     control.ItemSourceNotify.CollectionChanged -= control.ItemSourceNotify_CollectionChanged;
-                    if (control.ItemSourceNotify is IEnumerable<IClip> items)
+                    if (control.ItemSourceNotify is IEnumerable<Clipping> items)
                     {
-                        foreach (IClip item in items)
+                        foreach (Clipping item in items)
                         {
-                            control.Children.Remove(item.Track.Self);
+                            control.Children.Remove(item.Self.Track.Self);
                             control.RemoveHandler2(item);
                         }
                     }
@@ -58,11 +57,11 @@ namespace Video_Clip2.Controls
                 if (control.ItemSourceNotify != null)
                 {
                     control.ItemSourceNotify.CollectionChanged += control.ItemSourceNotify_CollectionChanged;
-                    if (control.ItemSourceNotify is IEnumerable<IClip> items)
+                    if (control.ItemSourceNotify is IEnumerable<Clipping> items)
                     {
-                        foreach (IClip item in items)
+                        foreach (Clipping item in items)
                         {
-                            control.Children.Add(item.Track.Self);
+                            control.Children.Add(item.Self.Track.Self);
                             control.AddHandler2(item);
                         }
                     }
@@ -82,10 +81,10 @@ namespace Video_Clip2.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems[0] is IClip itemAdd)
+                    if (e.NewItems[0] is Clipping itemAdd)
                     {
                         int index = e.NewStartingIndex;
-                        this.Children.Insert(index, itemAdd.Track.Self);
+                        this.Children.Insert(index, itemAdd.Self.Track.Self);
                         this.AddHandler2(itemAdd);
                     }
                     break;
@@ -94,18 +93,18 @@ namespace Video_Clip2.Controls
                     {
                         int index = e.OldStartingIndex;
                         this.Children.RemoveAt(index);
-                        this.RemoveHandler2(e.OldItems[index] as IClip);
+                        this.RemoveHandler2(e.OldItems[index] as Clipping);
                     }
-                    if (e.NewItems[0] is IClip itemMove)
+                    if (e.NewItems[0] is Clipping itemMove)
                     {
                         int index = e.NewStartingIndex;
-                        base.Children.Insert(index, itemMove.Track.Self);
-                        this.AddHandler2(e.NewItems[index] as IClip);
+                        base.Children.Insert(index, itemMove.Self.Track.Self);
+                        this.AddHandler2(e.NewItems[index] as Clipping);
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems[0] is IClip itemRemove)
+                    if (e.OldItems[0] is Clipping itemRemove)
                     {
                         int index = e.OldStartingIndex;
                         this.Children.RemoveAt(index);
@@ -117,20 +116,20 @@ namespace Video_Clip2.Controls
                     {
                         int index = e.OldStartingIndex;
                         this.Children.RemoveAt(index);
-                        this.RemoveHandler2(e.OldItems[index] as IClip);
+                        this.RemoveHandler2(e.OldItems[index] as Clipping);
                     }
-                    if (e.NewItems[0] is IClip itemReplace)
+                    if (e.NewItems[0] is Clipping itemReplace)
                     {
                         int index = e.NewStartingIndex;
-                        this.Children.Insert(index, itemReplace.Track.Self);
-                        this.AddHandler2(e.NewItems[index] as IClip);
+                        this.Children.Insert(index, itemReplace.Self.Track.Self);
+                        this.AddHandler2(e.NewItems[index] as Clipping);
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     foreach (FrameworkElement item in base.Children)
                     {
-                        this.RemoveHandler2(item.DataContext as IClip);
+                        this.RemoveHandler2(item.DataContext as Clipping);
                     }
                     base.Children.Clear();
                     break;
@@ -141,11 +140,11 @@ namespace Video_Clip2.Controls
         }
 
 
-        private void AddHandler2(IClip clip)
+        private void AddHandler2(Clipping clipping)
         {
-            Button element = clip.Track.Self;
+            Button element = clipping.Self.Track.Self;
             if (element is null) return;
-            element.DataContext = clip;
+            element.DataContext = clipping;
 
             element.Tapped += this.ItemTapped;
             element.Click += this.ItemClick;
@@ -161,9 +160,9 @@ namespace Video_Clip2.Controls
             element.PointerReleased += this.Item_PointerReleased;
         }
 
-        private void RemoveHandler2(IClip clip)
+        private void RemoveHandler2(Clipping clipping)
         {
-            Button element = clip.Track.Self;
+            Button element = clipping.Self.Track.Self;
             if (element is null) return;
             element.DataContext = null;
 

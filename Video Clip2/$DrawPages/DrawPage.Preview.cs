@@ -67,7 +67,7 @@ namespace Video_Clip2
             {
                 float scale = (float)this.ViewModel.Scale;
                 int rows = this.RectangleCanvas.MaximumRows;
-                switch (GroupIndex)
+                switch (this.GroupIndex)
                 {
                     case 6:
                         this.DurationMenu.Draw(args.DrawingSession, s.Size);
@@ -76,24 +76,26 @@ namespace Video_Clip2
                     default:
                         for (int i = 0; i < rows; i++)
                         {
-                            foreach (IClip item in this.ViewModel.ObservableCollection)
+                            foreach (Clipping item in this.ViewModel.ObservableCollection)
                             {
-                                if (item.Visibility == Visibility.Collapsed) continue;
-                                if (item.Opacity == 0) continue;
-                                if (item.Index != i) continue;
+                                IClip clip = item.Self;
 
-                                ICanvasImage image = item.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, s.Size);
+                                if (clip.Visibility == Visibility.Collapsed) continue;
+                                if (clip.Opacity == 0) continue;
+                                if (clip.Index != i) continue;
+
+                                ICanvasImage image = clip.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, s.Size);
                                 if (image == null) continue;
 
                                 // Clip
-                                ICanvasImage currentImage = Effect.Render(item.Effect, image, scale);
+                                ICanvasImage currentImage = Effect.Render(clip.Effect, image, scale);
 
                                 // Opacity
-                                if (item.Opacity < 1)
+                                if (clip.Opacity < 1)
                                 {
                                     args.DrawingSession.DrawImage(new OpacityEffect
                                     {
-                                        Opacity = item.Opacity,
+                                        Opacity = clip.Opacity,
                                         Source = currentImage
                                     });
                                 }
