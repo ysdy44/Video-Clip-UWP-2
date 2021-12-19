@@ -18,7 +18,10 @@ namespace Video_Clip2.Medias.Models
     {
 
         //@Instance
-        public static TokenDictionary<Video> Instances = new TokenDictionary<Video>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Video> Instances = new TokenDictionary<Video>();
+
+        //@Override
+        public override async Task ConstructSource(ICanvasResourceCreator resourceCreator, StorageFile file)
         {
             MediaClip clip = await MediaClip.CreateFromFileAsync(file);
             MediaComposition composition = new MediaComposition { Clips = { clip } };
@@ -39,20 +42,13 @@ namespace Video_Clip2.Medias.Models
                 thumbnails2[i] = await CanvasBitmap.LoadAsync(resourceCreator, thumbnails[i]);
             }
 
-            return new Video
-            {
-                Width = width,
-                Height = height,
-                Duration = duration,
-                File = file,
-                Thumbnails = thumbnails2,
-                Composition = composition,
-
-                Name = file.DisplayName,
-                FileType = file.FileType,
-                Token = token,
-            };
-        });
+            this.Width = width;
+            this.Height = height;
+            this.Duration = duration;
+            this.File = file;
+            this.Thumbnails = thumbnails2;
+            this.Composition = composition;
+        }
 
         //@Property
         public uint Width { get; private set; }

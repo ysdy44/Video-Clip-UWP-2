@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System;
+using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
@@ -11,21 +12,17 @@ namespace Video_Clip2.Medias.Models
     {
 
         //@Instance
-        public static TokenDictionary<Audio> Instances = new TokenDictionary<Audio>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Audio> Instances = new TokenDictionary<Audio>();
+
+        //@Override
+        public override async Task ConstructSource(ICanvasResourceCreator resourceCreator, StorageFile file)
         {
             MusicProperties properties = await file.Properties.GetMusicPropertiesAsync();
             TimeSpan duration = properties.Duration;
 
-            return new Audio
-            {
-                Duration = duration,
-                File = file,
-
-                Name = file.DisplayName,
-                FileType = file.FileType,
-                Token = token,
-            };
-        });
+            this.Duration = duration;
+            this.File = file;
+        }
 
         //@Property
         public TimeSpan Duration { get; private set; }

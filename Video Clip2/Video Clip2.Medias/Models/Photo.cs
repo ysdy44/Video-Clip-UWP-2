@@ -2,7 +2,9 @@
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Streams;
 
@@ -12,7 +14,10 @@ namespace Video_Clip2.Medias.Models
     {
 
         //@Instance
-        public static TokenDictionary<Photo> Instances = new TokenDictionary<Photo>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Photo> Instances = new TokenDictionary<Photo>();
+
+        //@Override
+        public override async Task ConstructSource(ICanvasResourceCreator resourceCreator, StorageFile file)
         {
             ImageProperties properties = await file.Properties.GetImagePropertiesAsync();
 
@@ -38,20 +43,13 @@ namespace Video_Clip2.Medias.Models
                     Scale = new Vector2(scale)
                 });
 
-                return new Photo
-                {
-                    Width = width,
-                    Height = height,
-                    File = file,
-                    Bitmap = bitmap,
-                    Thumbnail = thumbnail,
-
-                    Name = file.DisplayName,
-                    FileType = file.FileType,
-                    Token = token,
-                };
+                this.Width = width;
+                this.Height = height;
+                this.File = file;
+                this.Bitmap = bitmap;
+                this.Thumbnail = thumbnail;
             }
-        });
+        }
 
         //@Property
         public uint Width { get; private set; }

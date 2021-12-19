@@ -1,12 +1,19 @@
-﻿namespace Video_Clip2.Medias
+﻿using Microsoft.Graphics.Canvas;
+using System.Threading.Tasks;
+using Windows.Storage;
+
+namespace Video_Clip2.Medias
 {
     public abstract class Media
     {
 
         //@Property
-        public string Name { get; protected set; }
-        public string FileType { get; protected set; }
-        public string Token { get; protected set; }
+        public string Name { get; set; }
+        public string FileType { get; set; }
+        public string Token { get; set; }
+
+        //@Abstract
+        public abstract Task ConstructSource(ICanvasResourceCreator resourceCreator, StorageFile file);
 
         public Medium ToMedium()
         {
