@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips.ClipTracks;
+using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Windows.Foundation;
 using Windows.UI;
@@ -12,19 +13,16 @@ namespace Video_Clip2.Clips.Models
     public class AudioClip : MediaClip, IClip
     {
 
-        readonly Audio Audio;
+        public Medium Medium { get; set; }
 
         public override ClipType Type => ClipType.Audio;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
-        private AudioClip(Audio audio, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(audio.CreateSource(), playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
         {
-            this.Audio = audio;
-        }
-        public AudioClip(Audio audio, bool isMuted, TimeSpan delay, int index, double trackHeight, double trackScale)
-            : this(audio, 1, isMuted, delay, delay, audio.Duration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
-        {
+            Audio audio = Audio.Instances[this.Medium.Token];
+            base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
+            base.InitializeMediaClip(audio.CreateSource(), playbackRate, isMuted, position, audio.Duration, trackScale);
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
@@ -60,9 +58,24 @@ namespace Video_Clip2.Clips.Models
             return null;
         }
 
-        protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new AudioClip(this.Audio, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            // Clip
+            AudioClip audioClip = new AudioClip
+            {
+                Id = clipping.Id,
+                IsSelected = true,
+
+                TrimTimeFromStart = nextTrimTimeFromStart,
+                TrimTimeFromEnd = trimTimeFromEnd,
+
+                Medium = this.Medium
+            };
+
+            Audio audio = Audio.Instances[audioClip.Medium.Token];
+            audioClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
+            audioClip.InitializeMediaClip(audio.CreateSource(), playbackRate, isMuted, position, audio.Duration, trackScale);
+            return audioClip;
         }
 
         public void Dispose()

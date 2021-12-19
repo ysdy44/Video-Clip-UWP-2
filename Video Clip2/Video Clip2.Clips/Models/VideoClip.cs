@@ -2,8 +2,10 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Xml.Linq;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Elements;
+using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Video_Clip2.Transforms;
 using Windows.Foundation;
@@ -15,30 +17,29 @@ namespace Video_Clip2.Clips.Models
     public partial class VideoClip : MediaClip, IClip, ITransform
     {
 
-        readonly Video Video;
-        readonly CanvasRenderTarget Bitmap;
-        readonly RenderTransform TransformCore;
+        public Medium Medium { get; set; }
+        CanvasRenderTarget Bitmap;
+        public RenderTransform Transform { get; private set; }
 
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
-        public RenderTransform Transform => this.TransformCore;
 
-        private VideoClip(Video video, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(video.CreateSource(), playbackRate, isMuted, position, delay, originalDuration, timTimeFromStart, trimTimeFromEnd, index, trackHeight, trackScale)
+        public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
         {
-            this.Video = video;
-            this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, this.Video.Width, this.Video.Height, 96);
-            this.TransformCore = new RenderTransform(this.Video.Width, this.Video.Height);
-
+            Video video = Video.Instances[this.Medium.Token];
+            base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
+            base.InitializeMediaClip(video.CreateSource(), playbackRate, isMuted, position, video.Duration, trackScale);
+            this.InitializeVideoClip(video);
+        }
+        protected void InitializeVideoClip(Video video)
+        {
+            this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, video.Width, video.Height, 96);
+            this.Transform = new RenderTransform(video.Width, video.Height);
             base.Player.IsVideoFrameServerEnabled = true;
             base.Player.VideoFrameAvailable += (s, e) =>
             {
                 base.Player.CopyFrameToVideoSurface(this.Bitmap);
             };
-        }
-        public VideoClip(Video video, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
-            : this(video, 1, isMuted, position, delay, video.Duration, TimeSpan.Zero, TimeSpan.Zero, index, trackHeight, trackScale)
-        {
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
@@ -47,7 +48,8 @@ namespace Video_Clip2.Clips.Models
             double position = base.PlaybackRate * base.TrimTimeFromStart.TotalSeconds;
             double lenth = base.PlaybackRate * base.TrimmedDuration.TotalSeconds;
 
-            this.Video.DrawThumbnails(args.DrawingSession, width, position, lenth);
+            Video video = Video.Instances[this.Medium.Token];
+            video.DrawThumbnails(args.DrawingSession, width, position, lenth);
         }
 
         public ICanvasImage GetPlayerRender(TimeSpan position, Size previewSize)
@@ -103,9 +105,25 @@ namespace Video_Clip2.Clips.Models
             };
         }
 
-        protected override IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
-            return new VideoClip(this.Video, playbackRate, isMuted, position, position, base.OriginalDuration, nextTrimTimeFromStart, trimTimeFromEnd, base.Index, trackHeight, trackScale);
+            // Clip
+            VideoClip videoClip = new VideoClip
+            {
+                Id = clipping.Id,
+                IsSelected = true,
+
+                TrimTimeFromStart = nextTrimTimeFromStart,
+                TrimTimeFromEnd = trimTimeFromEnd,
+
+                Medium = this.Medium
+            };
+
+            Video video = Video.Instances[videoClip.Medium.Token];
+            videoClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
+            videoClip.InitializeMediaClip(video.CreateSource(), playbackRate, isMuted, position, video.Duration, trackScale);
+            videoClip.InitializeVideoClip(video);
+            return videoClip;
         }
 
         public void Dispose()

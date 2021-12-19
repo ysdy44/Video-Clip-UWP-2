@@ -7,14 +7,13 @@ namespace Video_Clip2.Clips
     {
 
         //@Abstract
-        protected abstract IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale);
+        protected abstract IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale);
 
         public override TimeSpan Duration => this.CoreDuration;
         protected TimeSpan CoreDuration;
         double StartingDuration;
 
-        protected FrameClip(bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
-                : base(isMuted, delay, index, trackHeight, trackScale)
+        protected void InitializeFrameClip(TimeSpan duration, double trackScale)
         {
             this.CoreDuration = duration;
             this.Track.SetWidth(trackScale, duration);
@@ -75,7 +74,7 @@ namespace Video_Clip2.Clips
             this.CoreDuration = duration;
             this.Track.SetWidth(trackScale, this.Duration);
         }
-        public IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale)
+        public IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, double trackHeight, double trackScale)
         {
             TimeSpan lastDuration = position - base.Delay;
             TimeSpan nextDuration = base.Delay + this.Duration - position;
@@ -83,7 +82,7 @@ namespace Video_Clip2.Clips
             this.CoreDuration = lastDuration;
             this.Track.SetWidth(trackScale, this.Duration);
 
-            return this.TrimClone(isMuted, position, nextDuration, trackHeight, trackScale);
+            return this.TrimClone(clipping, isMuted, position, nextDuration, trackHeight, trackScale);
         }
 
     }

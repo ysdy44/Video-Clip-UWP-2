@@ -59,7 +59,7 @@ namespace Video_Clip2.Clips
 
         #endregion
 
-        IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale);
+        IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, double trackHeight, double trackScale);
 
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
+using System.Xml.Linq;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.UI;
@@ -9,43 +10,17 @@ using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2.Clips.Models
 {
-    public class TextClip : FrameClip, IClip
+    public abstract class TextClipBase : FrameClip
     {
 
         public CanvasCommandList CommandList { get; protected set; }
-        public string Text { get; protected set; }
+        public string Text { get; set; }
 
-        public override ClipType Type => ClipType.Text;
-        public override IClipTrack Track { get; } = new ClipTrack(Colors.Orange, Symbol.FontSize);
-
-        protected TextClip(bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
-            : base(isMuted, delay, duration, index, trackHeight, trackScale)
-        {
-        }
-        public TextClip(string text, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
-            : base(isMuted, delay, duration, index, trackHeight, trackScale)
+        protected void InitializeTextClipBase(TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
             this.CommandList = new CanvasCommandList(ClipManager.CanvasDevice);
-            this.Text = text;
             if (this.Text != null) TextClip.Render(this.CommandList, this.Text);
             base.ChangeView(position, delay, duration);
-        }
-
-        public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
-        {
-            args.DrawingSession.DrawText(this.Text, Vector2.One, Colors.White);
-        }
-
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
-        {
-            if (this.Text == null) return null;
-            else if (base.InRange(position) == false) return null;
-            else return this.CommandList;
-        }
-
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
-        {
-            return new TextClip(this.Text, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale);
         }
 
         public void Dispose()
@@ -61,6 +36,50 @@ namespace Video_Clip2.Clips.Models
                 drawingSession.Clear(Colors.Transparent);
                 drawingSession.DrawText(text, Vector2.Zero, Colors.Red);
             }
+        }
+
+    }
+
+    public class TextClip : TextClipBase, IClip
+    {
+
+        public override ClipType Type => ClipType.Text;
+        public override IClipTrack Track { get; } = new ClipTrack(Colors.Orange, Symbol.FontSize);
+
+        public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+        {
+            base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
+            base.InitializeFrameClip(duration, trackScale);
+            this.InitializeTextClipBase(position, delay, duration);
+        }
+
+        public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
+        {
+            args.DrawingSession.DrawText(this.Text, Vector2.One, Colors.White);
+        }
+
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        {
+            if (this.Text == null) return null;
+            else if (base.InRange(position) == false) return null;
+            else return this.CommandList;
+        }
+
+        protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
+        {
+            // Clip
+            TextClip textClip = new TextClip
+            {
+                Id = clipping.Id,
+                IsSelected = true,
+
+                Text = this.Text
+            };
+
+            textClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
+            textClip.InitializeFrameClip(nextDuration, trackScale);
+            textClip.InitializeTextClipBase(position, position, nextDuration);
+            return textClip;
         }
 
     }

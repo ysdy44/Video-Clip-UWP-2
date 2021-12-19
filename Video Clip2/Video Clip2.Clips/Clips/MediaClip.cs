@@ -10,15 +10,15 @@ namespace Video_Clip2.Clips
     {
 
         //@Abstract
-        protected abstract IClip TrimClone(double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale);
+        protected abstract IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale);
 
         public override TimeSpan Duration => this.TrimmedDuration;
 
-        public readonly TimeSpan OriginalDuration;
+        public TimeSpan OriginalDuration { get; private set; }
         protected TimeSpan TrimmedDuration => this.SpeedDuration - this.TrimTimeFromStart - this.TrimTimeFromEnd;
         protected TimeSpan SpeedDuration { get; private set; }
-        public TimeSpan TrimTimeFromStart { get; private set; }
-        public TimeSpan TrimTimeFromEnd { get; private set; }
+        public TimeSpan TrimTimeFromStart { get; set; }
+        public TimeSpan TrimTimeFromEnd { get; set; }
 
         protected double StartingOriginalDuration;
         protected double StartingTrimmedDuration;
@@ -26,13 +26,12 @@ namespace Video_Clip2.Clips
         protected double StartingTrimTimeFromStart;
         protected double StartingTrimTimeFromEnd;
 
-        protected readonly MediaPlayer Player;
+        protected MediaPlayer Player;
         protected bool IsPlaying => this.Player.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
         public double PlaybackRate => this.Player.PlaybackSession.PlaybackRate;
         public double Volume => this.Player.Volume;
 
-        protected MediaClip(IMediaPlaybackSource source, double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan originalDuration, TimeSpan timTimeFromStart, TimeSpan trimTimeFromEnd, int index, double trackHeight, double trackScale)
-            : base(isMuted, delay, index, trackHeight, trackScale)
+        protected void InitializeMediaClip(IMediaPlaybackSource source, double playbackRate, bool isMuted, TimeSpan position, TimeSpan originalDuration, double trackScale)
         {
             this.Player = new MediaPlayer
             {
@@ -44,8 +43,6 @@ namespace Video_Clip2.Clips
 
             this.OriginalDuration = originalDuration;
             this.SpeedDuration = playbackRate == 1 ? originalDuration : (originalDuration.ToDouble() / playbackRate).ToTimeSpan();
-            this.TrimTimeFromStart = timTimeFromStart;
-            this.TrimTimeFromEnd = trimTimeFromEnd;
 
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
@@ -133,7 +130,7 @@ namespace Video_Clip2.Clips
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
-        public IClip TrimClone(bool isMuted, TimeSpan position, double trackHeight, double trackScale)
+        public IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, double trackHeight, double trackScale)
         {
             TimeSpan trimTimeFromStart = this.TrimTimeFromStart;
             TimeSpan trimTimeFromEnd = this.TrimTimeFromEnd;
@@ -144,7 +141,7 @@ namespace Video_Clip2.Clips
             this.TrimTimeFromEnd = lastTrimTimeFromEnd;
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
 
-            return this.TrimClone(this.PlaybackRate, isMuted, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale);
+            return this.TrimClone(clipping, this.PlaybackRate, isMuted, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale);
         }
 
     }

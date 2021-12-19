@@ -2,7 +2,6 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
-using Video_Clip2.Clips;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
 using Windows.UI;
@@ -13,21 +12,26 @@ namespace Video_Clip2.Clips.Models
     public class ColorClip : FrameClip, IClip
     {
 
-        public Color Color { get; private set; }
+        public Color Color { get; set; }
         private ColorSourceEffect Source;
 
         public override ClipType Type => ClipType.Color;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Black, Symbol.Flag);
 
-        public ColorClip(Color color, bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
-            : base(isMuted, delay, duration, index, trackHeight, trackScale)
+        public void Initialize(bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
-            this.Color = color;
+            base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
+            base.InitializeFrameClip(duration, trackScale);
+            this.InitializeColorClip();
+        }
+        protected void InitializeColorClip()
+        {
             this.Source = new ColorSourceEffect
             {
-                Color = color
+                Color = this.Color
             };
         }
+
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
         {
@@ -43,17 +47,26 @@ namespace Video_Clip2.Clips.Models
         public void SetColor(Color color)
         {
             this.Color = color;
-            this.Source = new ColorSourceEffect
-            {
-                Color = color
-            };
+            this.InitializeColorClip();
 
             this.Track.Invalidate(); // Invalidate
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-            return new ColorClip(this.Color, isMuted, position, nextDuration, base.Index, trackHeight, trackScale);
+            // Clip
+            ColorClip colorClip = new ColorClip
+            {
+                Id = clipping.Id,
+                IsSelected = true,
+
+                Color = this.Color
+            };
+
+            colorClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
+            colorClip.InitializeFrameClip(nextDuration, trackScale);
+            colorClip.InitializeColorClip();
+            return colorClip;
         }
 
         public void Dispose()

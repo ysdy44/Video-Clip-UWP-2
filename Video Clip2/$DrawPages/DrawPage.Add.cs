@@ -1,9 +1,9 @@
-﻿using Microsoft.Graphics.Canvas;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
+using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -36,15 +36,20 @@ namespace Video_Clip2
                 foreach (StorageFile item in files)
                 {
                     Video video = await Video.Instances.CreateAsync(ClipManager.CanvasDevice, item);
+                    Medium medium = video.ToMedium();
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
-                    IClip clip = new VideoClip(video, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    VideoClip videoClip = new VideoClip
                     {
                         Id = clipping.Id,
-                        IsSelected = true
+                        IsSelected = true,
+
+                        Medium = medium
                     };
-                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    videoClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    ClipBase.Instances.Add(clipping.Id, videoClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);
                 }
@@ -74,15 +79,20 @@ namespace Video_Clip2
                 foreach (StorageFile item in files)
                 {
                     Audio audio = await Audio.Instances.CreateAsync(ClipManager.CanvasDevice, item);
+                    Medium medium = audio.ToMedium();
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
-                    IClip clip = new AudioClip(audio, this.ViewModel.IsMuted, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    AudioClip audioClip = new AudioClip
                     {
                         Id = clipping.Id,
-                        IsSelected = true
+                        IsSelected = true,
+
+                        Medium = medium
                     };
-                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    audioClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    ClipBase.Instances.Add(clipping.Id, audioClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);
                 }
@@ -112,16 +122,21 @@ namespace Video_Clip2
                 foreach (StorageFile item in files)
                 {
                     Photo photo = await Photo.Instances.CreateAsync(ClipManager.CanvasDevice, item);
+                    Medium medium = photo.ToMedium();
                     TimeSpan duration = TimeSpan.FromSeconds(10);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
-                    IClip clip = new ImageClip(photo, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    ImageClip imageClip = new ImageClip
                     {
                         Id = clipping.Id,
-                        IsSelected = true
+                        IsSelected = true,
+
+                        Medium = medium
                     };
-                    ClipBase.Instances.Add(clipping.Id, clip);
+
+                    imageClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    ClipBase.Instances.Add(clipping.Id, imageClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);
                 }
@@ -148,11 +163,15 @@ namespace Video_Clip2
 
                 // Clip
                 Clipping clipping = Clipping.CreateByGuid();
-                IClip clip = new ColorClip(color, this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                ColorClip clip = new ColorClip
                 {
                     Id = clipping.Id,
-                    IsSelected = true
+                    IsSelected = true,
+
+                    Color = color
                 };
+
+                clip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                 ClipBase.Instances.Add(clipping.Id, clip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);
@@ -173,21 +192,24 @@ namespace Video_Clip2
                     if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
-                string text = "Click to change text";
                 TimeSpan duration = TimeSpan.FromSeconds(10);
 
                 // Clip
                 Clipping clipping = Clipping.CreateByGuid();
-                IClip clip = new TextClip(text, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                TextClip textClip = new TextClip
                 {
                     Id = clipping.Id,
-                    IsSelected = true
+                    IsSelected = true,
+
+                    Text = "Click to change text"
                 };
-                ClipBase.Instances.Add(clipping.Id, clip);
+
+                textClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                ClipBase.Instances.Add(clipping.Id, textClip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);
 
-                this.SelectionViewModel.SetModeSingle(clip); // Selection
+                this.SelectionViewModel.SetModeSingle(textClip); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
             };
 
@@ -203,30 +225,32 @@ namespace Video_Clip2
                     if (clip2.IsSelected) clip2.IsSelected = false;
                 }
 
-                string text = "Click to change text";
                 TimeSpan duration = TimeSpan.FromSeconds(10);
-                IList<Subtitle> subtitles = new List<Subtitle>
-                {
-                    new Subtitle
-                    {
-                        Text =text,
-                        Delay = TimeSpan.Zero,
-                        Duration = duration
-                    }
-                };
 
                 // Clip
                 Clipping clipping = Clipping.CreateByGuid();
-                IClip clip = new SubtitleClip(subtitles, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                SubtitleClip subtitleClip = new SubtitleClip
                 {
                     Id = clipping.Id,
-                    IsSelected = true
+                    IsSelected = true,
+
+                    Subtitles = new List<Subtitle>
+                    {
+                        new Subtitle
+                        {
+                            Text = "Click to change text",
+                            Delay = TimeSpan.Zero,
+                            Duration = duration
+                        }
+                    }
                 };
-                ClipBase.Instances.Add(clipping.Id, clip);
+
+                subtitleClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                ClipBase.Instances.Add(clipping.Id, subtitleClip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);
 
-                this.SelectionViewModel.SetModeSingle(clip); // Selection
+                this.SelectionViewModel.SetModeSingle(subtitleClip); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
             };
         }

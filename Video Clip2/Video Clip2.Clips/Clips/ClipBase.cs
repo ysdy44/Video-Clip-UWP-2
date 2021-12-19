@@ -14,7 +14,7 @@ namespace Video_Clip2.Clips
 {
     public abstract partial class ClipBase
     {
-        
+
         public abstract IClipTrack Track { get; }
 
         #region Property
@@ -101,11 +101,8 @@ namespace Video_Clip2.Clips
 
         #endregion
 
-        protected ClipBase(bool isMuted, TimeSpan delay, int index, double trackHeight, double trackScale)
+        protected void InitializeClipBase(bool isMuted, TimeSpan delay, int index, double trackHeight, double trackScale)
         {
-            string id = Guid.NewGuid().ToString();
-            this.Id = id;
-
             this.Track.SetIsMuted(isMuted, false);
 
             this.Delay = delay;

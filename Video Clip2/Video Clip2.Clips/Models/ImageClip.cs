@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips.ClipTracks;
+using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Video_Clip2.Transforms;
 using Windows.Foundation;
@@ -14,28 +15,33 @@ namespace Video_Clip2.Clips.Models
     public class ImageClip : FrameClip, IClip, ITransform
     {
 
-        readonly Photo Photo;
-        readonly RenderTransform TransformCore;
+        public Medium Medium { get; set; }
+        public RenderTransform Transform { get; private set; }
 
         public override ClipType Type => ClipType.Image;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
-        public RenderTransform Transform => this.TransformCore;
 
-        public ImageClip(Photo photo, bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
-            : base(isMuted, delay, duration, index, trackHeight, trackScale)
+        public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
-            this.Photo = photo;
-            this.TransformCore = new RenderTransform(photo.Width, photo.Height);
+            Photo photo = Photo.Instances[this.Medium.Token];
+            base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
+            base.InitializeFrameClip(duration, trackScale);
+            this.InitializeImageClip(photo, position, delay, duration);
+        }
+        protected void InitializeImageClip(Photo photo, TimeSpan position, TimeSpan delay, TimeSpan duration)
+        {
+            this.Transform = new RenderTransform(photo.Width, photo.Height);
             base.ChangeView(position, delay, duration);
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
         {
+            Photo photo = Photo.Instances[this.Medium.Token];
             args.DrawingSession.DrawImage(new BorderEffect
             {
                 ExtendX = CanvasEdgeBehavior.Wrap,
                 ExtendY = CanvasEdgeBehavior.Clamp,
-                Source = this.Photo.Thumbnail
+                Source = photo.Thumbnail
             });
         }
 
@@ -43,17 +49,33 @@ namespace Video_Clip2.Clips.Models
         {
             if (base.InRange(position) == false) return null;
 
+            Photo photo = Photo.Instances[this.Medium.Token];
+
+            // Transform
             this.Transform.ReloadMatrix(previewSize);
             return new Transform2DEffect
             {
                 TransformMatrix = this.Transform.Matrix,
-                Source = this.Photo.Bitmap
+                Source = photo.Bitmap
             };
         }
 
-        protected override IClip TrimClone(bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
-            return new ImageClip(this.Photo, isMuted, position, position, nextDuration, base.Index, trackHeight, trackScale);
+            // Clip
+            ImageClip imageClip = new ImageClip
+            {
+                Id = clipping.Id,
+                IsSelected = true,
+
+                Medium = this.Medium
+            };
+
+            Photo photo = Photo.Instances[this.Medium.Token];
+            imageClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
+            imageClip.InitializeFrameClip(nextDuration, trackScale);
+            imageClip.InitializeImageClip(photo, position, position, nextDuration);
+            return imageClip;
         }
 
         public void Dispose()

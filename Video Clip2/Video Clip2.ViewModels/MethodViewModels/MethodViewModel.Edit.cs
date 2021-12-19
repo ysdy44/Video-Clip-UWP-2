@@ -23,11 +23,9 @@ namespace Video_Clip2.ViewModels
                 if (lastClip.InRange(this.Position, TimeSpan.FromSeconds(2)) == false) continue;
 
                 //
-                IClip nextClip = lastClip.TrimClone(this.IsMuted, this.Position, this.TrackHeight, this.TrackScale);
-                if (nextClip == null) continue;
-
                 Clipping clipping = Clipping.CreateByGuid();
-                clipping.Id = nextClip.Id;
+                IClip nextClip = lastClip.TrimClone(clipping, this.IsMuted, this.Position, this.TrackHeight, this.TrackScale);
+                if (nextClip == null) continue;
                 ClipBase.Instances.Add(clipping.Id, nextClip);
                 //
 
