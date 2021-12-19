@@ -36,8 +36,8 @@ namespace Video_Clip2.Medias
 
         private static async Task<Audio> CreateAudioAsync(string token, StorageFile file)
         {
-            MusicProperties poperties = await file.Properties.GetMusicPropertiesAsync();
-            TimeSpan duration = poperties.Duration;
+            MusicProperties properties = await file.Properties.GetMusicPropertiesAsync();
+            TimeSpan duration = properties.Duration;
 
             return new Audio
             {

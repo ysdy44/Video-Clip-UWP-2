@@ -111,12 +111,12 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    CanvasBitmap bitmap = await ImageClip.LoadBitmapAsync(item);
+                    Photo photo = await Photo.CreatePhotoAsync(ClipManager.CanvasDevice, item);
                     TimeSpan duration = TimeSpan.FromSeconds(10);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
-                    IClip clip = new ImageClip(bitmap, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
+                    IClip clip = new ImageClip(photo, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale)
                     {
                         Id = clipping.Id,
                         IsSelected = true
