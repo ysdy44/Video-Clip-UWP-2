@@ -14,7 +14,7 @@ using Windows.Storage;
 
 namespace Video_Clip2.Medias
 {
-    public sealed partial class Video
+    public sealed class Video : Media
     {
 
         //@Instance
@@ -55,10 +55,6 @@ namespace Video_Clip2.Medias
         });
 
         //@Property
-        public string Name { get; private set; }
-        public string FileType { get; private set; }
-        public string Token { get; private set; }
-
         public uint Width { get; private set; }
         public uint Height { get; private set; }
         public TimeSpan Duration { get; private set; }
@@ -93,16 +89,6 @@ namespace Video_Clip2.Medias
             {
                 VideoProcessingAlgorithm = MediaVideoProcessingAlgorithm.Default
             }.PrepareFileTranscodeAsync(this.File, destination, MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High));
-        }
-
-        public Videotape ToVideotape()
-        {
-            return new Videotape
-            {
-                Name = this.Name,
-                FileType = this.FileType,
-                Token = this.Token,
-            };
         }
 
     }
