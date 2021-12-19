@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
-using Video_Clip2.Medias;
+using Video_Clip2.Medias.Models;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI;

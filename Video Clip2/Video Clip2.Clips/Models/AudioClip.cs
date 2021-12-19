@@ -2,7 +2,7 @@
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using Video_Clip2.Clips.ClipTracks;
-using Video_Clip2.Medias;
+using Video_Clip2.Medias.Models;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
