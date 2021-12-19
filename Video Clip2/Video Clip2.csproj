@@ -197,15 +197,12 @@
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanelBase.xaml.cs">
       <DependentUpon>TransitionPanelBase.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Video Clip2.Medias\Audio.cs" />
     <Compile Include="Video Clip2.Medias\Media.cs" />
     <Compile Include="Video Clip2.Medias\Medium.cs" />
     <Compile Include="Video Clip2.Medias\Models\Audio.cs" />
     <Compile Include="Video Clip2.Medias\Models\Photo.cs" />
     <Compile Include="Video Clip2.Medias\Models\Video.cs" />
-    <Compile Include="Video Clip2.Medias\Photo.cs" />
     <Compile Include="Video Clip2.Medias\TokenDictionary.cs" />
-    <Compile Include="Video Clip2.Medias\Video.cs" />
     <Compile Include="Video Clip2.Menus\DurationMenu.xaml.cs">
       <DependentUpon>DurationMenu.xaml</DependentUpon>
     </Compile>
