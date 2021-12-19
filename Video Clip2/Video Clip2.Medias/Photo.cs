@@ -12,7 +12,7 @@ namespace Video_Clip2.Medias
     {
 
         //@Instance
-        public static TokenDictionary<Photo> Tokener = new TokenDictionary<Photo>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Photo> Instances = new TokenDictionary<Photo>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
         {
             ImageProperties properties = await file.Properties.GetImagePropertiesAsync();
 

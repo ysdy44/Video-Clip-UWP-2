@@ -11,7 +11,7 @@ namespace Video_Clip2.Medias
     {
 
         //@Instance
-        public static TokenDictionary<Audio> Tokener = new TokenDictionary<Audio>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Audio> Instances = new TokenDictionary<Audio>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
         {
             MusicProperties properties = await file.Properties.GetMusicPropertiesAsync();
             TimeSpan duration = properties.Duration;

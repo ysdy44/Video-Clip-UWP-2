@@ -18,7 +18,7 @@ namespace Video_Clip2.Medias
     {
 
         //@Instance
-        public static TokenDictionary<Video> Tokener = new TokenDictionary<Video>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        public static TokenDictionary<Video> Instances = new TokenDictionary<Video>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
         {
             MediaClip clip = await MediaClip.CreateFromFileAsync(file);
             MediaComposition composition = new MediaComposition { Clips = { clip } };
