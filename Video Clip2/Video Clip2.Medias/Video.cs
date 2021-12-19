@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
@@ -15,6 +16,43 @@ namespace Video_Clip2.Medias
 {
     public sealed partial class Video
     {
+
+        //@Instance
+        public static TokenDictionary<Video> Tokener = new TokenDictionary<Video>(async (ICanvasResourceCreator resourceCreator, string token, StorageFile file) =>
+        {
+            MediaClip clip = await MediaClip.CreateFromFileAsync(file);
+            MediaComposition composition = new MediaComposition { Clips = { clip } };
+            VideoEncodingProperties properties = clip.GetVideoEncodingProperties();
+
+            uint width = properties.Width;
+            uint height = properties.Height;
+            const int scaledHeight = 50;
+            int scaledWidth = (int)(scaledHeight * width / height);
+
+            TimeSpan duration = clip.OriginalDuration;
+            IEnumerable<TimeSpan> points = Enumerable.Range(0, 1 + (int)Math.Floor(duration.TotalSeconds)).Select(c => TimeSpan.FromSeconds(c));
+            IReadOnlyList<ImageStream> thumbnails = await composition.GetThumbnailsAsync(points, scaledWidth, scaledHeight, VideoFramePrecision.NearestFrame);
+
+            CanvasBitmap[] thumbnails2 = new CanvasBitmap[thumbnails.Count];
+            for (int i = 0; i < thumbnails.Count; i++)
+            {
+                thumbnails2[i] = await CanvasBitmap.LoadAsync(resourceCreator, thumbnails[i]);
+            }
+
+            return new Video
+            {
+                Width = width,
+                Height = height,
+                Duration = duration,
+                File = file,
+                Thumbnails = thumbnails2,
+                Composition = composition,
+
+                Name = file.DisplayName,
+                FileType = file.FileType,
+                Token = token,
+            };
+        });
 
         //@Property
         public string Name { get; private set; }

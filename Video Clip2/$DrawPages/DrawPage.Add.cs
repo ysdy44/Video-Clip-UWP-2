@@ -35,7 +35,7 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    Video video = await Video.CreateVideoAsync(ClipManager.CanvasDevice, item);
+                    Video video = await Video.Tokener.CreateAsync(ClipManager.CanvasDevice, item);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
@@ -73,7 +73,7 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    Audio audio = await Audio.CreateAudioAsync(item);
+                    Audio audio = await Audio.Tokener.CreateAsync(ClipManager.CanvasDevice, item);
 
                     // Clip
                     Clipping clipping = Clipping.CreateByGuid();
@@ -111,7 +111,7 @@ namespace Video_Clip2
                 this.IsLoading = true;
                 foreach (StorageFile item in files)
                 {
-                    Photo photo = await Photo.CreatePhotoAsync(ClipManager.CanvasDevice, item);
+                    Photo photo = await Photo.Tokener.CreateAsync(ClipManager.CanvasDevice, item);
                     TimeSpan duration = TimeSpan.FromSeconds(10);
 
                     // Clip
