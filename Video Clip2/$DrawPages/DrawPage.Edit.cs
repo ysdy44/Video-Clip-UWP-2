@@ -98,8 +98,9 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is IRenderTransform transformClip)
+                                if (clip is IOverlayLayer transformClip)
                                 {
+                                    this.StretchListView.IsOverlayLayer = transformClip.IOverlayLayerCore;
                                     this.StretchListView.Stretch = transformClip.RenderTransform.Stretch;
                                     break;
                                 }
@@ -132,8 +133,28 @@ namespace Video_Clip2
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
+            };
+            this.StretchListView.IsOverlayLayerChanged += (s, isOverlayLayer) =>
+            {
+                foreach (Clipping item in this.ViewModel.ObservableCollection)
+                {
+                    IClip clip = item.Self;
 
-                this.StretchFlyout.Hide();
+                    if (clip.IsSelected)
+                    {
+                        switch (clip.Type)
+                        {
+                            case ClipType.Image:
+                            case ClipType.Video:
+                                if (clip is IOverlayLayer transformClip)
+                                {
+                                    transformClip.IOverlayLayerCore = isOverlayLayer;
+                                }
+                                break;
+                        }
+                    }
+                }
+                this.ViewModel.Invalidate(); // Invalidate
             };
 
 
@@ -222,8 +243,6 @@ namespace Video_Clip2
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
-
-                this.TransformFlyout.Hide();
             };
             this.FlipVerticalButton.Click += (s, e) =>
             {
@@ -247,8 +266,6 @@ namespace Video_Clip2
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
-
-                this.TransformFlyout.Hide();
             };
             this.RotateLeftButton.Click += (s, e) =>
             {
@@ -286,8 +303,6 @@ namespace Video_Clip2
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
-
-                this.TransformFlyout.Hide();
             };
             this.RotateRightButton.Click += (s, e) =>
             {
@@ -325,8 +340,6 @@ namespace Video_Clip2
                     }
                 }
                 this.ViewModel.Invalidate(); // Invalidate
-
-                this.TransformFlyout.Hide();
             };
 
 

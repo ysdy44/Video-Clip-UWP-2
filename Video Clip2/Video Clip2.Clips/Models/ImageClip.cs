@@ -12,14 +12,16 @@ using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2.Clips.Models
 {
-    public class ImageClip : FrameClip, IClip, IRenderTransform
+    public class ImageClip : FrameClip, IClip, IOverlayLayer, ITransform, IRenderTransform
     {
 
         public Medium Medium { get; set; }
+        public bool IOverlayLayerCore { get; set; }
+        public Transform Transform { get; private set; }
         public RenderTransform RenderTransform { get; private set; }
 
         public override ClipType Type => ClipType.Image;
-        public override bool IsOverlayLayer => false;
+        public override bool IsOverlayLayer => this.IOverlayLayerCore;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
 
         public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -27,11 +29,12 @@ namespace Video_Clip2.Clips.Models
             Photo photo = Photo.Instances[this.Medium.Token];
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeFrameClip(duration, trackScale);
-            this.InitializeImageClip(photo, position, delay, duration);
+            this.InitializeImageClip(photo.Width, photo.Height, position, delay, duration);
         }
-        protected void InitializeImageClip(Photo photo, TimeSpan position, TimeSpan delay, TimeSpan duration)
+        protected void InitializeImageClip(uint width, uint height, TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
-            this.RenderTransform = new RenderTransform(photo.Width, photo.Height);
+            this.Transform = new Transform(width, height);
+            this.RenderTransform = new RenderTransform(width, height);
             base.ChangeView(position, delay, duration);
         }
 
@@ -53,12 +56,24 @@ namespace Video_Clip2.Clips.Models
             Photo photo = Photo.Instances[this.Medium.Token];
 
             // Transform
-            this.RenderTransform.ReloadMatrix(previewSize);
-            return new Transform2DEffect
+            if (this.IsOverlayLayer)
             {
-                TransformMatrix = this.RenderTransform.Matrix,
-                Source = photo.Bitmap
-            };
+                this.Transform.ReloadMatrix(scale);
+                return new Transform2DEffect
+                {
+                    TransformMatrix = this.Transform.Matrix,
+                    Source = photo.Bitmap
+                };
+            }
+            else
+            {
+                this.RenderTransform.ReloadMatrix(previewSize);
+                return new Transform2DEffect
+                {
+                    TransformMatrix = this.RenderTransform.Matrix,
+                    Source = photo.Bitmap
+                };
+            }
         }
 
         protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
@@ -75,7 +90,7 @@ namespace Video_Clip2.Clips.Models
             Photo photo = Photo.Instances[this.Medium.Token];
             imageClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
             imageClip.InitializeFrameClip(nextDuration, trackScale);
-            imageClip.InitializeImageClip(photo, position, position, nextDuration);
+            imageClip.InitializeImageClip(photo.Width, photo.Height, position, position, nextDuration);
             return imageClip;
         }
 

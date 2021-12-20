@@ -17,12 +17,14 @@ namespace Video_Clip2.Clips.Models
     public partial class VideoClip : MediaClip, IClip, IRenderTransform
     {
 
-        public Medium Medium { get; set; }
         CanvasRenderTarget Bitmap;
+        public Medium Medium { get; set; }
+        public bool IOverlayLayerCore { get; set; }
+        public Transform Transform { get; private set; }
         public RenderTransform RenderTransform { get; private set; }
 
         public override ClipType Type => ClipType.Video;
-        public override bool IsOverlayLayer => false;
+        public override bool IsOverlayLayer => this.IOverlayLayerCore;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
 
         public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
@@ -30,12 +32,13 @@ namespace Video_Clip2.Clips.Models
             Video video = Video.Instances[this.Medium.Token];
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeMediaClip(video.CreateSource(), playbackRate, isMuted, position, video.Duration, trackScale);
-            this.InitializeVideoClip(video);
+            this.InitializeVideoClip(video.Width, video.Height);
         }
-        protected void InitializeVideoClip(Video video)
+        protected void InitializeVideoClip(uint width, uint height)
         {
-            this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, video.Width, video.Height, 96);
-            this.RenderTransform = new RenderTransform(video.Width, video.Height);
+            this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, width, height, 96);
+            this.Transform = new Transform(width, height);
+            this.RenderTransform = new RenderTransform(width, height);
             base.Player.IsVideoFrameServerEnabled = true;
             base.Player.VideoFrameAvailable += (s, e) =>
             {
@@ -62,11 +65,12 @@ namespace Video_Clip2.Clips.Models
                 base.Player.Pause();
             }
 
+            Video video = Video.Instances[this.Medium.Token];
+
             // Transform
-            this.RenderTransform.ReloadMatrix(previewSize);
             return new Transform2DEffect
             {
-                TransformMatrix = this.RenderTransform.Matrix,
+                TransformMatrix = RenderTransform.UniformRender(video.Width, video.Height, previewSize),
                 Source = this.Bitmap
             };
         }
@@ -98,12 +102,24 @@ namespace Video_Clip2.Clips.Models
             }
 
             // Transform
-            this.RenderTransform.ReloadMatrix(previewSize);
-            return new Transform2DEffect
+            if (this.IsOverlayLayer)
             {
-                TransformMatrix = this.RenderTransform.Matrix,
-                Source = this.Bitmap
-            };
+                this.Transform.ReloadMatrix(scale);
+                return new Transform2DEffect
+                {
+                    TransformMatrix = this.Transform.Matrix,
+                    Source = this.Bitmap
+                };
+            }
+            else
+            {
+                this.RenderTransform.ReloadMatrix(previewSize);
+                return new Transform2DEffect
+                {
+                    TransformMatrix = this.RenderTransform.Matrix,
+                    Source = this.Bitmap
+                };
+            }
         }
 
         protected override IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
@@ -123,7 +139,7 @@ namespace Video_Clip2.Clips.Models
             Video video = Video.Instances[videoClip.Medium.Token];
             videoClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
             videoClip.InitializeMediaClip(video.CreateSource(), playbackRate, isMuted, position, video.Duration, trackScale);
-            videoClip.InitializeVideoClip(video);
+            videoClip.InitializeVideoClip(video.Width, video.Height);
             return videoClip;
         }
 

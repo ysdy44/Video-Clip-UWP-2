@@ -2,6 +2,6 @@
 {
     public interface ITransform
     {
-        RenderTransform Transform { get; }
+        Transform Transform { get; }
     }
 }
