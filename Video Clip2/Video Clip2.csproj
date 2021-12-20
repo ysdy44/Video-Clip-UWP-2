@@ -229,10 +229,12 @@
     <Compile Include="Video Clip2.Tools\Models\NoneTool.cs" />
     <Compile Include="Video Clip2.Tools\ToolType.cs" />
     <Compile Include="Video Clip2.Tools\XMLs\XML.ToolFactory.cs" />
+    <Compile Include="Video Clip2.Transforms\IOverlayLayer.cs" />
     <Compile Include="Video Clip2.Transforms\IRenderTransform.cs" />
     <Compile Include="Video Clip2.Transforms\ITransform.cs" />
     <Compile Include="Video Clip2.Transforms\RenderTransform.cs" />
     <Compile Include="Video Clip2.Transforms\Rotate.cs" />
+    <Compile Include="Video Clip2.Transforms\Transform.cs" />
     <Compile Include="Video Clip2.ViewModels\InvalidateMode.cs" />
     <Compile Include="Video Clip2.ViewModels\MethodViewModels\MethodViewModel.cs" />
     <Compile Include="Video Clip2.ViewModels\MethodViewModels\MethodViewModel.Edit.cs" />

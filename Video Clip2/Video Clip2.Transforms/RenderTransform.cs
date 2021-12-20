@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Transforms
 {
-    public class RenderTransform
+    public sealed class RenderTransform
     {
         public Stretch Stretch = Stretch.Uniform;
         public Rotate Rotate;
@@ -25,7 +25,7 @@ namespace Video_Clip2.Transforms
         public void ReloadMatrix() => this.Matrix = this.Render();
         public void ReloadMatrix(Size previewSize)
         {
-            if (previewSize == this.PreviewSize) return;
+            if (this.PreviewSize == previewSize) return;
             this.PreviewSize = previewSize;
             this.ReloadMatrix();
         }
@@ -95,6 +95,18 @@ namespace Video_Clip2.Transforms
             return matrixRotated *
                 Matrix3x2.CreateScale(scale) *
                 Matrix3x2.CreateTranslation(new Vector2(previewWidth / 2, previewHeight / 2));
+        }
+
+        public static Matrix3x2 UniformRender(uint width, uint height, Size previewSize)
+        {
+            float previewWidth = (float)previewSize.Width;
+            float previewHeight = (float)previewSize.Height;
+
+            float scale = Math.Min(previewWidth / width, previewHeight / height);
+
+            return
+                Matrix3x2.CreateScale(scale) *
+                Matrix3x2.CreateTranslation((previewWidth - width) / 2 * scale, (previewHeight - height) / 2 * scale);
         }
 
         public static bool operator !=(RenderTransform left, RenderTransform right) => !(left == right);
