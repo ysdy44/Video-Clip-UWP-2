@@ -11,24 +11,40 @@
     >
 
     <ListView x:Name="ListView" IsItemClickEnabled="True" SelectionMode="Single">
+        <ListView.Header>
+            <Button x:Name="ClipButton" Height="36" HorizontalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}"
+                    Visibility="{x:Bind BooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
+                Convert to Clip
+            </Button>
+        </ListView.Header>
+        <ListView.Footer>
+            <Button x:Name="OverlayLayerButton" Height="36" HorizontalAlignment="Stretch" Style="{StaticResource TextBlockButtonStyle}"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
+                Convert to Overlay Layer
+            </Button>
+        </ListView.Footer>
         <ListView.Items>
 
-            <elements:StretchListViewItem x:Name="None" Type="None" Index="0">
+            <elements:StretchListViewItem x:Name="None" Type="None" Index="0"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
                 <ContentControl>
                     None
                 </ContentControl>
             </elements:StretchListViewItem>
-            <elements:StretchListViewItem x:Name="Fill" Type="Fill" Index="1">
+            <elements:StretchListViewItem x:Name="Fill" Type="Fill" Index="1"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
                 <ContentControl>
                     Fill
                 </ContentControl>
             </elements:StretchListViewItem>
-            <elements:StretchListViewItem x:Name="Uniform" Type="Uniform" Index="2">
+            <elements:StretchListViewItem x:Name="Uniform" Type="Uniform" Index="2"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
                 <ContentControl>
                     Uniform
                 </ContentControl>
             </elements:StretchListViewItem>
-            <elements:StretchListViewItem x:Name="UniformToFill" Type="UniformToFill" Index="3">
+            <elements:StretchListViewItem x:Name="UniformToFill" Type="UniformToFill" Index="3"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsOverlayLayer), Mode=OneWay}">
                 <ContentControl>
                     UniformToFill
                 </ContentControl>
