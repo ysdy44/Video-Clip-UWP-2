@@ -98,9 +98,9 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    this.StretchListView.Stretch = transformClip.Transform.Stretch;
+                                    this.StretchListView.Stretch = transformClip.RenderTransform.Stretch;
                                     break;
                                 }
                                 break;
@@ -122,10 +122,10 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    transformClip.Transform.Stretch = stretch;
-                                    transformClip.Transform.ReloadMatrix();
+                                    transformClip.RenderTransform.Stretch = stretch;
+                                    transformClip.RenderTransform.ReloadMatrix();
                                 }
                                 break;
                         }
@@ -212,10 +212,10 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    transformClip.Transform.IsXFlip = !transformClip.Transform.IsXFlip;
-                                    transformClip.Transform.ReloadMatrix();
+                                    transformClip.RenderTransform.IsXFlip = !transformClip.RenderTransform.IsXFlip;
+                                    transformClip.RenderTransform.ReloadMatrix();
                                 }
                                 break;
                         }
@@ -237,10 +237,10 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    transformClip.Transform.IsYFlip = !transformClip.Transform.IsYFlip;
-                                    transformClip.Transform.ReloadMatrix();
+                                    transformClip.RenderTransform.IsYFlip = !transformClip.RenderTransform.IsYFlip;
+                                    transformClip.RenderTransform.ReloadMatrix();
                                 }
                                 break;
                         }
@@ -262,24 +262,24 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    switch (transformClip.Transform.Rotate)
+                                    switch (transformClip.RenderTransform.Rotate)
                                     {
                                         case Rotate.None:
-                                            transformClip.Transform.Rotate = Rotate.RotateLeft90;
+                                            transformClip.RenderTransform.Rotate = Rotate.RotateLeft90;
                                             break;
                                         case Rotate.RotateLeft90:
-                                            transformClip.Transform.Rotate = Rotate.Rotate180;
+                                            transformClip.RenderTransform.Rotate = Rotate.Rotate180;
                                             break;
                                         case Rotate.RotateRight90:
-                                            transformClip.Transform.Rotate = Rotate.None;
+                                            transformClip.RenderTransform.Rotate = Rotate.None;
                                             break;
                                         case Rotate.Rotate180:
-                                            transformClip.Transform.Rotate = Rotate.RotateRight90;
+                                            transformClip.RenderTransform.Rotate = Rotate.RotateRight90;
                                             break;
                                     }
-                                    transformClip.Transform.ReloadMatrix();
+                                    transformClip.RenderTransform.ReloadMatrix();
                                 }
                                 break;
                         }
@@ -301,24 +301,24 @@ namespace Video_Clip2
                         {
                             case ClipType.Image:
                             case ClipType.Video:
-                                if (clip is ITransform transformClip)
+                                if (clip is IRenderTransform transformClip)
                                 {
-                                    switch (transformClip.Transform.Rotate)
+                                    switch (transformClip.RenderTransform.Rotate)
                                     {
                                         case Rotate.None:
-                                            transformClip.Transform.Rotate = Rotate.RotateRight90;
+                                            transformClip.RenderTransform.Rotate = Rotate.RotateRight90;
                                             break;
                                         case Rotate.RotateLeft90:
-                                            transformClip.Transform.Rotate = Rotate.None;
+                                            transformClip.RenderTransform.Rotate = Rotate.None;
                                             break;
                                         case Rotate.RotateRight90:
-                                            transformClip.Transform.Rotate = Rotate.Rotate180;
+                                            transformClip.RenderTransform.Rotate = Rotate.Rotate180;
                                             break;
                                         case Rotate.Rotate180:
-                                            transformClip.Transform.Rotate = Rotate.RotateLeft90;
+                                            transformClip.RenderTransform.Rotate = Rotate.RotateLeft90;
                                             break;
                                     }
-                                    transformClip.Transform.ReloadMatrix();
+                                    transformClip.RenderTransform.ReloadMatrix();
                                 }
                                 break;
                         }

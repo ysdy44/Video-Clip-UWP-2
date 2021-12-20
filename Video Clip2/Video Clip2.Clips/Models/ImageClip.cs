@@ -12,11 +12,11 @@ using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2.Clips.Models
 {
-    public class ImageClip : FrameClip, IClip, ITransform
+    public class ImageClip : FrameClip, IClip, IRenderTransform
     {
 
         public Medium Medium { get; set; }
-        public RenderTransform Transform { get; private set; }
+        public RenderTransform RenderTransform { get; private set; }
 
         public override ClipType Type => ClipType.Image;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
@@ -30,7 +30,7 @@ namespace Video_Clip2.Clips.Models
         }
         protected void InitializeImageClip(Photo photo, TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
-            this.Transform = new RenderTransform(photo.Width, photo.Height);
+            this.RenderTransform = new RenderTransform(photo.Width, photo.Height);
             base.ChangeView(position, delay, duration);
         }
 
@@ -52,10 +52,10 @@ namespace Video_Clip2.Clips.Models
             Photo photo = Photo.Instances[this.Medium.Token];
 
             // Transform
-            this.Transform.ReloadMatrix(previewSize);
+            this.RenderTransform.ReloadMatrix(previewSize);
             return new Transform2DEffect
             {
-                TransformMatrix = this.Transform.Matrix,
+                TransformMatrix = this.RenderTransform.Matrix,
                 Source = photo.Bitmap
             };
         }

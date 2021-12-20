@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Controls;
 
 namespace Video_Clip2.Clips.Models
 {
-    public partial class VideoClip : MediaClip, IClip, ITransform
+    public partial class VideoClip : MediaClip, IClip, IRenderTransform
     {
 
         public Medium Medium { get; set; }
         CanvasRenderTarget Bitmap;
-        public RenderTransform Transform { get; private set; }
+        public RenderTransform RenderTransform { get; private set; }
 
         public override ClipType Type => ClipType.Video;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
@@ -34,7 +34,7 @@ namespace Video_Clip2.Clips.Models
         protected void InitializeVideoClip(Video video)
         {
             this.Bitmap = new CanvasRenderTarget(ClipManager.CanvasDevice, video.Width, video.Height, 96);
-            this.Transform = new RenderTransform(video.Width, video.Height);
+            this.RenderTransform = new RenderTransform(video.Width, video.Height);
             base.Player.IsVideoFrameServerEnabled = true;
             base.Player.VideoFrameAvailable += (s, e) =>
             {
@@ -62,10 +62,10 @@ namespace Video_Clip2.Clips.Models
             }
 
             // Transform
-            this.Transform.ReloadMatrix(previewSize);
+            this.RenderTransform.ReloadMatrix(previewSize);
             return new Transform2DEffect
             {
-                TransformMatrix = this.Transform.Matrix,
+                TransformMatrix = this.RenderTransform.Matrix,
                 Source = this.Bitmap
             };
         }
@@ -97,10 +97,10 @@ namespace Video_Clip2.Clips.Models
             }
 
             // Transform
-            this.Transform.ReloadMatrix(previewSize);
+            this.RenderTransform.ReloadMatrix(previewSize);
             return new Transform2DEffect
             {
-                TransformMatrix = this.Transform.Matrix,
+                TransformMatrix = this.RenderTransform.Matrix,
                 Source = this.Bitmap
             };
         }
