@@ -44,6 +44,7 @@ namespace Video_Clip2.Clips.Models
     {
 
         public override ClipType Type => ClipType.Text;
+        public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Orange, Symbol.FontSize);
 
         public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -58,7 +59,7 @@ namespace Video_Clip2.Clips.Models
             args.DrawingSession.DrawText(this.Text, Vector2.One, Colors.White);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
         {
             if (this.Text == null) return null;
             else if (base.InRange(position) == false) return null;

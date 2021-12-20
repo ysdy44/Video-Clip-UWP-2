@@ -20,6 +20,7 @@ namespace Video_Clip2.Clips
         #region Property
 
         public abstract ClipType Type { get; }
+        public abstract bool IsOverlayLayer { get; }
         public string Name { get; set; }
 
         public float Opacity { get; set; } = 1;
@@ -63,7 +64,7 @@ namespace Video_Clip2.Clips
             return true;
         }
         public abstract void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize);
+        public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize);
 
         int StartingIndex;
         public int Index { get; private set; }

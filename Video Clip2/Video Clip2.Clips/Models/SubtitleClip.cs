@@ -23,6 +23,7 @@ namespace Video_Clip2.Clips.Models
         public IList<Subtitle> Subtitles { get; set; }
 
         public override ClipType Type => ClipType.Subtitle;
+        public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.OrangeRed, Symbol.FontColor);
 
         public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -37,7 +38,7 @@ namespace Video_Clip2.Clips.Models
         {
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
         {
             if (this.Text == null) return null;
             else if (base.InRange(position) == false) return null;

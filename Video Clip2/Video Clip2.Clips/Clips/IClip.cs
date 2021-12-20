@@ -22,6 +22,7 @@ namespace Video_Clip2.Clips
         #region Property
 
         ClipType Type { get; }
+        bool IsOverlayLayer { get; }
         string Name { get; set; }
 
         float Opacity { get; set; }
@@ -42,7 +43,7 @@ namespace Video_Clip2.Clips
         bool InRange(TimeSpan position);
         bool InRange(TimeSpan position, TimeSpan minDuration);
         void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize);
+        ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize);
 
         int Index { get; }
         void CacheIndex();

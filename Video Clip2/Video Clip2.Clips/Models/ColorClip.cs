@@ -16,6 +16,7 @@ namespace Video_Clip2.Clips.Models
         private ColorSourceEffect Source;
 
         public override ClipType Type => ClipType.Color;
+        public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Black, Symbol.Flag);
 
         public void Initialize(bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
@@ -38,7 +39,7 @@ namespace Video_Clip2.Clips.Models
             args.DrawingSession.Clear(this.Color);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
         {
             if (base.InRange(position) == false) return null;
             else return this.Source;

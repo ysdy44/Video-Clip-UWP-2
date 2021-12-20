@@ -22,6 +22,7 @@ namespace Video_Clip2.Clips.Models
         public RenderTransform RenderTransform { get; private set; }
 
         public override ClipType Type => ClipType.Video;
+        public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
 
         public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
@@ -69,7 +70,7 @@ namespace Video_Clip2.Clips.Models
                 Source = this.Bitmap
             };
         }
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
         {
             if (base.InRange(position) == false)
             {

@@ -16,6 +16,7 @@ namespace Video_Clip2.Clips.Models
         public Medium Medium { get; set; }
 
         public override ClipType Type => ClipType.Audio;
+        public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
         public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
@@ -29,7 +30,7 @@ namespace Video_Clip2.Clips.Models
         {
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
         {
             if (base.InRange(position) == false)
             {
