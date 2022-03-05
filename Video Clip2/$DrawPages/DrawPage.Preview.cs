@@ -14,34 +14,6 @@ namespace Video_Clip2
 
         private void ConstructPreview()
         {
-            base.SizeChanged += (s, e) =>
-            {
-                if (e.NewSize == Size.Empty) return;
-                if (e.NewSize == e.PreviousSize) return;
-
-                if (e.NewSize.Width != e.PreviousSize.Width)
-                {
-                    ScrollViewer element = this.AppBarRightScrollViewer;
-                    int half = element.HorizontalAlignment == HorizontalAlignment.Right ? 2 : 1;
-                    element.MaxWidth = e.NewSize.Width / half - this.PlayGrid.Width - element.Margin.Right;
-                }
-
-                if (e.NewSize.Height != e.PreviousSize.Height)
-                {
-                    double height = e.NewSize.Height;
-                    this.PreviewGrid.SetWindowHeight(height - this.PlayGrid.Width);
-                }
-            };
-            this.FullScreenButton.Click += (s, e) =>
-            {
-                double height = base.ActualHeight;
-                this.Animation.To = this.PreviewGrid.FullScreenStarted(height - 48);
-                this.Storyboard.Begin(); // Storyboard
-            };
-            this.Storyboard.Completed += (s, e) => this.PreviewGrid.FullScreenCompleted();
-
-
-
             this.PlayButton.Click += (s, e) =>
             {
                 if (this.ViewModel.Position >= this.ViewModel.Duration)
@@ -66,9 +38,9 @@ namespace Video_Clip2
             {
                 float scale = (float)this.ViewModel.Scale;
                 int rows = this.RectangleCanvas.MaximumRows;
-                switch (this.GroupIndex)
+                switch (this.AppBarListView.SelectedIndex)
                 {
-                    case 6:
+                    case 0:
                         this.DurationMenu.Draw(args.DrawingSession, s.Size);
                         break;
 

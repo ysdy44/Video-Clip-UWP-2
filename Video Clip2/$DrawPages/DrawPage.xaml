@@ -9,7 +9,6 @@
     xmlns:controls1="using:Video_Clip2.Controls"
     xmlns:elements="using:Video_Clip2.Elements"
     xmlns:times="using:Video_Clip2.Elements.Times"
-    xmlns:elementsTransitions="using:Video_Clip2.Elements.Transitions"
     xmlns:menus="using:Video_Clip2.Menus"
     xmlns:toolsElements="using:Video_Clip2.Tools.Elements"
     Background="Black" 
@@ -17,10 +16,11 @@
     >
 
 
-    <Page.Resources>
+    <FrameworkElement.Resources>
+
         <!--Double-->
         <x:Double x:Key="AppBarHeight">48</x:Double>
-        
+
         <x:Double x:Key="TrackLeftWidth">72</x:Double>
         <Thickness x:Key="TrackLeftMargin">72,0,72,0</Thickness>
         <x:Double x:Key="TrackLeftLeft">-72</x:Double>
@@ -31,49 +31,8 @@
         <x:Double x:Key="TimelineHeight">30</x:Double>
         <x:Double x:Key="TimelineTop">-30</x:Double>
         <Thickness x:Key="TimelineMargin">0,30,0,0</Thickness>
-        
-        <!--StaticResource-->
-        <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="{ThemeResource SystemAccentColor}"/>
-        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="{ThemeResource SystemAccentColor}"/>
-        <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="{ThemeResource SystemAccentColor}"/>
-        <SolidColorBrush x:Key="ListViewItemForegroundSelected" Color="White"/>
-        <SolidColorBrush x:Key="ListViewItemForegroundSelectedPointerOver" Color="White"/>
-        <SolidColorBrush x:Key="ListViewItemForegroundSelectedPressed" Color="White"/>
 
-        <!--Storyboard-->
-        <Storyboard x:Name="Storyboard">
-            <DoubleAnimation x:Name="Animation" From="{x:Null}" To="{x:Null}" Duration="0:0:0.6" 
-                             Storyboard.TargetProperty="Height" Storyboard.TargetName="PreviewGrid" 
-                             EnableDependentAnimation="True">
-                <DoubleAnimation.EasingFunction>
-                    <CircleEase EasingMode="EaseOut"/>
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-
-        <!--Style-->
-        <Style TargetType="ScrollViewer">
-            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
-            <Setter Property="HorizontalScrollMode" Value="Enabled"/>
-            <Setter Property="IsHorizontalRailEnabled" Value="False"/>
-            <Setter Property="VerticalScrollMode" Value="Disabled"/>
-            <Setter Property="IsVerticalRailEnabled" Value="True"/>
-            <Setter Property="ZoomMode" Value="Disabled"/>
-            <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
-            <Setter Property="BringIntoViewOnFocusChange" Value="True"/>
-        </Style>
-        <Style x:Key="MenuFlyoutItemStyle" TargetType="MenuFlyoutItem">
-            <Setter Property="MinWidth" Value="200"/>
-            <Setter Property="Height" Value="44"/>
-        </Style>
-        <Style x:Key="AppToolTipStyle" TargetType="ToolTip">
-            <Setter Property="BorderBrush" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
-            <Setter Property="Background" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-        </Style>
-
+       
         <!--Flyout-->
         <MenuFlyout x:Name="EditFlyout" Placement="Left">
             <MenuFlyout.MenuFlyoutPresenterStyle>
@@ -82,68 +41,7 @@
                 </Style>
             </MenuFlyout.MenuFlyoutPresenterStyle>
         </MenuFlyout>
-        <Flyout x:Name="SpeedFlyout" Placement="top">
-            <elements:TimeSlider x:Name="SpeedSlider" Value="1" Minimum="0.25" Maximum="4" StepFrequency="0.25" TickPlacement="Outside" TickFrequency="0.25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                <Slider.Header>
-                    Speed
-                </Slider.Header>
-            </elements:TimeSlider>
-        </Flyout>
-        <Flyout x:Name="StretchFlyout" Placement="Top">
-            <Flyout.FlyoutPresenterStyle>
-                <Style TargetType="FlyoutPresenter">
-                    <Setter Property="Padding" Value="0,4"/>
-                </Style>
-            </Flyout.FlyoutPresenterStyle>
-            <toolsElements:StretchListView x:Name="StretchListView"/>
-        </Flyout>
-        <Flyout x:Name="VolumeFlyout" Placement="top">
-            <elements:TimeSlider x:Name="VolumeSlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                <Slider.Header>
-                    Volume
-                </Slider.Header>
-            </elements:TimeSlider>
-        </Flyout>
-        <Flyout x:Name="TransformFlyout" Placement="top">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="FlipHorizontalButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <PathIcon>
-                        <PathIcon.Data>
-                            M18.477,20L7.843,29.724L7.843,10.276L18.477,20ZM21.523,20L32.157,29.724L32.157,10.276L21.523,20ZM23.207,20.063L31.057,27.241L31.057,12.885L23.207,20.063Z
-                        </PathIcon.Data>
-                    </PathIcon>
-                </Button>
-                <Button x:Name="FlipVerticalButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <PathIcon>
-                        <PathIcon.Data>
-                            M20,21.523L10.276,32.157L29.724,32.157L20,21.523ZM20,18.477L10.276,7.843L29.724,7.843L20,18.477ZM19.937,16.793L12.759,8.943L27.115,8.943L19.937,16.793Z
-                        </PathIcon.Data>
-                    </PathIcon>
-                </Button>
-                <Button x:Name="RotateLeftButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <PathIcon>
-                        <PathIcon.Data>
-                            M13.949,12.731C13.968,12.561 14.047,12.402 14.172,12.283L18.038,8.6C18.332,8.321 18.796,8.332 19.075,8.625C19.354,8.918 19.343,9.383 19.05,9.662L16.536,12.057C17.694,12.043 19.123,12.029 20,12.029C25.558,12.029 30.07,16.541 30.07,22.099C30.07,27.656 25.558,32.168 20,32.168C14.442,32.168 9.93,27.656 9.93,22.099C9.93,22.08 9.931,22.061 9.933,22.042L9.936,20.729C9.935,20.324 10.264,19.996 10.668,19.995C11.073,19.995 11.402,20.323 11.402,20.728C11.402,20.728 11.404,21.846 11.399,22.074C11.398,22.092 11.398,22.109 11.397,22.124C11.411,26.86 15.26,30.701 20,30.701C24.748,30.701 28.603,26.847 28.603,22.099C28.603,17.35 24.748,13.496 20,13.496C19.11,13.496 17.651,13.51 16.486,13.524L19.05,15.966C19.343,16.245 19.354,16.71 19.075,17.003C18.796,17.296 18.332,17.307 18.038,17.028L14.172,13.345C14.123,13.299 14.081,13.246 14.047,13.189L14.044,13.184C13.981,13.075 13.944,12.949 13.944,12.814C13.944,12.786 13.946,12.758 13.949,12.731Z
-                        </PathIcon.Data>
-                    </PathIcon>
-                </Button>
-                <Button x:Name="RotateRightButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <PathIcon>
-                        <PathIcon.Data>
-                            M26.051,12.731C26.032,12.561 25.953,12.402 25.828,12.283L21.962,8.6C21.668,8.321 21.204,8.332 20.925,8.625C20.646,8.918 20.657,9.383 20.95,9.662L23.464,12.057C22.306,12.043 20.877,12.029 20,12.029C14.442,12.029 9.93,16.541 9.93,22.099C9.93,27.656 14.442,32.168 20,32.168C25.558,32.168 30.07,27.656 30.07,22.099C30.07,22.08 30.069,22.061 30.067,22.042L30.064,20.729C30.065,20.324 29.736,19.996 29.332,19.995C28.927,19.995 28.598,20.323 28.598,20.728C28.598,20.728 28.596,21.846 28.601,22.074C28.602,22.092 28.602,22.109 28.603,22.124C28.589,26.86 24.74,30.701 20,30.701C15.252,30.701 11.397,26.847 11.397,22.099C11.397,17.35 15.252,13.496 20,13.496C20.89,13.496 22.349,13.51 23.514,13.524L20.95,15.966C20.657,16.245 20.646,16.71 20.925,17.003C21.204,17.296 21.668,17.307 21.962,17.028L25.828,13.345C25.877,13.299 25.919,13.246 25.953,13.189L25.956,13.184C26.019,13.075 26.056,12.949 26.056,12.814C26.056,12.786 26.054,12.758 26.051,12.731Z
-                        </PathIcon.Data>
-                    </PathIcon>
-                </Button>
-            </StackPanel>
-        </Flyout>
-        <Flyout x:Name="OpacityFlyout" Placement="top">
-            <elements:TimeSlider x:Name="OpacitySlider" Value="100" TickPlacement="Outside" TickFrequency="25" Foreground="{ThemeResource AppBlueLinearGradientBrush}">
-                <Slider.Header>
-                    Opacity
-                </Slider.Header>
-            </elements:TimeSlider>
-        </Flyout>
-    </Page.Resources>
+    </FrameworkElement.Resources>
 
 
     <Grid>
@@ -154,92 +52,136 @@
 
                 <!--Phone-->
                 <VisualState x:Name="Phone">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
-                    </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="AppBarLeftScrollViewer.Width" Value="150"/>
 
-                        <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
-                        <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
-                        <Setter Target="AppBarBorder2.Visibility" Value="Visible"/>
+                        <!--Preview-->
+                        <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="3"/>
 
-                        <Setter Target="AppBarLeftBorder.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightBorder.(Grid.Row)" Value="3"/>
+                        <!--AppBar-->
+                        <Setter Target="AppBarGrid.BorderBrush" Value="{x:Null}"/>
+                        <Setter Target="AppBarGrid.Background" Value="{x:Null}"/>
 
-                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
-                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
+
+                        <!--Preview-->
+                        <Setter Target="PreviewGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="HomeGrid.(Grid.ColumnSpan)" Value="2"/>
+
+                        <!--Menu-->
+                        <Setter Target="MenuRectangle.Visibility" Value="Collapsed"/>
+                        <Setter Target="MenuRectangle2.Visibility" Value="Visible"/>
+
+                        <!--AppBar-->
+                        <Setter Target="AppBarListView.(Grid.Column)" Value="0"/>
+                        <Setter Target="AppBarListView.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="AppBarListView.(Grid.Row)" Value="4"/>
+                        <Setter Target="SpliterButton2.Value" Value="0"/>
+                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
+
+                        <Setter Target="AppBarLeftBorder2.Visibility" Value="Collapsed"/>
                         <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
+                        <Setter Target="TimeButton.(Grid.Column)" Value="2"/>
+                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
 
-                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="0"/>
-                        <Setter Target="AppBarLeftScrollViewer.HorizontalAlignment" Value="Right"/>
-                        <Setter Target="AppBarLeftScrollViewer.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="AppBarRightScrollViewer.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
-                        <Setter Target="AppBarRightScrollViewer.HorizontalAlignment" Value="Center"/>
-                        <Setter Target="AppBarRightScrollViewer.Background" Value="{x:Null}"/>
+                        <Setter Target="AppBarLeftScrollViewer.(Grid.Column)" Value="4"/>
+                        <Setter Target="AppBarLeftScrollViewer.HorizontalContentAlignment" Value="Right"/>
+                        <Setter Target="AppBarGrid2.(Grid.Row)" Value="4"/>
+                        <Setter Target="BackBorderBorder.Visibility" Value="Visible"/>
 
-                        <Setter Target="PlayGrid.VerticalAlignment" Value="Bottom"/>
+                        <!--Buttons-->
+                        <Setter Target="ButtonListView.(Grid.Row)" Value="3"/>
+                        <Setter Target="ButtonListView.Margin" Value="0"/>
+                        <Setter Target="ButtonListView.ItemsPanel" >
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+
                     </VisualState.Setters>
                 </VisualState>
 
                 <!--Pad-->
                 <VisualState x:Name="Pad">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
-                    </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="2"/>
-                        <Setter Target="AppBarBorder.Visibility" Value="Collapsed"/>
-                        <Setter Target="AppBarBorder2.Visibility" Value="Visible"/>
 
-                        <Setter Target="AppBarLeftBorder.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightBorder.(Grid.Row)" Value="3"/>
+                        <!--Preview-->
+                        <Setter Target="PreviewGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="HomeGrid.(Grid.ColumnSpan)" Value="2"/>
 
-                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
-                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
+                        <!--Menu-->
+                        <Setter Target="MenuRectangle.Visibility" Value="Collapsed"/>
+                        <Setter Target="MenuRectangle2.Visibility" Value="Visible"/>
+
+                        <!--AppBar-->
+                        <Setter Target="AppBarListView.(Grid.Column)" Value="0"/>
+                        <Setter Target="AppBarListView.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="AppBarListView.(Grid.Row)" Value="4"/>
+                        <Setter Target="SpliterButton2.Value" Value="0"/>
+                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
+
+                        <Setter Target="AppBarLeftBorder2.Visibility" Value="Collapsed"/>
                         <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
+                        <Setter Target="TimeButton.(Grid.Column)" Value="2"/>
+                        <Setter Target="ScaleSlider.Visibility" Value="Collapsed"/>
 
-                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="0"/>
-                        <Setter Target="AppBarLeftScrollViewer.HorizontalAlignment" Value="Right"/>
-                        <Setter Target="AppBarLeftScrollViewer.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="AppBarRightScrollViewer.(Grid.Row)" Value="3"/>
-                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
-                        <Setter Target="AppBarRightScrollViewer.HorizontalAlignment" Value="Center"/>
-                        <Setter Target="AppBarRightScrollViewer.Background" Value="{x:Null}"/>
+                        <Setter Target="AppBarLeftScrollViewer.(Grid.Column)" Value="4"/>
+                        <Setter Target="AppBarLeftScrollViewer.HorizontalContentAlignment" Value="Right"/>
+                        <Setter Target="AppBarGrid2.(Grid.Row)" Value="4"/>
+                        <Setter Target="BackBorderBorder.Visibility" Value="Visible"/>
 
-                        <Setter Target="PlayGrid.VerticalAlignment" Value="Bottom"/>
+                        <!--Buttons-->
+                        <Setter Target="ButtonListView.(Grid.Row)" Value="3"/>
+                        <Setter Target="ButtonListView.Margin" Value="0"/>
+                        <Setter Target="ButtonListView.ItemsPanel" >
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical"/>
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+
                     </VisualState.Setters>
                 </VisualState>
 
                 <!--PC-->
                 <VisualState x:Name="PC">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="900" />
-                    </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="AppBarLeftBorder2.(Grid.Row)" Value="0"/>
-                        <Setter Target="AppBarLeftBorder2.Margin" Value="0"/>
-                        <Setter Target="AppBarLeftBorder2.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="AppBarLeftBorder2.RequestedTheme" Value="Dark"/>
-                        <Setter Target="AppBarRightBorder2.(Grid.Row)" Value="0"/>
-                        <Setter Target="AppBarRightBorder2.Margin" Value="0"/>
-                        <Setter Target="AppBarRightBorder2.VerticalAlignment" Value="Bottom"/>
-                        <Setter Target="AppBarRightBorder2.RequestedTheme" Value="Dark"/>
-
-                        <Setter Target="AppBarLeftScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
-                        <Setter Target="AppBarRightScrollViewer.Margin" Value="{StaticResource TrackLeftMargin}"/>
+                        <Setter Target="SpliterButton2.Value" Value="500"/>
                     </VisualState.Setters>
                 </VisualState>
 
-                <!--Hub-->
-                <VisualState x:Name="Hub">
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1100" />
-                    </VisualState.StateTriggers>
+                <!--FullScreen-->
+                <VisualState x:Name="FullScreen">
                     <VisualState.Setters>
+
+                        <!--Preview-->
+                        <Setter Target="PreviewGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="PreviewGrid.(Grid.RowSpan)" Value="5"/>
+                        <Setter Target="HomeGrid.Visibility" Value="Collapsed"/>
+                        <Setter Target="TrackScrollViewer.Visibility" Value="Collapsed"/>
+                        <Setter Target="Timeline2.Opacity" Value="0"/>
+
+                        <!--Menu-->
+                        <Setter Target="MenuRectangle.Visibility" Value="Collapsed"/>
+                        <Setter Target="MenuGrid.Visibility" Value="Collapsed"/>
+
+                        <!--AppBar-->
+                        <Setter Target="AppBarListView.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarGrid.Visibility" Value="Collapsed"/>
+                        <Setter Target="AppBarGrid2.Visibility" Value="Collapsed"/>
+
+                        <!--Buttons-->
+                        <Setter Target="ButtonListView.Visibility" Value="Collapsed"/>
+
+                        <!--Play-->
+                        <Setter Target="PlayGrid.RequestedTheme" Value="Dark"/>
+                        <Setter Target="PlayGrid.Background" Value="{StaticResource AppVerticalReverseShadowBrush}"/>
+                        <Setter Target="PlayGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="PlayGrid.(Grid.RowSpan)" Value="5"/>
+                        <Setter Target="PlayGrid.VerticalAlignment" Value="Bottom"/>
+                        <Setter Target="UnFullScreenButton.Visibility" Value="Visible"/>
+
                     </VisualState.Setters>
                 </VisualState>
 
@@ -247,9 +189,14 @@
         </VisualStateManager.VisualStateGroups>
 
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="{x:Bind SpliterButton2.Value, Mode=OneWay}"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="48"/>
+            <RowDefinition MinHeight="100" MaxHeight="700" Height="{x:Bind SpliterButton.Value, Mode=OneWay}"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -258,10 +205,9 @@
         <elements:ApplicationTitleBarExtension x:Name="ApplicationView" TitleBarColor="Black"/>
 
         <!--Preview-->
-        <controls1:PreviewCanvas x:Name="PreviewGrid"
-                   Height="276" MinHeight="100" MaxHeight="700"
+        <controls1:PreviewCanvas x:Name="PreviewGrid" Grid.ColumnSpan="1" Grid.RowSpan="2" 
                    Scale2="{x:Bind ViewModel.Scale, Mode=TwoWay}" Size2="{x:Bind ViewModel.Size, Mode=OneWay}">
-            <xaml:CanvasControl x:Name="PreviewCanvas" Width="1920" Height="1080" ClearColor="Black">
+            <xaml:CanvasControl x:Name="PreviewCanvas" Width="1920" Height="1080" ClearColor="Black" >
                 <UIElement.RenderTransformOrigin>
                     0, 0
                 </UIElement.RenderTransformOrigin>
@@ -271,34 +217,19 @@
             </xaml:CanvasControl>
         </controls1:PreviewCanvas>
 
-        <!--Home-->
-        <Button Margin="12"
-                HorizontalAlignment="Left" VerticalAlignment="Top"
-                Background="{ThemeResource AppBackgroundLight}"
-                IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}">
-            <StackPanel Orientation="Horizontal">
-                <SymbolIcon Symbol="Home" Width="32"/>
-                <TextBlock Margin="4,0">
-                    Home
-                </TextBlock>
-            </StackPanel>
-        </Button>
-        <!--Export-->
-        <Button x:Name="ExportButton" Margin="12"
-                    HorizontalAlignment="Right" VerticalAlignment="Top"
-                    Background="{ThemeResource AppBlueLinearGradientBrush}" 
-                    IsEnabled="{x:Bind IntToBooleanConverter(GroupIndex), Mode=OneWay}"
-                    Style="{StaticResource AccentButtonStyle}">
-            <StackPanel Orientation="Horizontal">
-                <SymbolIcon Symbol="NewWindow" Width="32"/>
-                <TextBlock Margin="4,0">
-                    Export
-                </TextBlock>
-            </StackPanel>
-        </Button>
-
         <!--Track-->
-        <ScrollViewer x:Name="TrackScrollViewer" Grid.Row="2" Background="{ThemeResource AppBackground}">
+        <ScrollViewer x:Name="TrackScrollViewer" Grid.ColumnSpan="2" Grid.Row="3" Visibility="Visible"
+                      Background="{ThemeResource AppBackground}"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled"
+                      HorizontalScrollMode="Enabled"
+                      IsHorizontalRailEnabled="False"
+                      VerticalScrollMode="Disabled"
+                      IsVerticalRailEnabled="True"
+                      ZoomMode="Disabled"
+                      IsDeferredScrollingEnabled="False"
+                      BringIntoViewOnFocusChange="True"
+                      >
             <Border x:Name="TrackCanvas" Background="Transparent"
                         ManipulationMode="{x:Bind ToolTypeComboBox.Tool.TrackManipulationMode, Mode=OneWay}"
                         ManipulationStarted="{x:Bind ToolTypeComboBox.Tool.TrackManipulationStarted, Mode=OneWay}"
@@ -540,30 +471,147 @@
         </ScrollViewer>
 
         <!--Timeline-->
-        <Line Grid.Row="2" IsHitTestVisible="False" 
+        <Line x:Name="Timeline2"  Grid.ColumnSpan="2" Grid.Row="3" IsHitTestVisible="False" Opacity="1"
                 HorizontalAlignment="Center" VerticalAlignment="Top"
                 Visibility="{x:Bind ReverseBooleanToVisibilityConverter(IsDirectFreedom), Mode=OneWay}"
                 X1="0" Y1="{StaticResource TimelineHeight}" 
                 X2="0" Y2="512" 
                 StrokeThickness="2" Stroke="{ThemeResource AppBlueAbsoluteLinearGradientBrush}" />
 
+        <!--Home-->
+        <Grid x:Name="HomeGrid" Grid.ColumnSpan="1" Padding="12,2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="HomeButton" Visibility="Visible" Padding="12,8" Foreground="White" Style="{StaticResource TextBlockButtonStyle}">
+                <TextBlock>
+                    Home
+                </TextBlock>
+            </Button>
+            <Border x:Name="ExportBorder" Visibility="Visible" Grid.Column="2" CornerRadius="4" VerticalAlignment="Center" Background="{ThemeResource AppBlueLinearGradientBrush}" >
+                <Button x:Name="ExportButton" Padding="12,8" Foreground="White" Style="{StaticResource TextBlockButtonStyle}">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Style="{StaticResource AppToolTipStyle}">
+                            Export
+                        </ToolTip>
+                    </ToolTipService.ToolTip>
+                    <SymbolIcon Symbol="NewWindow" Width="32"/>
+                </Button>
+            </Border>
+        </Grid>
+
+        <!--AppBar-->
+        <Grid x:Name="AppBarGrid" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible" Background="{ThemeResource AppBackgroundLight}" 
+                Height="{StaticResource AppBarHeight}" 
+                BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle x:Name="AppBarLeftBorder2" Visibility="Visible"
+                       Width="{StaticResource TrackLeftWidth}" />
+            <Rectangle x:Name="AppBarRightBorder2" Grid.Column="6" Visibility="Visible"
+                       Width="{StaticResource TrackLeftWidth}" />
+            <Rectangle Grid.Column="3"
+                       Width="{StaticResource AppBarHeight}"/>
+
+            <times:TimeButton x:Name="TimeButton" Grid.Column="1"
+                        Padding="2,0" HorizontalAlignment="Left"
+                        Width="{StaticResource TrackLeft2Width}" 
+                        Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" 
+                        Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
+                <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
+                </TextBlock>
+            </times:TimeButton>
+            <elements:TimeSlider x:Name="ScaleSlider" Grid.Column="5" Visibility="Visible"
+                        Padding="12,0" 
+                        HorizontalAlignment="Right" VerticalAlignment="Center" 
+                        Width="{StaticResource TrackLeft2Width}" 
+                        Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
+                        Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
+
+            <ScrollViewer x:Name="AppBarLeftScrollViewer" Grid.Column="2" HorizontalContentAlignment="Left" HorizontalScrollBarVisibility="Hidden">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="{x:Bind AppBarLeftScrollViewer.HorizontalContentAlignment, Mode=OneWay}">
+                    <!--Undo-->
+                    <Button x:Name="UndoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Undo
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="Undo"/>
+                    </Button>
+                    <!--Redo-->
+                    <Button x:Name="RedoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Redo
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="Redo"/>
+                    </Button>
+                    <!--FullScreen-->
+                    <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Full screen
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="FullScreen"/>
+                    </Button>
+                    <!--Help-->
+                    <Button x:Name="HelpButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Help
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="Help"/>
+                    </Button>
+                    <!--Pin-->
+                    <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
+                        <ToolTipService.ToolTip>
+                            <ToolTip Style="{StaticResource AppToolTipStyle}">
+                                Pin
+                            </ToolTip>
+                        </ToolTipService.ToolTip>
+                        <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+
         <!--Button-->
-        <ListView x:Name="ButtonListView" Grid.Row="2" SelectionMode="None" Width="{StaticResource TrackLeftWidth}" HorizontalAlignment="Right" >
-            <ListView.Resources>
+        <ListView x:Name="ButtonListView" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible"
+                  Margin="{StaticResource TrackLeft2Margin}" SelectionMode="None" 
+                  MinWidth="{StaticResource TrackLeftWidth}" 
+                  HorizontalAlignment="Right" >
+            <FrameworkElement.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource TextBlockButtonStyle}">
                     <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
                     <Setter Property="HorizontalAlignment" Value="Stretch"/>
                     <Setter Property="VerticalAlignment" Value="Stretch"/>
                 </Style>
-            </ListView.Resources>
+            </FrameworkElement.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="Width" Value="{StaticResource AppBarHeight}"/>
                     <Setter Property="Height" Value="{StaticResource AppBarHeight}"/>
                     <Setter Property="MinWidth" Value="32"/>
                     <Setter Property="MinHeight" Value="32"/>
+                    <Setter Property="Margin" Value="0"/>
                     <Setter Property="Padding" Value="2"/>
-                    <Setter Property="BorderThickness" Value="2"/>
+                    <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="BorderBrush" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
                     <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
                     <Setter Property="Template">
@@ -578,17 +626,22 @@
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.Header>
-                <Border Width="{StaticResource TrackLeftWidth}" Height="{StaticResource TimelineHeight}"/>
+                <Rectangle Height="{StaticResource TimelineHeight}" />
             </ListView.Header>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <!--Add-->
             <Button>
                 <ToolTipService.ToolTip>
-                    <ToolTip Placement="Left">
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
                         Add
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
-                    <MenuFlyout Placement="Left">
+                    <MenuFlyout Placement="Bottom">
                         <MenuFlyout.MenuFlyoutPresenterStyle>
                             <Style TargetType="MenuFlyoutPresenter">
                                 <Setter Property="Padding" Value="0"/>
@@ -649,12 +702,12 @@
             <!--Edit-->
             <Button x:Name="EditButton">
                 <ToolTipService.ToolTip>
-                    <ToolTip Placement="Left">
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
                         Edit
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <Button.Flyout>
-                    <MenuFlyout Placement="Left">
+                    <MenuFlyout Placement="Bottom">
                         <MenuFlyout.MenuFlyoutPresenterStyle>
                             <Style TargetType="MenuFlyoutPresenter">
                                 <Setter Property="Padding" Value="0"/>
@@ -713,295 +766,291 @@
                 </Button.Flyout>
                 <SymbolIcon Symbol="Preview"/>
             </Button>
-            <!--Transition-->
-            <Button x:Name="TransitionButton">
+            <!--Trim-->
+            <Button x:Name="TrimButton">
                 <ToolTipService.ToolTip>
-                    <ToolTip Placement="Left">
-                        Transition
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                        Trim
                     </ToolTip>
                 </ToolTipService.ToolTip>
                 <PathIcon>
                     <PathIcon.Data>
-                        M20.019,13.154C20.019,13.341 19.94,13.519 19.802,13.646L17.837,15.44L17.726,15.509L17.605,15.555L17.485,15.577L17.362,15.576L17.246,15.553L17.212,15.543C17.159,15.524 17.108,15.499 17.06,15.467L16.971,15.396L10.01,8.788L3.024,15.418L2.959,15.467C2.911,15.499 2.86,15.524 2.807,15.543L2.687,15.572L2.569,15.579L2.443,15.563L2.322,15.523L2.208,15.459L2.14,15.404L0.217,13.646C0.079,13.519 -0,13.341 0,13.154L0,2.425C0,2.238 0.079,2.059 0.217,1.933L2.182,0.139L2.293,0.069L2.414,0.023L2.534,0.002L2.657,0.003L2.773,0.025L2.807,0.036C2.86,0.054 2.911,0.079 2.959,0.111L3.048,0.183L10.01,6.79L16.995,0.161L17.06,0.111C17.108,0.079 17.159,0.054 17.212,0.036L17.332,0.007L17.45,0L17.576,0.016L17.697,0.056L17.811,0.119L17.88,0.174L19.802,1.933C19.94,2.059 20.019,2.238 20.019,2.425L20.019,13.154ZM1.333,2.861L1.333,12.718C1.333,12.718 2.596,13.977 2.596,13.977L8.97,7.789L2.596,1.602L1.333,2.861ZM11.049,7.789L17.423,13.977L18.686,12.718L18.686,2.861C18.686,2.861 17.423,1.602 17.423,1.602L11.049,7.789Z
+                        M14.523,0.381L5.135,20.208C4.978,20.541 5.12,20.938 5.453,21.096C5.785,21.253 6.183,21.111 6.34,20.779L15.728,0.952C15.886,0.619 15.744,0.222 15.411,0.064C15.079,-0.093 14.681,0.049 14.523,0.381ZM0,16.722C0,17.09 0.298,17.388 0.667,17.388L4.16,17.388C4.421,17.388 4.657,17.237 4.766,17.001L10.43,4.717C10.526,4.511 10.509,4.27 10.387,4.079C10.264,3.887 10.052,3.772 9.825,3.772L0.667,3.772C0.298,3.772 -0,4.07 0,4.438L0,16.722ZM20.864,4.438C20.864,4.07 20.565,3.772 20.197,3.772L16.703,3.772C16.443,3.772 16.207,3.923 16.098,4.159L10.433,16.443C10.338,16.649 10.355,16.89 10.477,17.081C10.6,17.273 10.811,17.388 11.039,17.388L20.197,17.388C20.565,17.388 20.864,17.09 20.864,16.722L20.864,4.438ZM1.333,16.055L1.333,5.105C1.333,5.105 8.784,5.105 8.784,5.105C8.784,5.105 3.734,16.055 3.734,16.055L1.333,16.055ZM19.53,5.105L19.53,16.055C19.53,16.055 12.08,16.055 12.08,16.055C12.08,16.055 17.13,5.105 17.13,5.105L19.53,5.105Z
                     </PathIcon.Data>
                 </PathIcon>
+            </Button>
+            <!--Color-->
+            <Button>
+                <Button.Flyout>
+                    <Flyout Placement="Left">
+                        <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
+                    </Flyout>
+                </Button.Flyout>
+                <ToolTipService.ToolTip>
+                    <ToolTip Placement="Left">
+                        Color
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
+                    <Ellipse.Fill>
+                        <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
             </Button>
         </ListView>
 
         <!--Menu-->
-        <Grid Grid.Row="2">
-            <!--Export-->
-            <elementsTransitions:IndexTransitionPanel Index="1" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:SettingMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Property-->
-            <elementsTransitions:IndexTransitionPanel Index="2" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <Border Background="{ThemeResource SystemControlAcrylicElementBrush}">
-                </Border>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Transition-->
-            <elementsTransitions:IndexTransitionPanel Index="3" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:TransitionMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Easing-->
-            <elementsTransitions:IndexTransitionPanel Index="4" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:EasingMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Effect-->
-            <elementsTransitions:IndexTransitionPanel Index="5" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:EffectMenu/>
-            </elementsTransitions:IndexTransitionPanel>
-            <!--Duration-->
-            <elementsTransitions:IndexTransitionPanel Index="6" GroupIndex="{x:Bind GroupIndex, Mode=OneWay}">
-                <menus:DurationMenu x:Name="DurationMenu"/>
-            </elementsTransitions:IndexTransitionPanel>
-        </Grid>
+        <Rectangle x:Name="MenuRectangle" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1" Visibility="Visible" Fill="{ThemeResource AppBackground}"/>
+        <elements:TransitionPanel x:Name="MenuGrid" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1"
+                    IsShow="{x:Bind ReverseIntToBooleanConverter(AppBarListView.SelectedIndex), Mode=OneWay}"
+                    >
+            <Grid>
+                <Rectangle x:Name="MenuRectangle2" Visibility="Collapsed" Fill="{ThemeResource SystemControlAcrylicElementBrush}"/>
+
+                <!--Setting-->
+                <menus:SettingMenu Visibility="{x:Bind BooleanToVisibilityConverter(SettingButton.IsSelected), Mode=OneWay}"/>
+                <!--Property-->
+                <Border Visibility="{x:Bind BooleanToVisibilityConverter(PropertyButton.IsSelected), Mode=OneWay}"/>
+                <!--Transition-->
+                <menus:TransitionMenu Visibility="{x:Bind BooleanToVisibilityConverter(TransitionButton.IsSelected), Mode=OneWay}"/>
+                <!--Easing-->
+                <menus:EasingMenu Visibility="{x:Bind BooleanToVisibilityConverter(EasingButton.IsSelected), Mode=OneWay}"/>
+                <!--Effect-->
+                <menus:EffectMenu Visibility="{x:Bind BooleanToVisibilityConverter(EffectButton.IsSelected), Mode=OneWay}"/>
+                <!--Duration-->
+                <menus:DurationMenu x:Name="DurationMenu" Visibility="{x:Bind BooleanToVisibilityConverter(DurationButton.IsSelected), Mode=OneWay}"/>
+                <!--Speed-->
+                <menus:SpeedMenu Visibility="{x:Bind BooleanToVisibilityConverter(SpeedButton.IsSelected), Mode=OneWay}"/>
+                <!--Stretch-->
+                <menus:StretchMenu Visibility="{x:Bind BooleanToVisibilityConverter(StretchButton.IsSelected), Mode=OneWay}"/>
+                <!--Volume-->
+                <menus:VolumeMenu Visibility="{x:Bind BooleanToVisibilityConverter(VolumeButton.IsSelected), Mode=OneWay}"/>
+                <!--Transform-->
+                <menus:TransformMenu Visibility="{x:Bind BooleanToVisibilityConverter(TransformButton.IsSelected), Mode=OneWay}"/>
+                <!--Opacity-->
+                <menus:OpacityMenu Visibility="{x:Bind BooleanToVisibilityConverter(OpacityButton.IsSelected), Mode=OneWay}"/>
+            </Grid>
+        </elements:TransitionPanel>
 
         <!--AppBar-->
-        <Border x:Name="AppBarBorder" Grid.Row="1" Visibility="Visible" 
-                Height="{StaticResource AppBarHeight}" 
-                BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundLight}" />
-        <Border x:Name="AppBarBorder2" Grid.Row="3" Visibility="Collapsed" 
-                Height="{StaticResource AppBarHeight}" 
-                BorderThickness="0,1,0,0" BorderBrush="{ThemeResource AppStroke}" Background="{ThemeResource AppBackgroundDark}" />
-
-        <Grid x:Name="AppBarLeftBorder" Grid.Row="1" 
-                HorizontalAlignment="Left"
-                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                Background="{ThemeResource AppBackgroundMediumDark}" >
-            <toolsElements:ToolTypeComboBox x:Name="ToolTypeComboBox" 
-                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
-                        ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
-            <Button x:Name="BackButton" HorizontalAlignment="Stretch"
-                Visibility="{x:Bind ReverseIntToVisibilityConverter(GroupIndex), Mode=OneWay}"
-                Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <ToolTipService.ToolTip>
-                    <ToolTip Style="{StaticResource AppToolTipStyle}">
-                        Back
-                    </ToolTip>
-                </ToolTipService.ToolTip>
-                <SymbolIcon Symbol="Back"/>
-            </Button>
-        </Grid>
-        <Border x:Name="AppBarRightBorder" Grid.Row="1" 
-                HorizontalAlignment="Right"
-                Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}"
-                Background="{ThemeResource AppBackgroundMediumDark}" >
-            <Button x:Name="SpliterButton" HorizontalAlignment="Stretch"
-                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
-                    ManipulationStarted="{x:Bind PreviewGrid.SpliterManipulationStarted,Mode=OneWay}"
-                    ManipulationDelta="{x:Bind PreviewGrid.SpliterManipulationDelta,Mode=OneWay}"
-                    ManipulationCompleted="{x:Bind PreviewGrid.SpliterManipulationCompleted,Mode=OneWay}"
-                    Style="{StaticResource TextBlockButtonStyle}">
-                <UIElement.ManipulationMode>
-                    TranslateY
-                </UIElement.ManipulationMode>
-                <SymbolIcon Symbol="GlobalNavigationButton"/>
-            </Button>
-        </Border>
-
-        <Border x:Name="AppBarLeftBorder2" Grid.Row="1" 
-                Margin="{StaticResource TrackLeftMargin}" HorizontalAlignment="Left" 
-                Width="{StaticResource TrackLeft2Width}" Height="{StaticResource AppBarHeight}" >
-            <times:TimeButton x:Name="TimeButton" Padding="2,0" 
-                        Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}"
-                        Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" 
-                        Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
-                <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
-                </TextBlock>
-            </times:TimeButton>
-        </Border>
-        <Border x:Name="AppBarRightBorder2" Grid.Row="1"
-                Margin="{StaticResource TrackLeftMargin}" HorizontalAlignment="Right" 
-                Width="{StaticResource TrackLeft2Width}" Height="{StaticResource AppBarHeight}" >
-            <elements:TimeSlider x:Name="ScaleSlider" Padding="12,0" VerticalAlignment="Center" 
-                       Value="{x:Bind ViewModel.TrackScale, Mode=TwoWay}" Minimum="2" Maximum="64" 
-                       Foreground="{ThemeResource AppBlueLinearGradientBrush}"/>
-        </Border>
-
-        <ScrollViewer x:Name="AppBarLeftScrollViewer" Grid.Row="1" 
-                      Margin="{StaticResource TrackLeft2Margin}" HorizontalAlignment="Left"
-                      HorizontalScrollBarVisibility="Hidden" >
-            <StackPanel Orientation="Horizontal" Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
-                <!--Undo-->
-                <Button x:Name="UndoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Undo
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Undo"/>
-                </Button>
-                <!--Redo-->
-                <Button x:Name="RedoButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Redo
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Redo"/>
-                </Button>
-                <!--FullScreen-->
-                <Button x:Name="FullScreenButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Full Screen
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="{x:Bind BooleanToFullScreenConverter(PreviewGrid.IsFullScreen), Mode=OneWay}"/>
-                </Button>
-                <!--Help-->
-                <Button x:Name="HelpButton" IsEnabled="False" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Help
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Help"/>
-                </Button>
-                <!--Pin-->
-                <Button x:Name="PinButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Pin
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="{x:Bind BooleanToPinConverter(PinCanvas.IsPositionOnPin), Mode=OneWay}"/>
-                </Button>
-            </StackPanel>
-        </ScrollViewer>
-        <ScrollViewer x:Name="AppBarRightScrollViewer" Grid.Row="1" 
-                      Margin="{StaticResource TrackLeft2Margin}" HorizontalAlignment="Right"
-                      HorizontalScrollBarVisibility="Hidden" 
-                      BorderThickness="0,0,0,1" BorderBrush="{ThemeResource AppBlueLinearGradientBrush}" Background="{ThemeResource AppBackgroundColorDark}" >
-            <StackPanel Orientation="Horizontal" >
-                <!--Trim-->
-                <Button x:Name="TrimButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Trim
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <PathIcon>
-                        <PathIcon.Data>
-                            M14.523,0.381L5.135,20.208C4.978,20.541 5.12,20.938 5.453,21.096C5.785,21.253 6.183,21.111 6.34,20.779L15.728,0.952C15.886,0.619 15.744,0.222 15.411,0.064C15.079,-0.093 14.681,0.049 14.523,0.381ZM0,16.722C0,17.09 0.298,17.388 0.667,17.388L4.16,17.388C4.421,17.388 4.657,17.237 4.766,17.001L10.43,4.717C10.526,4.511 10.509,4.27 10.387,4.079C10.264,3.887 10.052,3.772 9.825,3.772L0.667,3.772C0.298,3.772 -0,4.07 0,4.438L0,16.722ZM20.864,4.438C20.864,4.07 20.565,3.772 20.197,3.772L16.703,3.772C16.443,3.772 16.207,3.923 16.098,4.159L10.433,16.443C10.338,16.649 10.355,16.89 10.477,17.081C10.6,17.273 10.811,17.388 11.039,17.388L20.197,17.388C20.565,17.388 20.864,17.09 20.864,16.722L20.864,4.438ZM1.333,16.055L1.333,5.105C1.333,5.105 8.784,5.105 8.784,5.105C8.784,5.105 3.734,16.055 3.734,16.055L1.333,16.055ZM19.53,5.105L19.53,16.055C19.53,16.055 12.08,16.055 12.08,16.055C12.08,16.055 17.13,5.105 17.13,5.105L19.53,5.105Z
-                        </PathIcon.Data>
-                    </PathIcon>
-                </Button>
-                <!--Duration-->
-                <Button x:Name="DurationButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Duration
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Trim"/>
-                </Button>
-                <!--Speed-->
-                <Button x:Name="SpeedButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Speed
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Rotate"/>
-                </Button>
-                <!--Stretch-->
-                <Button x:Name="StretchButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Stretch
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Switch"/>
-                </Button>
-                <!--Property-->
-                <Button x:Name="PropertyButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Property
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Important"/>
-                </Button>
-                <!--Easing-->
-                <Button x:Name="EasingButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Easing
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Attach"/>
-                </Button>
-                <!--Effect-->
-                <Button x:Name="EffectButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Effect
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="OutlineStar"/>
-                </Button>
-                <!--Volume-->
-                <Button x:Name="VolumeButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Volume
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Volume"/>
-                </Button>
-                <!--Transform-->
-                <Button x:Name="TransformButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Transform
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <PathIcon>
+        <ListView x:Name="AppBarListView" Visibility="Visible"
+                Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0" 
+                Height="{StaticResource AppBarHeight}" Background="{ThemeResource AppBackground}"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.IsHorizontalRailEnabled="False"
+                ScrollViewer.VerticalScrollMode="Disabled"
+                ScrollViewer.IsVerticalRailEnabled="True"
+                ScrollViewer.ZoomMode="Disabled"
+                ScrollViewer.IsDeferredScrollingEnabled="False"
+                ScrollViewer.BringIntoViewOnFocusChange="True"
+                >
+            <FrameworkElement.Resources>
+                <!--StaticResource-->
+                <StaticResource x:Key="ListViewItemBackgroundPressed" ResourceKey="AppBlueLinearGradientBrush"/>
+                <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="AppBlueLinearGradientBrush"/>
+                <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="AppBlueLinearGradientBrush"/>
+                <StaticResource x:Key="ListViewItemBackgroundSelectedPressed" ResourceKey="AppBlueLinearGradientBrush"/>
+            </FrameworkElement.Resources>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Foreground" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
+                    <Setter Property="MinWidth" Value="{StaticResource AppBarHeight}"/>
+                    <Setter Property="Height" Value="{StaticResource AppBarHeight}"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.Header>
+                <Border x:Name="AppBarLeftBorder" Visibility="Visible"
+                           Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" >
+                    <elements:GridSpliterButton x:Name="SpliterButton2" HorizontalAlignment="Stretch" 
+                         Orientation="Horizontal" Reversed="True" Value="500" 
+                         Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                         Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="GlobalNavigationButton">
+                            <FrameworkElement.RenderTransformOrigin>
+                                0.5,0.5
+                            </FrameworkElement.RenderTransformOrigin>
+                            <FrameworkElement.RenderTransform>
+                                <RotateTransform Angle="90"/>
+                            </FrameworkElement.RenderTransform>
+                        </SymbolIcon>
+                    </elements:GridSpliterButton>
+                </Border>
+            </ListView.Header>
+            <ListView.Footer>
+                <Rectangle x:Name="AppBarRightBorder" Visibility="Visible"
+                           Width="{StaticResource TrackLeftWidth}" Height="{StaticResource AppBarHeight}" />
+            </ListView.Footer>
+            <!--Duration-->
+            <ListViewItem x:Name="DurationButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Trim" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Duration
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Speed-->
+            <ListViewItem x:Name="SpeedButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Rotate" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Speed
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Stretch-->
+            <ListViewItem x:Name="StretchButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Switch" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Stretch
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Property-->
+            <ListViewItem x:Name="PropertyButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Important" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Property
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Easing-->
+            <ListViewItem x:Name="EasingButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Attach" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Easing
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Effect-->
+            <ListViewItem x:Name="EffectButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="OutlineStar" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Effect
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Volume-->
+            <ListViewItem x:Name="VolumeButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Volume" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Volume
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Transform-->
+            <ListViewItem x:Name="TransformButton" >
+                <StackPanel Orientation="Vertical">
+                    <PathIcon Margin="4,0" HorizontalAlignment="Center">
                         <PathIcon.Data>
                             M6.965,18.263L10.648,22.13C10.786,22.275 10.978,22.357 11.179,22.357C11.379,22.357 11.571,22.275 11.71,22.13L15.393,18.263C15.672,17.97 15.661,17.505 15.368,17.226C15.074,16.947 14.61,16.958 14.331,17.252L11.179,20.561C11.179,20.561 8.027,17.252 8.027,17.252C7.747,16.958 7.283,16.947 6.99,17.226C6.697,17.505 6.685,17.97 6.965,18.263ZM18.263,15.393L22.13,11.71C22.275,11.571 22.357,11.379 22.357,11.179C22.357,10.978 22.275,10.786 22.13,10.648L18.263,6.965C17.97,6.685 17.505,6.697 17.226,6.99C16.947,7.283 16.958,7.747 17.252,8.027L20.561,11.179C20.561,11.179 17.252,14.331 17.252,14.331C16.958,14.61 16.947,15.074 17.226,15.368C17.505,15.661 17.97,15.672 18.263,15.393ZM5.106,14.331L1.797,11.179C1.797,11.179 5.106,8.027 5.106,8.027C5.399,7.747 5.41,7.283 5.131,6.99C4.852,6.697 4.387,6.685 4.094,6.965L0.228,10.648C0.082,10.786 -0,10.978 0,11.179C0,11.379 0.082,11.571 0.228,11.71L4.094,15.393C4.387,15.672 4.852,15.661 5.131,15.368C5.41,15.074 5.399,14.61 5.106,14.331ZM8.027,5.106L11.179,1.797C11.179,1.797 14.331,5.106 14.331,5.106C14.61,5.399 15.074,5.41 15.368,5.131C15.661,4.852 15.672,4.387 15.393,4.094L11.71,0.228C11.571,0.082 11.379,0 11.179,0C10.978,-0 10.786,0.082 10.648,0.228L6.965,4.094C6.685,4.387 6.697,4.852 6.99,5.131C7.283,5.41 7.747,5.399 8.027,5.106Z
                         </PathIcon.Data>
                     </PathIcon>
-                </Button>
-                <!--Opacity-->
-                <Button x:Name="OpacityButton" Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Opacity
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <SymbolIcon Symbol="Stop"/>
-                </Button>
-                <!--Color-->
-                <Button Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}" Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
-                    <ToolTipService.ToolTip>
-                        <ToolTip Style="{StaticResource AppToolTipStyle}">
-                            Color
-                        </ToolTip>
-                    </ToolTipService.ToolTip>
-                    <Button.Flyout>
-                        <Flyout Placement="Left">
-                            <elements:ColorPicker2 x:Name="ColorPicker" Color="DodgerBlue"/>
-                        </Flyout>
-                    </Button.Flyout>
-                    <Ellipse Width="24" Height="24" StrokeThickness="1" Stroke="Gray">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </Button>
-            </StackPanel>
-        </ScrollViewer>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Transform
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Opacity-->
+            <ListViewItem x:Name="OpacityButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Stop" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Opacity
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Transition-->
+            <ListViewItem x:Name="TransitionButton" >
+                <StackPanel Orientation="Vertical">
+                    <PathIcon Margin="4,0" HorizontalAlignment="Center">
+                        <PathIcon.Data>
+                            M20.019,13.154C20.019,13.341 19.94,13.519 19.802,13.646L17.837,15.44L17.726,15.509L17.605,15.555L17.485,15.577L17.362,15.576L17.246,15.553L17.212,15.543C17.159,15.524 17.108,15.499 17.06,15.467L16.971,15.396L10.01,8.788L3.024,15.418L2.959,15.467C2.911,15.499 2.86,15.524 2.807,15.543L2.687,15.572L2.569,15.579L2.443,15.563L2.322,15.523L2.208,15.459L2.14,15.404L0.217,13.646C0.079,13.519 -0,13.341 0,13.154L0,2.425C0,2.238 0.079,2.059 0.217,1.933L2.182,0.139L2.293,0.069L2.414,0.023L2.534,0.002L2.657,0.003L2.773,0.025L2.807,0.036C2.86,0.054 2.911,0.079 2.959,0.111L3.048,0.183L10.01,6.79L16.995,0.161L17.06,0.111C17.108,0.079 17.159,0.054 17.212,0.036L17.332,0.007L17.45,0L17.576,0.016L17.697,0.056L17.811,0.119L17.88,0.174L19.802,1.933C19.94,2.059 20.019,2.238 20.019,2.425L20.019,13.154ZM1.333,2.861L1.333,12.718C1.333,12.718 2.596,13.977 2.596,13.977L8.97,7.789L2.596,1.602L1.333,2.861ZM11.049,7.789L17.423,13.977L18.686,12.718L18.686,2.861C18.686,2.861 17.423,1.602 17.423,1.602L11.049,7.789Z
+                        </PathIcon.Data>
+                    </PathIcon>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Transition
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <!--Setting-->
+            <ListViewItem x:Name="SettingButton" >
+                <StackPanel Orientation="Vertical">
+                    <SymbolIcon Symbol="Setting" Margin="4,0" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="12" HorizontalAlignment="Center">
+                        Setting
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>
+        <Grid x:Name="AppBarGrid2" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible" 
+              Height="{StaticResource AppBarHeight}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Rectangle x:Name="AppBarLeftBorder3" Visibility="Visible"
+                       Width="{StaticResource TrackLeftWidth}" 
+                       Fill="{ThemeResource AppBackgroundMediumDark}"/>
+            <Rectangle x:Name="AppBarRightBorder3" Grid.Column="2" Visibility="Visible"
+                       Width="{StaticResource TrackLeftWidth}" 
+                       Fill="{ThemeResource AppBackgroundMediumDark}"/>
+
+            <toolsElements:ToolTypeComboBox x:Name="ToolTypeComboBox"
+                    Width="{StaticResource TrackLeftWidth}" 
+                    ToolType="{x:Bind ViewModel.ToolType, Mode=TwoWay}"/>
+
+            <Border x:Name="BackBorderBorder" Visibility="Collapsed">
+                <Border x:Name="BackBorder"
+                    Width="{StaticResource TrackLeftWidth}" 
+                    Background="{ThemeResource AppBackgroundMediumDark}"
+                    Visibility="{x:Bind ReverseIntToVisibilityConverter(AppBarListView.SelectedIndex),Mode=OneWay}">
+                    <Button x:Name="BackButton" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                    Foreground="White" Style="{StaticResource TextBlockButtonStyle}">
+                        <SymbolIcon Symbol="Back"/>
+                    </Button>
+                </Border>
+            </Border>
+
+            <elements:GridSpliterButton x:Name="SpliterButton" Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    Width="{StaticResource TrackLeftWidth}" 
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    Style="{StaticResource TextBlockButtonStyle}">
+                <SymbolIcon Symbol="GlobalNavigationButton"/>
+            </elements:GridSpliterButton>
+
+        </Grid>
 
         <!--Play-->
-        <Grid x:Name="PlayGrid" Grid.Row="1" BorderThickness="0,1" HorizontalAlignment="Center"
-                Width="{StaticResource AppBarHeight}" Height="{StaticResource AppBarHeight}"
-                Visibility="{x:Bind IntToVisibilityConverter(GroupIndex), Mode=OneWay}">
-            <elements:PlayRing x:Name="PlayRing"/>
-            <Button x:Name="PlayButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+        <Grid x:Name="PlayGrid" Grid.ColumnSpan="2" Grid.Row="2" Visibility="Visible" 
+                  HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                  Height="{StaticResource AppBarHeight}" 
+                  Background="{x:Null}">
+            <elements:PlayRing x:Name="PlayRing" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button x:Name="PlayButton" 
+                    Width="{StaticResource AppBarHeight}" 
+                    HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    Style="{StaticResource TextBlockButtonStyle}"
+                    Visibility="{x:Bind ReverseBooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
                 <ToolTipService.ToolTip>
                     <ToolTip Style="{StaticResource AppToolTipStyle}">
                         Play
@@ -1009,8 +1058,12 @@
                 </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Play"/>
             </Button>
-            <Button x:Name="PauseButton" Foreground="{ThemeResource AppBlueLinearGradientBrush}" HorizontalAlignment="Center" Style="{StaticResource TextBlockButtonStyle}"
-                        Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
+            <Button x:Name="PauseButton" 
+                    Width="{StaticResource AppBarHeight}" 
+                    HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    Style="{StaticResource TextBlockButtonStyle}"
+                    Visibility="{x:Bind BooleanToVisibilityConverter(ViewModel.IsPlaying), Mode=OneWay}">
                 <ToolTipService.ToolTip>
                     <ToolTip Style="{StaticResource AppToolTipStyle}">
                         Pause
@@ -1018,16 +1071,29 @@
                 </ToolTipService.ToolTip>
                 <SymbolIcon Symbol="Pause"/>
             </Button>
+            <Button x:Name="UnFullScreenButton" 
+                    Width="{StaticResource AppBarHeight}" 
+                    HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                    Foreground="{ThemeResource AppBlueLinearGradientBrush}" 
+                    Style="{StaticResource TextBlockButtonStyle}"
+                    Visibility="{x:Bind BooleanToVisibilityConverter(IsFullScreen), Mode=OneWay}">
+                <ToolTipService.ToolTip>
+                    <ToolTip Style="{StaticResource AppToolTipStyle}">
+                        Exit Full Screen
+                    </ToolTip>
+                </ToolTipService.ToolTip>
+                <SymbolIcon Symbol="BackToWindow"/>
+            </Button>
         </Grid>
 
         <!--Loading-->
-        <ContentDialog x:Name="LoadingDialog" Grid.RowSpan="4">
+        <ContentDialog x:Name="LoadingDialog" Grid.ColumnSpan="2" Grid.RowSpan="4">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ProgressRing Width="28" Height="28" IsActive="{x:Bind IsLoading, Mode=OneWay}"/>
+                <elements:ProgressRing Width="50" Height="50" IsActive="{x:Bind IsLoading, Mode=OneWay}"/>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center">
                     Loading
                 </TextBlock>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Video_Clip2.Elements;
 using Video_Clip2.ViewModels;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,29 +19,18 @@ namespace Video_Clip2
         bool IsWheelForTrackScale => this.IsCtrl;
 
         //@Converter
-        private bool IntToBooleanConverter(int value) => value == 0;
+        private bool IntToBooleanConverter(int value) => value == -1;
         private string TimeSpanToStringConverter(TimeSpan value) => value.ToText();
         private Symbol BooleanToPinConverter(bool value) => value ? Symbol.UnPin : Symbol.Pin;
         private Symbol BooleanToMuteConverter(bool value) => value ? Symbol.Mute : Symbol.Volume;
         private Symbol BooleanToFreedomConverter(bool value) => value ? Symbol.MapPin : Symbol.Map;
-        private Symbol BooleanToFullScreenConverter(bool value) => value ? Symbol.BackToWindow : Symbol.FullScreen;
-        private Visibility IntToVisibilityConverter(int value) => value == 0 ? Visibility.Visible : Visibility.Collapsed;
-        private Visibility ReverseIntToVisibilityConverter(int value) => value == 0 ? Visibility.Collapsed : Visibility.Visible;
+        private Visibility ReverseIntToVisibilityConverter(int value) => value == -1 ? Visibility.Collapsed : Visibility.Visible;
+        private bool ReverseIntToBooleanConverter(int value) => value != -1;
         private Visibility BooleanToVisibilityConverter(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
         private Visibility ReverseBooleanToVisibilityConverter(bool value) => value ? Visibility.Collapsed : Visibility.Visible;
 
 
         #region DependencyProperty
-
-
-        /// <summary> Gets or set the group index for <see cref="DrawPage"/>, Default 0. </summary>
-        public int GroupIndex
-        {
-            get => (int)base.GetValue(GroupIndexProperty);
-            set => SetValue(GroupIndexProperty, value);
-        }
-        /// <summary> Identifies the <see cref = "DrawPage.GroupIndex" /> dependency property. </summary>
-        public static readonly DependencyProperty GroupIndexProperty = DependencyProperty.Register(nameof(GroupIndex), typeof(int), typeof(DrawPage), new PropertyMetadata(0));
 
 
         /// <summary> Gets or set the loading state for <see cref="DrawPage"/>. </summary>
@@ -94,12 +84,71 @@ namespace Video_Clip2
         }));
 
 
+        /// <summary> Gets or set the full-screen state for <see cref="DrawPage"/>. </summary>
+        public bool IsFullScreen
+        {
+            get => (bool)base.GetValue(IsFullScreenProperty);
+            set => SetValue(IsFullScreenProperty, value);
+        }
+        /// <summary> Identifies the <see cref = "DrawPage.IsFullScreen" /> dependency property. </summary>
+        public static readonly DependencyProperty IsFullScreenProperty = DependencyProperty.Register(nameof(IsFullScreen), typeof(bool), typeof(DrawPage), new PropertyMetadata(false, (sender, e) =>
+        {
+            DrawPage control = (DrawPage)sender;
+
+            if (e.NewValue is bool value)
+            {
+                control._vsIsFullScreen = value;
+                control.VisualState = control.VisualState; // VisualState
+            }
+        }));
+
+
         #endregion
 
+
+        //@VisualState
+        bool _vsIsFullScreen = false;
+        DeviceLayoutType _vsDeviceLayoutType = DeviceLayoutType.PC;
+        /// <summary> 
+        /// Represents the visual appearance of UI elements in a specific state.
+        /// </summary>
+        public VisualState VisualState
+        {
+            get
+            {
+                if (this._vsIsFullScreen) return this.FullScreen;
+                else
+                {
+                    switch (this._vsDeviceLayoutType)
+                    {
+                        case DeviceLayoutType.PC: return this.PC;
+                        case DeviceLayoutType.Pad: return this.Pad;
+                        case DeviceLayoutType.Phone: return this.Phone;
+                        default: return this.PC;
+                    }
+                }
+            }
+            set => VisualStateManager.GoToState(this, value.Name, true);
+        }
+        DeviceLayout DeviceLayout = DeviceLayout.Default;
 
         public DrawPage()
         {
             this.InitializeComponent();
+            {
+                // Extend TitleBar
+                CoreApplicationView applicationView = CoreApplication.GetCurrentView();
+                applicationView.TitleBar.ExtendViewIntoTitleBar = false;
+            }
+            base.SizeChanged += (s, e) =>
+            {
+                if (e.NewSize == Size.Empty) return;
+                if (e.NewSize == e.PreviousSize) return;
+
+                this._vsDeviceLayoutType = this.DeviceLayout.GetActualType(e.NewSize.Width);
+                this.VisualState = this.VisualState; // VisualState
+            };
+
 
             this.ConstructPreview();
             this.ConstructPosition();
@@ -112,6 +161,9 @@ namespace Video_Clip2
             this.ConstructEdit();
 
 
+            this.BackButton.Click += (s, e) => this.AppBarListView.SelectedIndex = -1;
+            this.FullScreenButton.Click += (s, e) => this.IsFullScreen = true;
+            this.UnFullScreenButton.Click += (s, e) => this.IsFullScreen = false;
             this.TrackComboBox.SelectionChanged += (s, e) =>
             {
                 if (this.TrackComboBox.SelectedItem is int item)
