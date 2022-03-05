@@ -2,7 +2,7 @@
 using System;
 using Video_Clip2.Clips;
 using Video_Clip2.Clips.Models;
-using Video_Clip2.Elements.Transitions;
+using Video_Clip2.Elements;
 using Video_Clip2.ViewModels;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
