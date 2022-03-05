@@ -175,6 +175,7 @@
     <Compile Include="Video Clip2.Effects\Effect.cs" />
     <Compile Include="Video Clip2.Elements\ApplicationTitleBarExtension.cs" />
     <Compile Include="Video Clip2.Elements\ColorPicker2.cs" />
+    <Compile Include="Video Clip2.Elements\GridSpliterButton.cs" />
     <Compile Include="Video Clip2.Elements\PlayRing.xaml.cs">
       <DependentUpon>PlayRing.xaml</DependentUpon>
     </Compile>
