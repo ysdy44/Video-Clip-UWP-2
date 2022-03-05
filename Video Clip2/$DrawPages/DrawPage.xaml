@@ -69,13 +69,15 @@
                         <!--Menu-->
                         <Setter Target="MenuRectangle.Visibility" Value="Collapsed"/>
                         <Setter Target="MenuRectangle2.Visibility" Value="Visible"/>
+                        <Setter Target="MenuGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="MenuGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
 
                         <!--AppBar-->
                         <Setter Target="AppBarListView.(Grid.Column)" Value="0"/>
                         <Setter Target="AppBarListView.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="AppBarListView.(Grid.Row)" Value="4"/>
                         <Setter Target="SpliterButton2.Value" Value="0"/>
-                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
 
                         <Setter Target="AppBarLeftBorder2.Visibility" Value="Collapsed"/>
                         <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
@@ -112,13 +114,15 @@
                         <!--Menu-->
                         <Setter Target="MenuRectangle.Visibility" Value="Collapsed"/>
                         <Setter Target="MenuRectangle2.Visibility" Value="Visible"/>
+                        <Setter Target="MenuGrid.(Grid.Column)" Value="0"/>
+                        <Setter Target="MenuGrid.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
 
                         <!--AppBar-->
                         <Setter Target="AppBarListView.(Grid.Column)" Value="0"/>
                         <Setter Target="AppBarListView.(Grid.ColumnSpan)" Value="2"/>
                         <Setter Target="AppBarListView.(Grid.Row)" Value="4"/>
                         <Setter Target="SpliterButton2.Value" Value="0"/>
-                        <Setter Target="MenuGrid.(Grid.Row)" Value="3"/>
 
                         <Setter Target="AppBarLeftBorder2.Visibility" Value="Collapsed"/>
                         <Setter Target="AppBarRightBorder2.Visibility" Value="Collapsed"/>
