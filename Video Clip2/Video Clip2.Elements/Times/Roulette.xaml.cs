@@ -54,7 +54,7 @@ namespace Video_Clip2.Elements.Times
 
             if (e.NewValue is int value)
             {
-                control.ChangeView(value, control.IsChangeView);
+                control.IndexChanged(value, false);
 
                 for (int i = 0; i < control.StackPanel.Children.Count; i++)
                 {
@@ -72,6 +72,26 @@ namespace Video_Clip2.Elements.Times
                 }
             }
         }));
+
+        internal void IndexChanged(int value, bool disableAnimation)
+        {
+            this.ChangeView(value, this.IsChangeView, disableAnimation);
+
+            for (int i = 0; i < this.StackPanel.Children.Count; i++)
+            {
+                ContentPresenter item = this.StackPanel.Children[i] as ContentPresenter;
+
+                item.Foreground = i == value ? this.BorderBrush : this.Foreground;
+
+                switch (Math.Abs(i - value))
+                {
+                    case 0: item.Opacity = 1; break;
+                    case 1: item.Opacity = 0.8; break;
+                    case 2: item.Opacity = 0.5; break;
+                    default: item.Opacity = 0.2; break;
+                }
+            }
+        }
 
 
         public int Count
@@ -120,7 +140,7 @@ namespace Video_Clip2.Elements.Times
         public Roulette()
         {
             this.InitializeComponent();
-            base.Loaded += (s, e) => this.ChangeView(this.Index, true);
+            base.Loaded += (s, e) => this.ChangeView(this.Index, true, true);
             base.SizeChanged += (s, e) =>
             {
                 if (e.NewSize == e.PreviousSize) return;
@@ -130,7 +150,7 @@ namespace Video_Clip2.Elements.Times
                 this.HeaderBorder.Height = height / 2;
                 this.FooterBorder.Height = height / 2;
 
-                this.ChangeView(this.Index, true);
+                this.ChangeView(this.Index, true, true);
             };
 
 
@@ -139,7 +159,7 @@ namespace Video_Clip2.Elements.Times
                 this.DispatcherTimer.Stop();
                 this.IsChangeView = true;
 
-                this.ChangeView(this.Index, true);
+                this.ChangeView(this.Index, true, false);
             };
             this.HeaderBorder.Tapped += (s, e) => this.Index = 0;
             this.FooterBorder.Tapped += (s, e) => this.Index = this.Count - 1;
@@ -176,12 +196,12 @@ namespace Video_Clip2.Elements.Times
             };
         }
 
-        private void ChangeView(int value, bool isChangeView)
+        private void ChangeView(int value, bool isChangeView, bool disableAnimation)
         {
             if (isChangeView is false) return;
 
             double verticalOffset = value * this.ItemHeight + this.ItemHeight / 2;
-            this.ScrollViewer.ChangeView(null, verticalOffset, null);
+            this.ScrollViewer.ChangeView(null, verticalOffset, null, disableAnimation);
         }
 
         private void Item_Tapped(object sender, TappedRoutedEventArgs e)

@@ -24,6 +24,9 @@ namespace Video_Clip2.Elements
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(GridLength), typeof(GridSpliterButton), new PropertyMetadata(new GridLength(276.0)));
 
 
+        /// <summary> Gets or set the direction state for <see cref="GridSpliterButton"/>. </summary>
+        public bool Reversed { get; set; }
+
         /// <summary> Gets or set the orientation for <see cref="GridSpliterButton"/>. </summary>
         public Orientation Orientation
         {
@@ -65,10 +68,16 @@ namespace Video_Clip2.Elements
                 switch (this.Orientation)
                 {
                     case Orientation.Vertical:
-                        this.startingValue += e.Delta.Translation.Y;
+                        if (this.Reversed)
+                            this.startingValue -= e.Delta.Translation.Y;
+                        else
+                            this.startingValue += e.Delta.Translation.Y;
                         break;
                     case Orientation.Horizontal:
-                        this.startingValue += e.Delta.Translation.X;
+                        if (this.Reversed)
+                            this.startingValue -= e.Delta.Translation.X;
+                        else
+                            this.startingValue += e.Delta.Translation.X;
                         break;
                 }
                 this.Value = new GridLength(this.startingValue < 0 ? 0 : this.startingValue);
