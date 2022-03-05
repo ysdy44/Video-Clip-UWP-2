@@ -162,6 +162,8 @@
     <Compile Include="Video Clip2.Clips\Draggers\TrimDragger.xaml.cs">
       <DependentUpon>TrimDragger.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Elements\DeviceLayout.cs" />
+    <Compile Include="Video Clip2.Elements\DeviceLayoutType.cs" />
     <Compile Include="Video Clip2.Elements\Extensions.cs" />
     <Compile Include="Video Clip2.Clips\Models\AudioClip.cs" />
     <Compile Include="Video Clip2.Clips\Models\ColorClip.cs" />
