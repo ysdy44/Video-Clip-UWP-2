@@ -219,11 +219,26 @@
     <Compile Include="Video Clip2.Menus\EffectControl.xaml.cs">
       <DependentUpon>EffectControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Menus\OpacityMenu.xaml.cs">
+      <DependentUpon>OpacityMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Menus\SettingMenu.xaml.cs">
       <DependentUpon>SettingMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Menus\SpeedMenu.xaml.cs">
+      <DependentUpon>SpeedMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\StretchMenu.xaml.cs">
+      <DependentUpon>StretchMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\TransformMenu.xaml.cs">
+      <DependentUpon>TransformMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Menus\TransitionControl.xaml.cs">
       <DependentUpon>TransitionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Video Clip2.Menus\VolumeMenu.xaml.cs">
+      <DependentUpon>VolumeMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Video Clip2.Tools\Elements\StretchListView.xaml.cs">
       <DependentUpon>StretchListView.xaml</DependentUpon>
@@ -403,11 +418,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Video Clip2.Menus\OpacityMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Video Clip2.Menus\SettingMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Video Clip2.Menus\SpeedMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\StretchMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\TransformMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Video Clip2.Menus\TransitionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Menus\VolumeMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

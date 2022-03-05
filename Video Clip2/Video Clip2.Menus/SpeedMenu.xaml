@@ -1,0 +1,23 @@
+﻿<UserControl
+    x:Class="Video_Clip2.Menus.SpeedMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:elements="using:Video_Clip2.Elements"
+    mc:Ignorable="d"
+    d:DesignHeight="200"
+    d:DesignWidth="400"
+    >
+
+    <elements:TimeSlider x:Name="Slider" 
+                         HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                         Value="1" Minimum="0.25" Maximum="4" 
+                         StepFrequency="0.25" TickPlacement="Outside" TickFrequency="0.25" 
+                         Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+        <Slider.Header>
+            Speed
+        </Slider.Header>
+    </elements:TimeSlider>
+
+</UserControl>
