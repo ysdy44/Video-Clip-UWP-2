@@ -191,6 +191,9 @@
     <Compile Include="Video Clip2.Elements\Times\TimeButton.xaml.cs">
       <DependentUpon>TimeButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Elements\TransitionPanel.xaml.cs">
+      <DependentUpon>TransitionPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Video Clip2.Elements\Transitions\IndexTransitionPanel.cs" />
     <Compile Include="Video Clip2.Elements\Transitions\ITransitionElement.cs" />
     <Compile Include="Video Clip2.Elements\Transitions\TransitionPanel.cs" />
@@ -373,6 +376,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Video Clip2.Elements\Times\TimeButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Video Clip2.Elements\TransitionPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
