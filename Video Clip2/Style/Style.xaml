@@ -3,5 +3,64 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls">
 
+    <!--Style-->
+    <Style TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="HorizontalScrollMode" Value="Enabled"/>
+        <Setter Property="IsHorizontalRailEnabled" Value="False"/>
+        <Setter Property="VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="IsVerticalRailEnabled" Value="True"/>
+        <Setter Property="ZoomMode" Value="Disabled"/>
+        <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
+        <Setter Property="BringIntoViewOnFocusChange" Value="True"/>
+    </Style>
+    <Style x:Key="MenuFlyoutItemStyle" TargetType="MenuFlyoutItem">
+        <Setter Property="MinWidth" Value="200"/>
+        <Setter Property="Height" Value="44"/>
+    </Style>
+    <Style x:Key="AppToolTipStyle" TargetType="ToolTip">
+        <Setter Property="BorderBrush" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
+        <Setter Property="Background" Value="{ThemeResource AppBlueLinearGradientBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
 
+
+    <!--Style-->
+    <Style x:Name="AppNoneScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="IsHorizontalRailEnabled" Value="False"/>
+        <Setter Property="VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="IsVerticalRailEnabled" Value="True"/>
+        <Setter Property="ZoomMode" Value="Disabled"/>
+        <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
+        <Setter Property="BringIntoViewOnFocusChange" Value="False"/>
+    </Style>
+    <Style x:Name="AppHorizontalScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="HorizontalScrollMode" Value="Enabled"/>
+        <Setter Property="IsHorizontalRailEnabled" Value="False"/>
+        <Setter Property="VerticalScrollMode" Value="Disabled"/>
+        <Setter Property="IsVerticalRailEnabled" Value="True"/>
+        <Setter Property="ZoomMode" Value="Disabled"/>
+        <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
+        <Setter Property="BringIntoViewOnFocusChange" Value="True"/>
+    </Style>
+    <Style x:Name="AppVerticalScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollMode" Value="Disabled"/>
+        <Setter Property="IsHorizontalRailEnabled" Value="True"/>
+        <Setter Property="VerticalScrollMode" Value="Enabled"/>
+        <Setter Property="IsVerticalRailEnabled" Value="False"/>
+        <Setter Property="ZoomMode" Value="Disabled"/>
+        <Setter Property="IsDeferredScrollingEnabled" Value="False"/>
+        <Setter Property="BringIntoViewOnFocusChange" Value="True"/>
+    </Style>
+
+    
 </ResourceDictionary>

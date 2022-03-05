@@ -35,6 +35,16 @@
                         <GradientStop Color="#09000000" Offset="0.2"/>
                         <GradientStop Color="#00000000" Offset="1"/>
                     </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppHorizontalReverseShadowBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Color="#00000000" Offset="0"/>
+                        <GradientStop Color="#09000000" Offset="0.2"/>
+                        <GradientStop Color="#22000000" Offset="1"/>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppVerticalReverseShadowBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#00000000" Offset="0"/>
+                        <GradientStop Color="#09000000" Offset="0.2"/>
+                        <GradientStop Color="#22000000" Offset="1"/>
+                    </LinearGradientBrush>
                     <LinearGradientBrush x:Key="AppBlueLinearGradientBrush" StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Offset="0" Color="#00D1FE"/>
                         <GradientStop Offset="1" Color="#0048FE"/>
@@ -86,6 +96,16 @@
                         <GradientStop Color="#66000000" Offset="0"/>
                         <GradientStop Color="#44000000" Offset="0.2"/>
                         <GradientStop Color="#00000000" Offset="1"/>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppHorizontalReverseShadowBrush" StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Color="#00000000" Offset="0"/>
+                        <GradientStop Color="#44000000" Offset="0.2"/>
+                        <GradientStop Color="#66000000" Offset="1"/>
+                    </LinearGradientBrush>
+                    <LinearGradientBrush x:Key="AppVerticalReverseShadowBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#00000000" Offset="0"/>
+                        <GradientStop Color="#44000000" Offset="0.2"/>
+                        <GradientStop Color="#66000000" Offset="1"/>
                     </LinearGradientBrush>
                     <LinearGradientBrush x:Key="AppBlueLinearGradientBrush" StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Offset="0" Color="#76EAF8"/>
