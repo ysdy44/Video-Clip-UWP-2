@@ -181,6 +181,7 @@
     <Compile Include="Video Clip2.Elements\PlayRing.xaml.cs">
       <DependentUpon>PlayRing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Elements\ProgressRing.cs" />
     <Compile Include="Video Clip2.Elements\Ranger.xaml.cs">
       <DependentUpon>Ranger.xaml</DependentUpon>
     </Compile>
