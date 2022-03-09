@@ -546,7 +546,7 @@
                     <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
                 </TextBlock>
             </times:TimeButton>
-            <elements:TimeSlider x:Name="ScaleSlider" Grid.Column="5" Visibility="Visible"
+            <elements:ThumbSlider x:Name="ScaleSlider" Grid.Column="5" Visibility="Visible"
                         Padding="12,0" 
                         HorizontalAlignment="Right" VerticalAlignment="Center" 
                         Width="{StaticResource TrackLeft2Width}" 

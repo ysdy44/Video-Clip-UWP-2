@@ -37,6 +37,7 @@ namespace Video_Clip2.Menus
                         }
                     }
                 }
+                this.SelectionViewModel.SetMode(); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
             };
             this.ListView.IsOverlayLayerChanged += (s, isOverlayLayer) =>
@@ -59,6 +60,7 @@ namespace Video_Clip2.Menus
                         }
                     }
                 }
+                this.SelectionViewModel.SetMode(); // Selection
                 this.ViewModel.Invalidate(); // Invalidate
             };
         }

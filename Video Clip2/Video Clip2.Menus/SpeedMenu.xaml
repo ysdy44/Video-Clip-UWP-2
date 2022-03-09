@@ -10,14 +10,41 @@
     d:DesignWidth="400"
     >
 
-    <elements:TimeSlider x:Name="Slider" 
+    <elements:ThumbSlider x:Name="Slider" 
+                         MaxWidth="600" Padding="12,0,12,24"
                          HorizontalAlignment="Stretch" VerticalAlignment="Center" 
-                         Value="1" Minimum="0.25" Maximum="4" 
-                         StepFrequency="0.25" TickPlacement="Outside" TickFrequency="0.25" 
-                         Foreground="{ThemeResource AppBlueLinearGradientBrush}">
+                         Value="4" Minimum="1" Maximum="16" 
+                         StepFrequency="1" TickPlacement="Outside" TickFrequency="1" 
+                         IsThumbToolTipEnabled="False">
+        <FrameworkElement.Resources>
+            <!--StaticResource-->
+            <StaticResource x:Key="SliderTrackValueFill" ResourceKey="AppBlueLinearGradientBrush"/>
+            <StaticResource x:Key="SliderTrackValueFillPointerOver" ResourceKey="AppBlueLinearGradientBrush"/>
+            <StaticResource x:Key="SliderTrackValueFillPressed" ResourceKey="AppBlueLinearGradientBrush"/>
+        </FrameworkElement.Resources>
         <Slider.Header>
-            Speed
+            <Button x:Name="Button" HorizontalAlignment="Center"
+                Foreground="{ThemeResource AppBlueLinearGradientBrush}"
+                Style="{StaticResource TextBlockButtonStyle}">
+                <TextBlock FontWeight="Bold" TextWrapping="WrapWholeWords" 
+                           TextDecorations="{x:Bind DoubleToUnderlineStyleConverter(Slider.Value), Mode=OneWay}">   
+                    <Run x:Name="TitleRun" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}">
+                        Speed            
+                    </Run>      
+                     <Run FontSize="24" Text="{x:Bind DoubleToStringConverter(Slider.Value), Mode=OneWay}"/><Run FontSize="24">
+                        ×
+                    </Run>         
+                    <Run>
+                        ·
+                    </Run>   
+                    <Run x:Name="SpeedDurationRun" FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" >
+                        00:00:00
+                    </Run><Run>(</Run><Run x:Name="OriginalDurationRun">
+                        00:00:00
+                    </Run><Run>)</Run>
+                </TextBlock>
+            </Button>
         </Slider.Header>
-    </elements:TimeSlider>
+    </elements:ThumbSlider>
 
 </UserControl>
