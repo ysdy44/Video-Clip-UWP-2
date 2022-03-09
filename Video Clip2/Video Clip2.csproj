@@ -189,6 +189,7 @@
     <Compile Include="Video Clip2.Elements\ThemeControl.xaml.cs">
       <DependentUpon>ThemeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Video Clip2.Elements\ThumbSlider.cs" />
     <Compile Include="Video Clip2.Elements\TimeSlider.cs" />
     <Compile Include="Video Clip2.Elements\Times\Roulette.xaml.cs">
       <DependentUpon>Roulette.xaml</DependentUpon>
