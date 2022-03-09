@@ -10,8 +10,6 @@ namespace Video_Clip2.Transforms
         public Transformer Transformer { get; set; }
         public Transformer StartingTransformer { get; private set; }
 
-        public float Scale;
-
         private Transform()
         {
         }
@@ -19,6 +17,7 @@ namespace Video_Clip2.Transforms
         {
             this.TransformerRect = new TransformerRect(width, height, Vector2.Zero);
             this.Transformer = new Transformer(width, height, Vector2.Zero);
+            this.ReloadMatrix();
         }
 
         public Transform Clone()
@@ -35,14 +34,7 @@ namespace Video_Clip2.Transforms
         public void ReloadMatrix()
         {
             this.Matrix =
-                Transformer.FindHomography(this.TransformerRect, this.Transformer) *
-                Matrix3x2.CreateScale(this.Scale);
-        }
-        public void ReloadMatrix(float scale)
-        {
-            if (this.Scale == scale) return;
-            this.Scale = scale;
-            this.ReloadMatrix();
+                Transformer.FindHomography(this.TransformerRect, this.Transformer);
         }
 
 

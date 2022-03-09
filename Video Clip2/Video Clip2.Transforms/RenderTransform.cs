@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.UI.Xaml.Media;
 
 namespace Video_Clip2.Transforms
@@ -13,22 +14,18 @@ namespace Video_Clip2.Transforms
         public bool IsYFlip;
         public readonly uint Width;
         public readonly uint Height;
-        public Size PreviewSize;
+        public BitmapSize Size;
 
-        public RenderTransform(uint width, uint height)
+        public RenderTransform(uint width, uint height, BitmapSize size)
         {
             this.Width = width;
             this.Height = height;
+            this.Size = size;
+            this.ReloadMatrix();
         }
 
         public Matrix3x2 Matrix { get; private set; }
         public void ReloadMatrix() => this.Matrix = this.Render();
-        public void ReloadMatrix(Size previewSize)
-        {
-            if (this.PreviewSize == previewSize) return;
-            this.PreviewSize = previewSize;
-            this.ReloadMatrix();
-        }
 
         private Matrix3x2 Render()
         {
@@ -72,8 +69,8 @@ namespace Video_Clip2.Transforms
 
             if (this.Stretch == Stretch.None) return matrixRotated * Matrix3x2.CreateTranslation(widthRotated / 2, heightRotated / 2);
 
-            float previewWidth = (float)this.PreviewSize.Width;
-            float previewHeight = (float)this.PreviewSize.Height;
+            float previewWidth = (float)this.Size.Width;
+            float previewHeight = (float)this.Size.Height;
             float scaleX = previewWidth / widthRotated;
             float scaleY = previewHeight / heightRotated;
 
@@ -118,8 +115,8 @@ namespace Video_Clip2.Transforms
             if (left.IsYFlip != right.IsYFlip) return false;
             if (left.Width != right.Width) return false;
             if (left.Height != right.Height) return false;
-            if (left.PreviewSize.Width != right.PreviewSize.Width) return false;
-            if (left.PreviewSize.Height != right.PreviewSize.Height) return false;
+            if (left.Size.Width != right.Size.Width) return false;
+            if (left.Size.Height != right.Size.Height) return false;
             return true;
         }
 

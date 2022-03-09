@@ -2,11 +2,13 @@
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Numerics;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Video_Clip2.Transforms;
 using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -24,17 +26,17 @@ namespace Video_Clip2.Clips.Models
         public override bool IsOverlayLayer => this.IOverlayLayerCore;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
 
-        public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+        public void Initialize(bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
             Photo photo = Photo.Instances[this.Medium.Token];
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeFrameClip(duration, trackScale);
-            this.InitializeImageClip(photo.Width, photo.Height, position, delay, duration);
+            this.InitializeImageClip(photo.Width, photo.Height, size, position, delay, duration);
         }
-        protected void InitializeImageClip(uint width, uint height, TimeSpan position, TimeSpan delay, TimeSpan duration)
+        protected void InitializeImageClip(uint width, uint height, BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
             this.Transform = new Transform(width, height);
-            this.RenderTransform = new RenderTransform(width, height);
+            this.RenderTransform = new RenderTransform(width, height, size);
             base.ChangeView(position, delay, duration);
         }
 
@@ -49,7 +51,7 @@ namespace Video_Clip2.Clips.Models
             });
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Matrix3x2 matrix)
         {
             if (base.InRange(position) == false) return null;
 
@@ -58,25 +60,23 @@ namespace Video_Clip2.Clips.Models
             // Transform
             if (this.IsOverlayLayer)
             {
-                this.Transform.ReloadMatrix(scale);
                 return new Transform2DEffect
                 {
-                    TransformMatrix = this.Transform.Matrix,
+                    TransformMatrix = this.Transform.Matrix * matrix,
                     Source = photo.Bitmap
                 };
             }
             else
             {
-                this.RenderTransform.ReloadMatrix(previewSize);
                 return new Transform2DEffect
                 {
-                    TransformMatrix = this.RenderTransform.Matrix,
+                    TransformMatrix = this.RenderTransform.Matrix * matrix,
                     Source = photo.Bitmap
                 };
             }
         }
 
-        protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
             // Clip
             ImageClip imageClip = new ImageClip
@@ -90,7 +90,7 @@ namespace Video_Clip2.Clips.Models
             Photo photo = Photo.Instances[this.Medium.Token];
             imageClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
             imageClip.InitializeFrameClip(nextDuration, trackScale);
-            imageClip.InitializeImageClip(photo.Width, photo.Height, position, position, nextDuration);
+            imageClip.InitializeImageClip(photo.Width, photo.Height, size, position, position, nextDuration);
             return imageClip;
         }
 

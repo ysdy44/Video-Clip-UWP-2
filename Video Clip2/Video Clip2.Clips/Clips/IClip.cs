@@ -1,9 +1,10 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Numerics;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Effects;
-using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.UI.Xaml;
 
 namespace Video_Clip2.Clips
@@ -43,7 +44,7 @@ namespace Video_Clip2.Clips
         bool InRange(TimeSpan position);
         bool InRange(TimeSpan position, TimeSpan minDuration);
         void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize);
+        ICanvasImage GetRender(bool isPlaying, TimeSpan position, Matrix3x2 matrix);
 
         int Index { get; }
         void CacheIndex();
@@ -60,7 +61,7 @@ namespace Video_Clip2.Clips
 
         #endregion
 
-        IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, double trackHeight, double trackScale);
+        IClip TrimClone(Clipping clipping, bool isMuted, BitmapSize size, TimeSpan position, double trackHeight, double trackScale);
 
     }
 }

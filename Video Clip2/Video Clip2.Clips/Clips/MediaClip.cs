@@ -1,8 +1,8 @@
 ﻿using System;
 using Video_Clip2.Elements;
-using Windows.Media.Core;
+using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.Media.Playback;
-using Windows.Storage;
 
 namespace Video_Clip2.Clips
 {
@@ -10,7 +10,7 @@ namespace Video_Clip2.Clips
     {
 
         //@Abstract
-        protected abstract IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale);
+        protected abstract IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale);
 
         public override TimeSpan Duration => this.TrimmedDuration;
 
@@ -130,7 +130,7 @@ namespace Video_Clip2.Clips
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
         }
 
-        public IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, double trackHeight, double trackScale)
+        public IClip TrimClone(Clipping clipping, bool isMuted, BitmapSize size, TimeSpan position, double trackHeight, double trackScale)
         {
             TimeSpan trimTimeFromStart = this.TrimTimeFromStart;
             TimeSpan trimTimeFromEnd = this.TrimTimeFromEnd;
@@ -141,7 +141,7 @@ namespace Video_Clip2.Clips
             this.TrimTimeFromEnd = lastTrimTimeFromEnd;
             this.Track.SetWidth(trackScale, this.TrimmedDuration);
 
-            return this.TrimClone(clipping, this.PlaybackRate, isMuted, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale);
+            return this.TrimClone(clipping, this.PlaybackRate, isMuted, size, position, nextTrimTimeFromStart, trimTimeFromEnd, trackHeight, trackScale);
         }
 
     }

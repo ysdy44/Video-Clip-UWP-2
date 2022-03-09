@@ -1,9 +1,9 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
+using System.Numerics;
 using Video_Clip2.Clips;
 using Video_Clip2.Effects;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -47,6 +47,7 @@ namespace Video_Clip2
                     default:
                         for (int i = 0; i < rows; i++)
                         {
+                            Matrix3x2 matrix = Matrix3x2.CreateScale(scale);
                             foreach (Clipping item in this.ViewModel.ObservableCollection)
                             {
                                 IClip clip = item.Self;
@@ -55,7 +56,7 @@ namespace Video_Clip2
                                 if (clip.Opacity == 0) continue;
                                 if (clip.Index != i) continue;
 
-                                ICanvasImage image = clip.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, scale, s.Size);
+                                ICanvasImage image = clip.GetRender(this.ViewModel.IsPlayingCore, this.ViewModel.Position, matrix);
                                 if (image == null) continue;
 
                                 // Clip

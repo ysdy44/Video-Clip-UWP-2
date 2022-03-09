@@ -48,7 +48,7 @@ namespace Video_Clip2
                         Medium = medium
                     };
 
-                    videoClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    videoClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                     ClipBase.Instances.Add(clipping.Id, videoClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);
@@ -135,7 +135,7 @@ namespace Video_Clip2
                         Medium = medium
                     };
 
-                    imageClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    imageClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                     ClipBase.Instances.Add(clipping.Id, imageClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);

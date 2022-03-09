@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Xml.Linq;
 using Video_Clip2.Clips.ClipTracks;
 using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -59,14 +60,14 @@ namespace Video_Clip2.Clips.Models
             args.DrawingSession.DrawText(this.Text, Vector2.One, Colors.White);
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Matrix3x2 matrix)
         {
             if (this.Text == null) return null;
             else if (base.InRange(position) == false) return null;
             else return this.CommandList;
         }
 
-        protected override IClip TrimClone(Clipping clipping, bool isMuted, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan nextDuration, double trackHeight, double trackScale)
         {
             // Clip
             TextClip textClip = new TextClip

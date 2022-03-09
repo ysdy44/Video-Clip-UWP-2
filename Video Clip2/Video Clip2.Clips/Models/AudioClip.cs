@@ -1,10 +1,11 @@
 ﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Numerics;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
-using Windows.Foundation;
+using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 
@@ -30,7 +31,7 @@ namespace Video_Clip2.Clips.Models
         {
         }
 
-        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize)
+        public override ICanvasImage GetRender(bool isPlaying, TimeSpan position, Matrix3x2 matrix)
         {
             if (base.InRange(position) == false)
             {
@@ -59,7 +60,7 @@ namespace Video_Clip2.Clips.Models
             return null;
         }
 
-        protected override IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
+        protected override IClip TrimClone(Clipping clipping, double playbackRate, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan nextTrimTimeFromStart, TimeSpan trimTimeFromEnd, double trackHeight, double trackScale)
         {
             // Clip
             AudioClip audioClip = new AudioClip

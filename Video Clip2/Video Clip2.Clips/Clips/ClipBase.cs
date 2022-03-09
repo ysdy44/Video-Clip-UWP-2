@@ -64,7 +64,7 @@ namespace Video_Clip2.Clips
             return true;
         }
         public abstract void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args);
-        public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, float scale, Size previewSize);
+        public abstract ICanvasImage GetRender(bool isPlaying, TimeSpan position, Matrix3x2 matrix);
 
         int StartingIndex;
         public int Index { get; private set; }
