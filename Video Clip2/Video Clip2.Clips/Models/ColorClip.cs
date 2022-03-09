@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -15,19 +16,25 @@ namespace Video_Clip2.Clips.Models
 
         public Color Color { get; set; }
         private ColorSourceEffect Source;
+        public Transformer Transformer { get; private set; }
 
         public override ClipType Type => ClipType.Color;
         public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Black, Symbol.Flag);
 
-        public void Initialize(bool isMuted, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+        public Transformer GetActualTransformer() => this.Transformer;
+
+        public void Initialize(bool isMuted, BitmapSize size, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeFrameClip(duration, trackScale);
-            this.InitializeColorClip();
+            this.InitializeColorClip(size);
         }
-        protected void InitializeColorClip()
+        protected void InitializeColorClip(BitmapSize size)
         {
+            uint width = size.Width;
+            uint height = size.Height; 
+            this.Transformer = new Transformer(width, height, Vector2.Zero);
             this.Source = new ColorSourceEffect
             {
                 Color = this.Color
@@ -49,7 +56,10 @@ namespace Video_Clip2.Clips.Models
         public void SetColor(Color color)
         {
             this.Color = color;
-            this.InitializeColorClip();
+            this.Source = new ColorSourceEffect
+            {
+                Color = this.Color
+            };
 
             this.Track.Invalidate(); // Invalidate
         }
@@ -67,7 +77,7 @@ namespace Video_Clip2.Clips.Models
 
             colorClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
             colorClip.InitializeFrameClip(nextDuration, trackScale);
-            colorClip.InitializeColorClip();
+            colorClip.InitializeColorClip(size);
             return colorClip;
         }
 

@@ -1,10 +1,12 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
 using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
+using Video_Clip2.Transforms;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -15,16 +17,26 @@ namespace Video_Clip2.Clips.Models
     {
 
         public Medium Medium { get; set; }
+        public Transformer Transformer { get; private set; }
 
         public override ClipType Type => ClipType.Audio;
         public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Fuchsia, Symbol.Audio);
 
-        public void Initialize(double playbackRate, bool isMuted, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
+        public Transformer GetActualTransformer() => this.Transformer;
+
+        public void Initialize(double playbackRate, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
         {
             Audio audio = Audio.Instances[this.Medium.Token];
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeMediaClip(audio.CreateSource(), playbackRate, isMuted, position, audio.Duration, trackScale);
+            this.InitializeAudioClip(size);
+        }
+        protected void InitializeAudioClip(BitmapSize size)
+        {
+            uint width = size.Width;
+            uint height = size.Height;
+            this.Transformer = new Transformer(width, height, Vector2.Zero);
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)

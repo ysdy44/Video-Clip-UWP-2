@@ -91,7 +91,7 @@ namespace Video_Clip2
                         Medium = medium
                     };
 
-                    audioClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                    audioClip.Initialize(1, this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, this.ViewModel.Position, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                     ClipBase.Instances.Add(clipping.Id, audioClip);
 
                     this.ViewModel.ObservableCollection.Add(clipping);
@@ -171,7 +171,7 @@ namespace Video_Clip2
                     Color = color
                 };
 
-                clip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                clip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                 ClipBase.Instances.Add(clipping.Id, clip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);
@@ -204,7 +204,7 @@ namespace Video_Clip2
                     Text = "Click to change text"
                 };
 
-                textClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                textClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                 ClipBase.Instances.Add(clipping.Id, textClip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);
@@ -245,7 +245,7 @@ namespace Video_Clip2
                     }
                 };
 
-                subtitleClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
+                subtitleClip.Initialize(this.ViewModel.IsMuted, this.ViewModel.Size, this.ViewModel.Position, this.ViewModel.Position, duration, 0, this.ViewModel.TrackHeight, this.ViewModel.TrackScale);
                 ClipBase.Instances.Add(clipping.Id, subtitleClip);
 
                 this.ViewModel.ObservableCollection.Add(clipping);

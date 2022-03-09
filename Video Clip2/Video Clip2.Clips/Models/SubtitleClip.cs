@@ -27,12 +27,12 @@ namespace Video_Clip2.Clips.Models
         public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.OrangeRed, Symbol.FontColor);
 
-        public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+        public void Initialize(bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
             base.Text = SubtitleClip.GetIndex(this.Subtitles, position, delay);
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeFrameClip(duration, trackScale);
-            this.InitializeTextClipBase(position, delay, duration);
+            base.InitializeTextClipBase(size, position, delay, duration);
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
@@ -60,6 +60,7 @@ namespace Video_Clip2.Clips.Models
             subtitleClip.Text = SubtitleClip.GetIndex(subtitleClip.Subtitles, position, this.Delay);
             subtitleClip.InitializeClipBase(isMuted, this.Delay, base.Index, trackHeight, trackScale);
             subtitleClip.InitializeFrameClip(nextDuration, trackScale);
+            subtitleClip.InitializeTextClipBase(size, position, position, nextDuration);
             return subtitleClip;
         }
 

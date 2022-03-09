@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml;
 
 namespace Video_Clip2.Clips
 {
-    public interface IClip : IDisposable
+    public interface IClip : IDisposable, IGetActualTransformer
     {
 
         IClipTrack Track { get; }

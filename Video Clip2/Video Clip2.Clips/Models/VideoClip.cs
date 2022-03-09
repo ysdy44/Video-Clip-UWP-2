@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -22,12 +23,14 @@ namespace Video_Clip2.Clips.Models
         CanvasRenderTarget Bitmap;
         public Medium Medium { get; set; }
         public bool IOverlayLayerCore { get; set; }
-        public Transform Transform { get; private set; }
-        public RenderTransform RenderTransform { get; private set; }
+        public Transform Transform { get; protected set; }
+        public RenderTransform RenderTransform { get; protected set; }
 
         public override ClipType Type => ClipType.Video;
         public override bool IsOverlayLayer => this.IOverlayLayerCore;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.BlueViolet, Symbol.Video);
+  
+        public Transformer GetActualTransformer() => this.IOverlayLayerCore ? this.Transform.Transformer : this.RenderTransform.Transformer;
 
         public void Initialize(double playbackRate, bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, int index, double trackHeight, double trackScale)
         {
@@ -51,8 +54,8 @@ namespace Video_Clip2.Clips.Models
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
         {
             double width = sender.ActualWidth;
-            double position = base.PlaybackRate * base.TrimTimeFromStart.TotalSeconds;
-            double lenth = base.PlaybackRate * base.TrimmedDuration.TotalSeconds;
+            double position = base.TrimTimeFromStart.ToDouble(base.PlaybackRate);
+            double lenth = base.TrimmedDuration.ToDouble(base.PlaybackRate);
 
             Video video = Video.Instances[this.Medium.Token];
             video.DrawThumbnails(args.DrawingSession, width, position, lenth);

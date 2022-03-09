@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FanKit.Transformers;
+using System;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.Graphics.Imaging;
@@ -25,7 +26,12 @@ namespace Video_Clip2.Transforms
         }
 
         public Matrix3x2 Matrix { get; private set; }
-        public void ReloadMatrix() => this.Matrix = this.Render();
+        public Transformer Transformer { get; private set; }
+        public void ReloadMatrix()
+        {
+            this.Matrix = this.Render();
+            this.Transformer = Transformer.Multiplies(new Transformer(this.Width, this.Height, Vector2.Zero), this.Matrix);
+        }
 
         private Matrix3x2 Render()
         {

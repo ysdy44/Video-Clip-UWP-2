@@ -1,10 +1,11 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
 using System.Xml.Linq;
 using Video_Clip2.Clips.ClipTracks;
-using Windows.Foundation;
+using Video_Clip2.Transforms;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -16,9 +17,15 @@ namespace Video_Clip2.Clips.Models
 
         public CanvasCommandList CommandList { get; protected set; }
         public string Text { get; set; }
+        public Transformer Transformer { get; private set; }
 
-        protected void InitializeTextClipBase(TimeSpan position, TimeSpan delay, TimeSpan duration)
+        public Transformer GetActualTransformer() => this.Transformer;
+
+        protected void InitializeTextClipBase(BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration)
         {
+            uint width = size.Width;
+            uint height = size.Height; 
+            this.Transformer = new Transformer(width, height, Vector2.Zero);
             this.CommandList = new CanvasCommandList(ClipManager.CanvasDevice);
             if (this.Text != null) TextClip.Render(this.CommandList, this.Text);
             base.ChangeView(position, delay, duration);
@@ -48,11 +55,11 @@ namespace Video_Clip2.Clips.Models
         public override bool IsOverlayLayer => false;
         public override IClipTrack Track { get; } = new ClipTrack(Colors.Orange, Symbol.FontSize);
 
-        public void Initialize(bool isMuted, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
+        public void Initialize(bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
             base.InitializeClipBase(isMuted, delay, index, trackHeight, trackScale);
             base.InitializeFrameClip(duration, trackScale);
-            this.InitializeTextClipBase(position, delay, duration);
+            this.InitializeTextClipBase(size, position, delay, duration);
         }
 
         public override void DrawThumbnail(CanvasControl sender, CanvasDrawEventArgs args)
@@ -80,7 +87,7 @@ namespace Video_Clip2.Clips.Models
 
             textClip.InitializeClipBase(isMuted, position, base.Index, trackHeight, trackScale);
             textClip.InitializeFrameClip(nextDuration, trackScale);
-            textClip.InitializeTextClipBase(position, position, nextDuration);
+            textClip.InitializeTextClipBase(size, position, position, nextDuration);
             return textClip;
         }
 

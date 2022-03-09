@@ -1,4 +1,5 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using FanKit.Transformers;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -7,7 +8,6 @@ using Video_Clip2.Clips.ClipTracks;
 using Video_Clip2.Medias;
 using Video_Clip2.Medias.Models;
 using Video_Clip2.Transforms;
-using Windows.Foundation;
 using Windows.Graphics.Imaging;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
@@ -19,12 +19,14 @@ namespace Video_Clip2.Clips.Models
 
         public Medium Medium { get; set; }
         public bool IOverlayLayerCore { get; set; }
-        public Transform Transform { get; private set; }
-        public RenderTransform RenderTransform { get; private set; }
+        public Transform Transform { get; protected set; }
+        public RenderTransform RenderTransform { get; protected set; }
 
         public override ClipType Type => ClipType.Image;
         public override bool IsOverlayLayer => this.IOverlayLayerCore;
         public override IClipTrack Track { get; } = new LazyClipTrack(Colors.DodgerBlue, Symbol.Pictures);
+
+        public Transformer GetActualTransformer() => this.IOverlayLayerCore ? this.Transform.Transformer : this.RenderTransform.Transformer;
 
         public void Initialize(bool isMuted, BitmapSize size, TimeSpan position, TimeSpan delay, TimeSpan duration, int index, double trackHeight, double trackScale)
         {
