@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using FanKit.Transformers;
+using System.ComponentModel;
 using Video_Clip2.Clips;
 using Windows.UI.Xaml.Controls;
 
@@ -49,6 +50,23 @@ namespace Video_Clip2.ViewModels
         //////////////////////////
 
         
+        public Transformer Transformer
+        {
+            get => this.transformer;
+            set
+            {
+                this.transformer = value;
+                this.OnPropertyChanged(nameof(Transformer)); // Notify 
+            }
+        }
+        private Transformer transformer;
+        public Transformer StartingTransformer { get; private set; }
+        public void CacheTransformer() => this.StartingTransformer = this.Transformer;
+
+
+        //////////////////////////
+
+
         public Trimmer Trimmer
         {
             get => this.trimmer;

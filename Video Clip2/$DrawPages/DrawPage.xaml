@@ -32,7 +32,7 @@
         <x:Double x:Key="TimelineTop">-30</x:Double>
         <Thickness x:Key="TimelineMargin">0,30,0,0</Thickness>
 
-       
+
         <!--Flyout-->
         <MenuFlyout x:Name="EditFlyout" Placement="Left">
             <MenuFlyout.MenuFlyoutPresenterStyle>
@@ -219,6 +219,16 @@
                     <CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
                 </UIElement.RenderTransform>
             </xaml:CanvasControl>
+
+            <controls1:TransformerCanvas Width="1920" Height="1080" 
+                     Scale2="{x:Bind ViewModel.Scale, Mode=OneWay}" Transformer="{x:Bind ViewModel.Transformer, Mode=OneWay}">
+                <UIElement.RenderTransformOrigin>
+                    0, 0
+                </UIElement.RenderTransformOrigin>
+                <UIElement.RenderTransform>
+                    <CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
+                </UIElement.RenderTransform>
+            </controls1:TransformerCanvas>
         </controls1:PreviewCanvas>
 
         <!--Track-->
@@ -533,7 +543,7 @@
                         Time="{x:Bind ViewModel.Duration , Mode=TwoWay}" 
                         Foreground="{ThemeResource AppBlueLinearGradientBrush}" Style="{StaticResource TextBlockButtonStyle}">
                 <TextBlock Margin="4,0" FontWeight="Bold" VerticalAlignment="Center">
-                <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
+                    <Run FontSize="24" Foreground="{ThemeResource AppBarItemForegroundThemeBrush}" Text="{x:Bind TimeSpanToStringConverter(ViewModel.Position), Mode=OneWay}"/><Run>/</Run><Run Text="{x:Bind TimeSpanToStringConverter(ViewModel.Duration), Mode=OneWay}"/>
                 </TextBlock>
             </times:TimeButton>
             <elements:TimeSlider x:Name="ScaleSlider" Grid.Column="5" Visibility="Visible"
@@ -805,36 +815,56 @@
 
         <!--Menu-->
         <Rectangle x:Name="MenuRectangle" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1" Visibility="Visible" Fill="{ThemeResource AppBackground}"/>
-        <elements:TransitionPanel x:Name="MenuGrid" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1"
-                    IsShow="{x:Bind ReverseIntToBooleanConverter(AppBarListView.SelectedIndex), Mode=OneWay}"
-                    >
-            <Grid>
+        <Grid x:Name="MenuGrid" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="1">
+            <elements:TransitionPanel IsShow="{x:Bind ReverseIntToBooleanConverter(AppBarListView.SelectedIndex), Mode=OneWay}">
                 <Rectangle x:Name="MenuRectangle2" Visibility="Collapsed" Fill="{ThemeResource SystemControlAcrylicElementBrush}"/>
+            </elements:TransitionPanel>
 
-                <!--Setting-->
-                <menus:SettingMenu Visibility="{x:Bind BooleanToVisibilityConverter(SettingButton.IsSelected), Mode=OneWay}"/>
-                <!--Property-->
-                <Border Visibility="{x:Bind BooleanToVisibilityConverter(PropertyButton.IsSelected), Mode=OneWay}"/>
-                <!--Transition-->
-                <menus:TransitionMenu Visibility="{x:Bind BooleanToVisibilityConverter(TransitionButton.IsSelected), Mode=OneWay}"/>
-                <!--Easing-->
-                <menus:EasingMenu Visibility="{x:Bind BooleanToVisibilityConverter(EasingButton.IsSelected), Mode=OneWay}"/>
-                <!--Effect-->
-                <menus:EffectMenu Visibility="{x:Bind BooleanToVisibilityConverter(EffectButton.IsSelected), Mode=OneWay}"/>
-                <!--Duration-->
-                <menus:DurationMenu x:Name="DurationMenu" Visibility="{x:Bind BooleanToVisibilityConverter(DurationButton.IsSelected), Mode=OneWay}"/>
-                <!--Speed-->
-                <menus:SpeedMenu Visibility="{x:Bind BooleanToVisibilityConverter(SpeedButton.IsSelected), Mode=OneWay}"/>
-                <!--Stretch-->
-                <menus:StretchMenu Visibility="{x:Bind BooleanToVisibilityConverter(StretchButton.IsSelected), Mode=OneWay}"/>
-                <!--Volume-->
-                <menus:VolumeMenu Visibility="{x:Bind BooleanToVisibilityConverter(VolumeButton.IsSelected), Mode=OneWay}"/>
-                <!--Transform-->
-                <menus:TransformMenu Visibility="{x:Bind BooleanToVisibilityConverter(TransformButton.IsSelected), Mode=OneWay}"/>
-                <!--Opacity-->
-                <menus:OpacityMenu Visibility="{x:Bind BooleanToVisibilityConverter(OpacityButton.IsSelected), Mode=OneWay}"/>
-            </Grid>
-        </elements:TransitionPanel>
+            <!--Setting-->
+            <elements:TransitionPanel IsShow="{x:Bind SettingButton.IsSelected, Mode=OneWay}">
+                <menus:SettingMenu/>
+            </elements:TransitionPanel>
+            <!--Property-->
+            <elements:TransitionPanel IsShow="{x:Bind PropertyButton.IsSelected, Mode=OneWay}">
+                <Border/>
+            </elements:TransitionPanel>
+            <!--Transition-->
+            <elements:TransitionPanel IsShow="{x:Bind TransitionButton.IsSelected, Mode=OneWay}">
+                <menus:TransitionMenu/>
+            </elements:TransitionPanel>
+            <!--Easing-->
+            <elements:TransitionPanel IsShow="{x:Bind EasingButton.IsSelected, Mode=OneWay}">
+                <menus:EasingMenu/>
+            </elements:TransitionPanel>
+            <!--Effect-->
+            <elements:TransitionPanel IsShow="{x:Bind EffectButton.IsSelected, Mode=OneWay}">
+                <menus:EffectMenu/>
+            </elements:TransitionPanel>
+            <!--Duration-->
+            <elements:TransitionPanel IsShow="{x:Bind DurationButton.IsSelected, Mode=OneWay}">
+                <menus:DurationMenu x:Name="DurationMenu"/>
+            </elements:TransitionPanel>
+            <!--Speed-->
+            <elements:TransitionPanel IsShow="{x:Bind SpeedButton.IsSelected, Mode=OneWay}">
+                <menus:SpeedMenu/>
+            </elements:TransitionPanel>
+            <!--Stretch-->
+            <elements:TransitionPanel IsShow="{x:Bind StretchButton.IsSelected, Mode=OneWay}">
+                <menus:StretchMenu/>
+            </elements:TransitionPanel>
+            <!--Volume-->
+            <elements:TransitionPanel IsShow="{x:Bind VolumeButton.IsSelected, Mode=OneWay}">
+                <menus:VolumeMenu/>
+            </elements:TransitionPanel>
+            <!--Transform-->
+            <elements:TransitionPanel IsShow="{x:Bind TransformButton.IsSelected, Mode=OneWay}">
+                <menus:TransformMenu/>
+            </elements:TransitionPanel>
+            <!--Opacity-->
+            <elements:TransitionPanel IsShow="{x:Bind OpacityButton.IsSelected, Mode=OneWay}">
+                <menus:OpacityMenu/>
+            </elements:TransitionPanel>
+        </Grid>
 
         <!--AppBar-->
         <ListView x:Name="AppBarListView" Visibility="Visible"

@@ -1,7 +1,9 @@
-﻿using System;
+﻿using FanKit.Transformers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using Video_Clip2.Clips;
 using Video_Clip2.Elements;
 using Windows.Foundation;
@@ -51,6 +53,8 @@ namespace Video_Clip2.ViewModels
         {
             this.SelectionMode = ListViewSelectionMode.Single;
 
+            this.Transformer = clip.GetActualTransformer();
+
             this.Trimmer = new Trimmer
             {
                 Top = clip.Index,
@@ -84,6 +88,10 @@ namespace Video_Clip2.ViewModels
         public void SetModeMultiple(IEnumerable<IClip> clips)
         {
             this.SelectionMode = ListViewSelectionMode.Multiple;
+
+            // TransformerBorder
+            TransformerBorder border = new TransformerBorder(clips);
+            this.Transformer = border.ToTransformer();
 
             this.Trimmer = new Trimmer
             {
