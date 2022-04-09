@@ -1,3 +1,11 @@
+This project has stopped development and is currently in a semi-finished state
+
+The author went to develop Painting Application
+
+2022.4.9
+
+---
+
 # Video-Clip-UWP-2
 
 ![](ScreenShot/logo.png)
@@ -8,7 +16,7 @@
 
 ## Function description
 
-Media Editing Tool, you can trimming, composition, animation, support adjustment, effect, blend. brush, geometry, tracks. If you need to edit meida might as well try.
+Media Editing Tool, you can trimming, composition, animation, support adjustment, effect, blend. brush, geometry, tracks. If you need to edit media might as well try.
 
 
 <br/>
